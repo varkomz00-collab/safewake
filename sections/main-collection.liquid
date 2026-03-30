@@ -401,15 +401,24 @@
   /* -----------------------------------------------------------
      4. PRODUCT GRID — consistent spacing
      ----------------------------------------------------------- */
+  /* Grid gap: Lovable gap-2 sm:gap-3 = 8px / 12px */
   .product-grid {
-    gap: 16px;
+    gap: 8px;
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Ensure the grid gap uses the token on all breakpoints */
   .collection-listing .product-grid {
-    row-gap: 16px;
-    column-gap: 16px;
+    row-gap: 8px;
+    column-gap: 8px;
+  }
+
+  @media (min-width: 640px) {
+    .product-grid,
+    .collection-listing .product-grid {
+      gap: 12px;
+      row-gap: 12px;
+      column-gap: 12px;
+    }
   }
 
   @media (min-width: 768px) {

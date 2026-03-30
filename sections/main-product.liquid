@@ -931,7 +931,7 @@
     border-radius: 16px;
     overflow: hidden;
     box-shadow: var(--sw-shadow-soft);
-    transition: box-shadow var(--sw-transition-smooth);
+    transition: box-shadow 0.3s var(--sw-ease-smooth);
   }
 
   .section-{{ section.id }} .product-media-collage__item:hover {
@@ -1032,9 +1032,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: border-color var(--sw-transition-smooth),
-                box-shadow var(--sw-transition-smooth),
-                background-color var(--sw-transition-smooth);
+    transition: border-color 0.3s var(--sw-ease-smooth),
+                box-shadow 0.3s var(--sw-ease-smooth),
+                background-color 0.3s var(--sw-ease-smooth);
     font-weight: 500;
     font-size: 0.875rem;
     color: var(--sw-text-secondary);
@@ -1064,7 +1064,7 @@
     min-height: var(--sw-touch-target);
     border: var(--sw-border-hairline);
     padding: 0 1.25rem;
-    transition: border-color var(--sw-transition-smooth), box-shadow var(--sw-transition-smooth);
+    transition: border-color 0.3s var(--sw-ease-smooth), box-shadow 0.3s var(--sw-ease-smooth);
   }
 
   .section-{{ section.id }} .custom-select__btn:hover,
@@ -1082,9 +1082,9 @@
     font-weight: 600;
     font-size: 1rem;
     letter-spacing: 0.01em;
-    transition: transform var(--sw-transition-smooth),
-                box-shadow var(--sw-transition-smooth),
-                background-color var(--sw-transition-smooth);
+    transition: transform 0.3s var(--sw-ease-smooth),
+                box-shadow 0.3s var(--sw-ease-smooth),
+                background-color 0.3s var(--sw-ease-smooth);
     box-shadow: var(--sw-shadow-soft);
   }
 
@@ -1124,7 +1124,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: background-color var(--sw-transition-smooth), color var(--sw-transition-smooth);
+    transition: background-color 0.3s var(--sw-ease-smooth), color 0.3s var(--sw-ease-smooth);
     color: var(--sw-text-secondary);
   }
 
@@ -1213,11 +1213,12 @@
   }
 
   .section-{{ section.id }} .disclosure__title {
-    padding: 1.125rem 0;
+    padding: 16px 0;
     font-weight: 500;
+    font-size: 14px;
     color: var(--sw-text-primary);
     cursor: pointer;
-    transition: color var(--sw-transition-smooth);
+    transition: color 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1225,18 +1226,31 @@
   }
 
   .section-{{ section.id }} .disclosure__title:hover {
-    color: hsl(var(--sw-glow-h), var(--sw-glow-s), var(--sw-glow-l));
+    text-decoration: underline;
+  }
+
+  /* Chevron rotation — matches Lovable duration-200 rotate-180 */
+  .section-{{ section.id }} .disclosure__title svg,
+  .section-{{ section.id }} .disclosure__title .icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+  .section-{{ section.id }} .disclosure--open .disclosure__title svg,
+  .section-{{ section.id }} .disclosure--open .disclosure__title .icon {
+    transform: rotate(180deg);
   }
 
   .section-{{ section.id }} .disclosure__content {
-    padding: 0 0 1.25rem;
+    padding: 0 0 16px;
     color: var(--sw-text-secondary);
-    line-height: 1.7;
-    font-size: 0.9375rem;
+    line-height: 1.6;
+    font-size: 14px;
   }
 
   .section-{{ section.id }} .disclosure__panel.has-motion {
-    transition: height var(--sw-transition-smooth);
+    transition: height 0.3s ease;
   }
 
   /* --- 9. Sticky Buy Box (Mobile) --- */
@@ -1305,9 +1319,9 @@
     background: var(--sw-surface-card);
     border: var(--sw-border-hairline);
     color: var(--sw-text-secondary);
-    transition: background-color var(--sw-transition-smooth),
-                color var(--sw-transition-smooth),
-                box-shadow var(--sw-transition-smooth);
+    transition: background-color 0.3s var(--sw-ease-smooth),
+                color 0.3s var(--sw-ease-smooth),
+                box-shadow 0.3s var(--sw-ease-smooth);
   }
 
   .section-{{ section.id }} .slider-nav__btn:hover {
@@ -1337,7 +1351,7 @@
     border: var(--sw-border-hairline);
     padding: 0.75rem 1rem;
     min-height: var(--sw-touch-target);
-    transition: border-color var(--sw-transition-smooth), box-shadow var(--sw-transition-smooth);
+    transition: border-color 0.3s var(--sw-ease-smooth), box-shadow 0.3s var(--sw-ease-smooth);
     background: var(--sw-surface-card);
     color: var(--sw-text-primary);
   }
@@ -1360,7 +1374,7 @@
   .section-{{ section.id }} .only-in-quickbuy .more {
     color: hsl(var(--sw-glow-h), var(--sw-glow-s), var(--sw-glow-l));
     font-weight: 500;
-    transition: opacity var(--sw-transition-smooth);
+    transition: opacity 0.3s var(--sw-ease-smooth);
   }
 
   .section-{{ section.id }} .only-in-quickbuy .more:hover {

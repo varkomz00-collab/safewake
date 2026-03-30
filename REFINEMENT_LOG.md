@@ -475,3 +475,60 @@ Engineering + Design rotation (Run 1,4,7... pattern). Read WakeFooter.tsx, CartC
 - Collection page grid verification at all breakpoints
 - Transition token refactor (split --sw-transition-smooth into specific variants)
 - CRO + Conversion audit (Run 8 rotation)
+
+---
+
+## Run 8 — 2026-03-30
+
+### Methodology
+CRO + Conversion rotation (Run 2,5,8... pattern). Read accordion.tsx, WakeProductTemplate.tsx (accordion/tabs), ShopifyProductGrid.tsx from Lovable. Fixed accordion styling, collection grid gap, and **critical bug** in transition token usage.
+
+### Bugs Fixed
+- **CRITICAL**: Fixed 8 instances of `transition: property var(--sw-transition-smooth)` which expanded to invalid CSS (`property all 0.3s ...`). Browser was silently ignoring these transitions. Replaced all with `property 0.3s var(--sw-ease-smooth)` using the easing token instead of the full transition token. Affected: variant pills, select buttons, ATC button, quantity buttons, related products arrows, custom option inputs, quickbuy link.
+
+### Sections Refined
+
+#### main-product.liquid (accordion styling)
+- **Lovable ref:** accordion.tsx — `py-4 font-medium hover:underline text-sm pb-4 pt-0 duration-200 rotate-180`
+- Trigger padding: `1.125rem 0` (18px) → `16px 0` matching `py-4`
+- Trigger font-size: unset → 14px matching `text-sm`
+- Trigger hover: brand glow color → `text-decoration: underline` matching Lovable
+- Chevron: added `16px` sizing, `flex-shrink: 0`, `transition: transform 0.2s ease` matching `duration-200`
+- Chevron rotation: added `transform: rotate(180deg)` on `.disclosure--open` matching `rotate-180`
+- Content padding: `0 0 1.25rem` (20px) → `0 0 16px` matching `pb-4`
+- Content font-size: `0.9375rem` (15px) → `14px` matching `text-sm`
+- Content line-height: 1.7 → 1.6
+- Panel transition: `height var(--sw-transition-smooth)` → `height 0.3s ease`
+
+#### main-collection.liquid (grid gap fix)
+- **Lovable ref:** ShopifyProductGrid.tsx — `gap-2 sm:gap-3` = 8px / 12px
+- Grid gap: 16px → 8px mobile, 12px at sm (640px) — **50% tighter gap** matching Lovable's compact grid
+- Added explicit sm breakpoint for gap (was only md breakpoint before)
+
+#### main-product.liquid (transition bug fix)
+- Fixed 8 broken `transition: property var(--sw-transition-smooth)` patterns
+- All now use `property 0.3s var(--sw-ease-smooth)` — valid CSS that actually transitions
+- Reduced total `var(--sw-transition-smooth)` references from 24 → 6 (all remaining are valid standalone usage)
+
+### Skills Applied
+- CRO: Accordion styling now matches Lovable — cleaner disclosure sections improve product information scannability
+- CRO: Tighter grid gap (8px/12px vs 16px) puts more products above fold on mobile — estimated +5-8% visibility on initial viewport
+- Engineering: Fixed critical CSS transition bug — 8 transitions were being silently ignored by browsers due to invalid `property all 0.3s` syntax
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **Featured collection arrows group-hover** — Still only hides disabled arrows; need section-level hover to show/hide all arrows
+2. **Product card aspect-ratio conflict** — `aspect-ratio: 1` on `.image-cont` may conflict with Symmetry JS; needs live testing
+3. **Gallery zoom modal** — WakeGallery has fullscreen zoom with swipe; Symmetry gallery viewer doesn't match
+4. **Accordion icon rotation** — `.disclosure--open` class may not exist in Symmetry's accordion JS; chevron rotation may not trigger. Needs live testing
+5. **Desktop product layout** — Lovable uses `md:grid-cols-[1fr_420px] lg:grid-cols-[1fr_480px] gap-8`; our product page layout not yet verified against this
+6. **Tab-style UI on desktop** — Lovable uses tabs for product details on desktop, accordion on mobile; ours uses accordion everywhere
+7. **Collection grid 3-col variant** — Lovable supports `md:grid-cols-3` as alternate layout; ours only has 2-col/4-col
+8. **Scrolling banner marquee speed** — Not compared against Lovable animation timing
+9. **Shop the Look product overlay** — WakeLifestyleVideoBlock has overlay product cards; our section may not match
+10. **Image-with-text section** — Not yet compared against any Lovable equivalent
+
+### Next Run Should Focus On
+- Desktop product page layout (gallery + buybox grid)
+- Featured collection group-hover arrow experiment
+- Image-with-text section comparison
+- Brand + SEO audit (Run 9 rotation)
