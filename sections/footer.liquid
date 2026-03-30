@@ -212,21 +212,32 @@
     background: var(--sw-surface-section);
   }
 
-  /* Column titles */
+  /* Column titles — matches Lovable text-xs sm:text-sm font-medium */
   .section-footer .section-footer__title {
     font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--sw-text-muted);
+    font-weight: 500;
+    color: var(--sw-text-primary, #F5F5F5);
+    margin-bottom: 0.75rem;
+  }
+  @media (min-width: 640px) {
+    .section-footer .section-footer__title {
+      font-size: 14px;
+    }
   }
 
-  /* Menu links */
+  /* Menu links — matches Lovable text-xs sm:text-sm text-secondary-label */
   .section-footer .section-footer__menu-block__menu a {
-    font-size: 14px;
+    font-size: 12px;
     color: var(--sw-text-secondary);
     transition: color 0.3s ease;
     text-decoration: none;
+    display: inline-block;
+    padding-block: 2px;
+  }
+  @media (min-width: 640px) {
+    .section-footer .section-footer__menu-block__menu a {
+      font-size: 14px;
+    }
   }
   .section-footer .section-footer__menu-block__menu a:hover {
     color: var(--sw-text-primary);
@@ -276,7 +287,7 @@
   .section-footer .section-footer__payment-icon {
     height: 32px;
     width: auto;
-    border-radius: 4px;
+    border-radius: 6px;
     opacity: 0.6;
     transition: opacity 0.3s ease;
   }
