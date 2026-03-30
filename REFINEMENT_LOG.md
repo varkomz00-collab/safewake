@@ -88,3 +88,77 @@ Read all Lovable Wake component source files (.tsx), extracted exact Tailwind-to
 - Rich-text / WakeUnifiedStrip sticky navigation strip
 - Replace remaining `transition: all` with specific properties
 - Mobile CRO: verify ATC button visibility above fold on iPhone SE (375px)
+
+---
+
+## Run 2 — 2026-03-30
+
+### Methodology
+Addressed top 5 remaining issues from Run 1. Read Lovable component source for each section, extracted exact Tailwind values, applied CSS fixes scoped to section IDs in `{% style %}` blocks. Validated with `scripts/validate-theme.sh` — all clean.
+
+### Bugs Fixed
+- None found (validation clean on entry)
+
+### Sections Refined
+
+#### testimonials.liquid
+- **Lovable ref:** Design system card patterns + pill-expand dots from WakeHero
+- Section background: added `rgba(255, 255, 255, 0.03)` surface tint
+- Heading: margin-bottom 48px, responsive 30px/36px, weight 600, tracking -0.025em
+- Cards: radius 12px → 24px (rounded-3xl), border rgba 50% opacity, shadow `0 1px 2px rgba(0,0,0,0.05)`, hover shadow `0 4px 6px rgba(0,0,0,0.1)`, padding 16px
+- Stars: 14px sizing, gap 2px, fill with brand glow color
+- Quote text: 14px, line-clamp 2, muted-foreground color
+- Author footer: border-top at 50% opacity, pt/mt 12px
+- Nav dots: MAJOR — added pill-expand pattern matching hero (8px inactive → 32px active, 300ms transition, 44px touch targets)
+- Nav buttons: 44px circles, hover bg-muted, disabled opacity 0.3
+
+#### cart-drawer.liquid
+- **Lovable ref:** CartDrawer.tsx patterns
+- Drawer container: max-width 512px (was unconstrained)
+- Content: padding-top 24px
+- Line items: flex layout, gap 16px, padding 8px, `rgba(255,255,255,0.03)` background, radius 12px
+- Item images: 64×64px, radius 8px, object-fit cover
+- Quantity controls: 32px visual / 44px touch targets, centered 14px text
+- Checkout button: height 56px (was default), radius 9999px (pill), full-width
+- Subtotal: label 18px/600, price 20px/700
+- Trust badges: border-top 50% opacity, py 12px, security text 12px, payment icons 20px with 0.7 opacity
+
+#### scrolling-banner.liquid
+- **Lovable ref:** WakeExpressBanner.tsx
+- Background: `rgba(21, 128, 61, 0.1)` matching `bg-success-fill/10`
+- Borders: `rgba(21, 128, 61, 0.2)` matching `border-success-fill/20`
+- Inner padding: fixed 12px
+- Link styles: flex centered, gap 8px, 14px, weight 500, hover opacity 0.8
+- Icon: 16px, color `rgb(21, 128, 61)` matching success-fill
+
+#### rich-text.liquid
+- **Lovable ref:** WakeUnifiedStrip.tsx spacing/typography
+- Section padding: 48px mobile / 64px desktop (was inconsistent)
+- Content max-width: 720px → 640px (tighter, matching Lovable container)
+- Eyebrow tracking: 0.12em → 0.15em, added font-weight 500
+- Heading tracking: -0.02em → -0.025em (tracking-tight)
+- Body line-height: 1.7 → 1.625 (leading-relaxed)
+
+### Skills Applied
+- Engineering review: all changes scoped to `#shopify-section-{{ section.id }}` — zero bleed risk
+- Accessibility: 44px touch targets on all interactive elements (dots, nav buttons, quantity controls)
+- Design system: verified against Lovable Tailwind values (rounded-3xl = 24px, blur-xl = 24px, etc.)
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **CSS budget exceeded** — safewake-*.css total is 8.5KB (budget was 5KB). Need to minify or move section-specific styles entirely into `{% style %}` blocks to reduce external CSS payload
+2. **`transition: all` usage** — Some sections still use `transition: all` which can cause layout jank; should specify individual properties (transform, opacity, box-shadow)
+3. **Mobile CRO: ATC visibility** — Need to verify add-to-cart button is visible above fold on iPhone SE (375×667px) without scrolling
+4. **Rich-text sticky strip** — WakeUnifiedStrip.tsx uses `sticky top-[60px] z-20` with `backdrop-blur-lg`; our rich-text section doesn't have this sticky behavior
+5. **Mobile menu drawer** — Lovable uses rounded drawer with separate sheet pattern; ours is a basic slide panel without radius or backdrop blur
+6. **Collection page filter strip** — WakeFilterStrip.tsx has express delivery toggle with `animate-shake` animation; not implemented
+7. **Product page trust strip** — WakeTrustStrip.tsx uses specific `gap-x-3 gap-y-1 py-2` layout; not yet verified against our implementation
+8. **Responsive product card widths** — Lovable uses `w-[48%]/w-[32%]/w-[24%]/w-[20%]` breakpoint pattern; Shopify grid handles this differently and may not match
+9. **Cart drawer empty state** — Lovable has illustrated empty cart with CTA; ours uses default Symmetry empty state
+10. **Announcement bar** — Not yet compared against Lovable's AnnouncementBar.tsx patterns
+
+### Next Run Should Focus On
+- CSS budget optimization: minify safewake-utilities.css or inline into `{% style %}` blocks
+- Replace all remaining `transition: all` with specific properties
+- Rich-text sticky navigation strip (backdrop-blur-lg, sticky positioning)
+- Mobile menu drawer: rounded sheet with backdrop blur
+- Mobile CRO viewport audit on iPhone SE 375px

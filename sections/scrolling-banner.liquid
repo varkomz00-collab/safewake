@@ -18,14 +18,14 @@
       --vertical-padding: {{ section.settings.vertical_padding }}px;
     }
 
-    /* Subtle background differentiation from adjacent sections */
+    /* Success-tinted banner background (WakeExpressBanner parity) */
     #section-id-{{ section.id }} .marquee-container {
-      padding-block: var(--vertical-padding);
+      padding-block: 12px;
       overflow: hidden;
       position: relative;
-      background: rgba(255, 255, 255, 0.02);
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      background: rgba(21, 128, 61, 0.1);
+      border-top: 1px solid rgba(21, 128, 61, 0.2);
+      border-bottom: 1px solid rgba(21, 128, 61, 0.2);
     }
 
     /* Smoother marquee animation */
@@ -39,6 +39,30 @@
       line-height: 1.2;
       white-space: nowrap;
       will-change: transform;
+    }
+
+    /* Link styling (WakeExpressBanner parity) */
+    #section-id-{{ section.id }} .marquee-content a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s ease;
+    }
+
+    #section-id-{{ section.id }} .marquee-content a:hover {
+      opacity: 0.8;
+    }
+
+    /* Icon sizing (WakeExpressBanner parity) */
+    #section-id-{{ section.id }} .marquee-icon svg {
+      width: 16px;
+      height: 16px;
+      color: rgb(21, 128, 61);
     }
 
     #section-id-{{ section.id }} .marquee-content {

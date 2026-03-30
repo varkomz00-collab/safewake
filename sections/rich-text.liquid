@@ -3,17 +3,17 @@
 
   /* 1. Section padding: tighter vertical spacing */
   #section-{{ section.id }}.section-rich-text--apple {
-    --rt-apple-max-width: 720px;
+    --rt-apple-max-width: 640px;
     --rt-apple-body-size: 0.95rem;
     --rt-apple-eyebrow-size: 11px;
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
 
   @media (min-width: 768px) {
     #section-{{ section.id }}.section-rich-text--apple {
-      padding-top: 40px;
-      padding-bottom: 40px;
+      padding-top: 64px;
+      padding-bottom: 64px;
     }
   }
 
@@ -27,7 +27,8 @@
   #section-{{ section.id }} .rt-apple__eyebrow {
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.15em;
+    font-weight: 500;
     color: var(--sw-text-muted, #9CA1AB);
     margin-bottom: 0.2rem;
   }
@@ -35,9 +36,9 @@
   /* 3. Heading: tight tracking, semi-bold, max-width centered */
   #section-{{ section.id }} .rt-apple__title {
     margin: 0;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
     font-weight: 600;
-    max-width: 720px;
+    max-width: 640px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -45,7 +46,7 @@
   /* 4. Body text: relaxed line-height, secondary color, max-width centered */
   #section-{{ section.id }} .rt-apple__text {
     font-size: var(--rt-apple-body-size);
-    line-height: 1.7;
+    line-height: 1.625;
     color: var(--sw-text-secondary, #CDD0D6);
     max-width: 640px;
     margin-left: auto;
