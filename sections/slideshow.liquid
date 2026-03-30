@@ -242,18 +242,21 @@
       opacity: 0.92;
     }
 
-    #section-id-{{ section.id }} .text-overlay__button.btn:hover,
-    #section-id-{{ section.id }} .text-overlay__button.btn:focus-visible {
-      transform: translateY(-1px);
-      box-shadow:
-        0 22px 50px rgba(0, 0, 0, 0.65),
-        0 0 0 1px rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.28);
-      outline: none;
+    @media (hover: hover) {
+      #section-id-{{ section.id }} .text-overlay__button.btn:hover {
+        transform: translateY(-1px);
+        box-shadow:
+          0 22px 50px rgba(0, 0, 0, 0.65),
+          0 0 0 1px rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.28);
+        background: #ffffff;
+        color: #000000;
+      }
+    }
 
-      /* INVERT: button white, text black on hover */
-      background: #ffffff;
-      color: #000000;
+    #section-id-{{ section.id }} .text-overlay__button.btn:focus-visible {
+      outline: 2px solid hsl(var(--sw-glow-h, 205), var(--sw-glow-s, 100%), var(--sw-glow-l, 52%));
+      outline-offset: 2px;
     }
 
     #section-id-{{ section.id }} .text-overlay__button.btn:active {
@@ -359,13 +362,17 @@
       }
     }
 
-    #section-id-{{ section.id }} .slideshow-nav__btn:hover,
+    @media (hover: hover) {
+      #section-id-{{ section.id }} .slideshow-nav__btn:hover {
+        background: rgba(12, 14, 18, 0.96);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.56);
+        transform: translateY(-1px);
+        border-color: rgba(255, 255, 255, 0.26);
+      }
+    }
     #section-id-{{ section.id }} .slideshow-nav__btn:focus-visible {
-      background: rgba(12, 14, 18, 0.96);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.56);
-      transform: translateY(-1px);
-      border-color: rgba(255, 255, 255, 0.26);
-      outline: none;
+      outline: 2px solid hsl(var(--sw-glow-h, 205), var(--sw-glow-s, 100%), var(--sw-glow-l, 52%));
+      outline-offset: 2px;
     }
 
     #section-id-{{ section.id }} .slideshow-nav__btn:active {

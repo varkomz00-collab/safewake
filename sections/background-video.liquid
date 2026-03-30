@@ -85,9 +85,11 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     }
 
-    #section-id-{{ section.id }} .text-overlay__button-row .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    @media (hover: hover) {
+      #section-id-{{ section.id }} .text-overlay__button-row .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      }
     }
 
     {%- for block in section.blocks -%}

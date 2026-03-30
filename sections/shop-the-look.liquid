@@ -238,9 +238,11 @@
       transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
-    #section-id-{{ section.id }} .video-hero__primary-btn:hover {
-      background: rgba(255, 255, 255, 0.9);
-      transform: translateY(-1px);
+    @media (hover: hover) {
+      #section-id-{{ section.id }} .video-hero__primary-btn:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateY(-1px);
+      }
     }
 
     #section-id-{{ section.id }} .video-hero__primary-meta {

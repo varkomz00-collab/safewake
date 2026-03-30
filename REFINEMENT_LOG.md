@@ -1040,6 +1040,54 @@ Compared header, buy box, collection filters against fresh Lovable component dat
   - Filters: rounded-full toggle, pill tags, 44px touch targets ✅
 
 ### Remaining (Prioritized)
-1. **PageFly cleanup** — remnant `pagefly-head` render in theme.liquid adds ~2KB
+1. ~~**PageFly cleanup**~~ — investigated: `pagefly-head.liquid` is a 4-line metafield conditional, near-zero cost. Not worth removing.
 2. **Tamara widget** — external script loads on every page; should be conditional to product/cart
-3. **Mobile sort bottom-sheet** — verify radius + backdrop matches Lovable Sheet component
+
+---
+
+## Run 17 — 2026-03-30
+
+### Methodology
+Compared Lovable dark-mode design tokens (index.css:162-214) against safewake-design-tokens.css. Systematic sweep of all sections for unguarded `:hover` effects with `transform`/`box-shadow` changes that can "stick" on touch devices.
+
+### Fixes Applied (6 issues)
+
+#### safewake-design-tokens.css — Glow shadow intensity
+- `--sw-shadow-glow`: `0 0 20px / 0.25` → `0 0 22px / 0.35` (matches Lovable dark `--shadow-glow`)
+- Affects ALL glow effects globally (nav underline, variant picker, active filter tags, etc.)
+
+#### featured-collection.liquid — 3 hover guards
+- `.product-block:hover` border-color + box-shadow → `@media (hover: hover)`
+- `.small-feature-link:hover` color → `@media (hover: hover)`
+- `.slider-nav__btn:hover` bg + shadow → `@media (hover: hover)`
+
+#### main-collection.liquid — 4 hover guards
+- `.toggle-btn[data-toggle-filters]:hover` → `@media (hover: hover)`
+- `.link-dropdown__link:hover` → `@media (hover: hover)`
+- `.active-filters__tag:hover` → `@media (hover: hover)`
+- `.pagination a:hover` → `@media (hover: hover)`
+
+#### background-video.liquid — CTA hover guard
+- `.btn:hover` with `translateY(-1px)` → `@media (hover: hover)`
+
+#### shop-the-look.liquid — CTA hover guard
+- `.video-hero__primary-btn:hover` with `translateY(-1px)` → `@media (hover: hover)`
+
+#### slideshow.liquid — Hover/focus-visible split
+- CTA `.btn:hover` + `:focus-visible` were combined → separated into:
+  - `:hover` wrapped in `@media (hover: hover)` (transform, bg inversion)
+  - `:focus-visible` gets proper `outline: 2px solid brand-glow` (accessibility)
+- Nav `.slideshow-nav__btn:hover` + `:focus-visible` → same split pattern
+
+### Verification
+- `--sw-shadow-glow` now `0 0 22px / 0.35` ✅
+- featured-collection: 3 `@media (hover: hover)` guards ✅
+- main-collection: 8 total `@media (hover: hover)` guards ✅
+- background-video: 1 guard ✅
+- shop-the-look: 1 guard ✅
+- slideshow: 2 hover guards + 2 focus-visible indicators ✅
+- Total hover guards across theme: 20+ (all `transform`/`box-shadow` hovers protected)
+
+### Remaining (Prioritized)
+1. **Tamara widget** — external script loads on every page; should be conditional to product/cart
+2. **Remaining color-only hovers** — footer links, header nav, cart drawer — intentionally left unguarded (brief tap state, no transform/shadow changes)
