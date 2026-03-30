@@ -506,8 +506,10 @@
     display: block;
     transition: transform 500ms ease;
   }
-  .section-id-{{ section.id }} .collection-block:hover img {
-    transform: scale(1.05);
+  @media (hover: hover) {
+    .section-id-{{ section.id }} .collection-block:hover img {
+      transform: scale(1.05);
+    }
   }
 
   /* Card title: uppercase, tight tracking, small bold text */
@@ -555,6 +557,24 @@
 
   .section-id-{{ section.id }} .slider__item {
     scroll-snap-align: start;
+  }
+
+  /* Compact carousel items — match Lovable w-[130px] sm:[150px] md:[180px] */
+  .section-id-{{ section.id }} .product-grid--carousel .slider__item {
+    max-width: 130px;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 640px) {
+    .section-id-{{ section.id }} .product-grid--carousel .slider__item {
+      max-width: 150px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .section-id-{{ section.id }} .product-grid--carousel .slider__item {
+      max-width: 180px;
+    }
   }
 
   /* ── Invert mode ── */

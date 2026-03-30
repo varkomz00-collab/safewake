@@ -1489,6 +1489,27 @@
   .section-{{ section.id }} .only-in-quickbuy .more:hover {
     opacity: 0.8;
   }
+
+  /* --- Product Popup Modals (size guide, shipping info) — dark theme --- */
+  .section-{{ section.id }} ~ .modal .modal__window,
+  .section-{{ section.id }} .modal .modal__window {
+    background: var(--sw-surface-card, #15171E);
+    color: var(--sw-text-primary, #F5F5F5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--sw-radius-xl, 1.25rem);
+  }
+
+  .section-{{ section.id }} ~ .modal .modal__close,
+  .section-{{ section.id }} .modal .modal__close {
+    color: var(--sw-text-muted, #9CA1AB);
+    width: 44px;
+    height: 44px;
+  }
+
+  .section-{{ section.id }} ~ .modal .modal__close:hover,
+  .section-{{ section.id }} .modal .modal__close:hover {
+    color: var(--sw-text-primary, #F5F5F5);
+  }
 {% endstyle %}
 
 {% schema %}

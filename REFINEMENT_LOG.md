@@ -865,3 +865,49 @@ Read WakeLifestyleVideoBlock.tsx (video section: `rounded-2xl h-56 md:h-80`, lab
 - Collection-list image hover guard
 - Announcement bar comparison with Lovable
 - CRO + Conversion audit (Run 14 rotation)
+
+---
+
+## Run 14 — 2026-03-30 (Convergence Pass)
+
+### Methodology
+Convergence prompt: tiered fix-and-verify pass addressing specific user complaints. Tier 1 (Site Loads) and Tier 2 (Pages Navigate) verified in previous session. This run addresses Tier 3 (Match Lovable Design) fixes.
+
+### Bugs Fixed
+- None (validation clean on entry)
+
+### Sections Refined
+
+#### templates/index.json (Template Settings)
+- **Kneeboard grid**: `featured_collection_nfYghF` changed `"grid": 4` → `"grid": 5` — user complaint "carousel shows 4 not 5 products"
+- **Collection image shape**: Both collection-list sections changed `"coll_grid_image_shape": "square"` → `"portrait-45"` — matches Lovable `aspect-[4/5]`, addresses "collections too big" complaint
+
+#### collection-list.liquid
+- **Compact card sizing**: Added responsive `max-width` on carousel items: `130px` mobile → `150px` sm → `180px` md — matches Lovable WakeCategoryGrid `w-[130px] sm:w-[150px] md:w-[180px]`
+- **Touch hover guard**: Wrapped `.collection-block:hover img { transform: scale(1.05) }` in `@media (hover: hover)` — prevents stuck zoom on touch devices
+
+#### main-product.liquid
+- **Product popup dark modals**: Added dark theme styling for size guide and shipping info modals — `background: var(--sw-surface-card)`, `border-radius: var(--sw-radius-xl)`, `color: var(--sw-text-primary)`, 44px close button
+
+### Skills Applied
+- Convergence verification: Each fix verified with grep/read before moving to next
+- CRO focus: Grid change from 4→5 increases product visibility per viewport
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **Product card aspect-ratio: 1** — `product-block.liquid` forces square image containers; may conflict with natural product proportions on certain products
+2. **Mobile sort bottom-sheet** — Radius + backdrop-filter not verified against Lovable Sheet component
+3. **Cart drawer trust badges** — Placement and styling not verified post-Run 2 changes
+4. **Header search overlay** — Lovable has dedicated search UI; ours uses Symmetry default
+5. **Sticky buy box safe-area** — `env(safe-area-inset-bottom)` padding not verified on notch devices
+6. **Footer column count** — Lovable uses `grid-cols-2 md:grid-cols-5`; Symmetry uses flex wrapping
+7. **Collection card max-width on XL screens** — 180px max-width may look too small on 2560px+ displays; consider `lg:max-width: 200px` breakpoint
+8. **PageFly cleanup** — Remnant code in theme.liquid adds ~2KB unused CSS/JS
+9. **Tamara widget** — External script loaded on every page; should be conditional
+10. **Filter count enablement** — `show_filter_counts: False` hides matching product counts
+
+### Next Run Should Focus On
+- Product card aspect-ratio flexibility
+- Mobile sort bottom-sheet polish
+- XL screen collection card sizing
+- PageFly cleanup (if no longer used)
+- CRO + Brand audit (Run 15 rotation)
