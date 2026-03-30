@@ -80,12 +80,12 @@
 
     #section-id-{{ section.id }} .text-overlay__button-row .btn {
       border-radius: 999px;
-      transition: var(--sw-transition-smooth, transform 0.3s ease, box-shadow 0.3s ease);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     }
 
     #section-id-{{ section.id }} .text-overlay__button-row .btn:hover {
       transform: translateY(-1px);
-      box-shadow: var(--sw-shadow-hover, 0 12px 30px rgba(0, 0, 0, 0.3));
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
     }
 
     {%- for block in section.blocks -%}

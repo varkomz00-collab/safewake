@@ -588,3 +588,78 @@ Compared Lovable WakeProductTemplate.tsx grid layout (`grid-cols-[1fr_420px]` md
 - Collection page filter strip refinement
 - Background-video transition cleanup
 - Engineering + Design audit (Run 10 rotation)
+
+## Run 10 — 2026-03-30
+
+### Methodology
+Read WakeLifestyleVideoBlock.tsx (shop-the-look button: `bg-white text-slate-900 font-medium text-xs`), WakeExpressBanner.tsx (scrolling banner — confirmed parity), and WakeFilterStrip.tsx (filter toggle: `rounded-full p-2 hover:bg-muted`, `transition-all duration-200`). Performed full `var(--sw-transition-smooth)` token elimination sweep across ALL sections and snippets. Run 10 = Engineering + Design audit rotation.
+
+### Bugs Fixed
+- **CRITICAL: Complete `--sw-transition-smooth` token elimination** — Found and replaced ALL remaining instances across 6 files:
+  - `cart-drawer.liquid`: 3 instances (close button, qty buttons, textarea)
+  - `main-collection.liquid`: 5 instances (collection link, nav arrows, sort options, pagination, active tags)
+  - `shop-the-look.liquid`: 1 instance (chip buttons)
+  - `background-video.liquid`: 1 instance (CTA button)
+  - `snippets/collection-block.liquid`: 1 instance (card container)
+  - **Total across all runs: 0 instances remain in sections/snippets** (was 24+ at start)
+
+### Sections Refined
+
+#### shop-the-look.liquid (CTA Button Match)
+- CTA button: changed from generic glass pill to match Lovable exactly — `bg-white; color: rgb(15,23,42); font-size: 12px; font-weight: 500; border: none`
+- Hover: `background: rgba(255,255,255,0.9)` instead of box-shadow
+- Chip transition: replaced `var(--sw-transition-smooth)` with `background 0.3s ease, border-color 0.3s ease`
+
+#### cart-drawer.liquid (Cross-sell + Transitions)
+- Cross-sell quick-add button: pill-shaped (`border-radius: 9999px; padding: 6px 14px; font-size: 12px; font-weight: 500`)
+- Checkout button: `var(--sw-transition-smooth)` → `box-shadow 0.3s ease, transform 0.3s ease`
+- Close button: → `background 0.3s ease, color 0.3s ease`
+- Qty buttons: → `background 0.3s ease, color 0.3s ease`
+- Order note textarea: → `border-color 0.3s ease`
+
+#### main-collection.liquid (Filter Strip + Token Cleanup)
+- Filter toggle button: added `border-radius: 9999px; padding: 0.5rem 1rem; hover:bg: rgba(255,255,255,0.06)` — matches Lovable `rounded-full p-2 hover:bg-muted`
+- Transition speed: all `0.3s` → `0.2s` to match Lovable's `duration-200`
+- Collection link: `all 0.3s` → `border-color 0.2s, filter 0.2s`
+- Nav arrows: → `background-color 0.2s, border-color 0.2s, box-shadow 0.2s`
+- Sort option: → `background-color 0.2s, color 0.2s, border-color 0.2s`
+- Pagination: → `color 0.2s`
+- Page buttons: → `background-color 0.2s, color 0.2s`
+- Active filter tags: → `background-color 0.2s, border-color 0.2s`
+
+#### background-video.liquid (Transition)
+- CTA button: `var(--sw-transition-smooth)` → `transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease`
+- Shadow: `var(--sw-shadow-hover)` → inline `0 12px 30px rgba(0,0,0,0.3)`
+
+#### snippets/collection-block.liquid (Hover Consistency)
+- Removed `translateY(-2px)` and `box-shadow: var(--sw-shadow-medium)` from hover
+- Replaced with border-only hover: `border-color: rgba(255,255,255,0.30)` — consistent with collection-list and product-block
+- Transition: `var(--sw-transition-smooth)` → `border-color 0.2s ease`
+
+### Skills Applied
+- **Engineering audit (Run 10 rotation)**:
+  - **`transition: all` elimination**: Completed full codebase sweep. Zero `var(--sw-transition-smooth)` remain in any section or snippet. All transitions now specify exact properties, preventing unintended layout/opacity/transform animations.
+  - **Performance**: Specific property transitions allow browser to optimize — only affected properties are tracked for animation frames.
+  - **Consistency**: All collection-type cards (product-block, collection-block, collection-list) now share identical hover philosophy: border-color change only, no translateY, no box-shadow on hover.
+- **Design system audit**:
+  - Verified transition speed hierarchy: 0.15s (micro-interactions like nav links), 0.2s (filter/collection UI), 0.3s (product/hero/CTA elements), 0.7s (slide transitions)
+  - Shop-the-look CTA now matches Lovable's white solid button instead of glass morphism
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **Product card aspect-ratio conflict** — `aspect-ratio: 1` on `.image-cont` may conflict with Symmetry's JS image resizing
+2. **Gallery zoom modal** — Lovable has fullscreen swipe gallery; Symmetry's modal needs CSS verification
+3. **Tab-style UI on desktop** — Lovable uses tabs for product details; we use accordions (Symmetry limitation)
+4. **Collection page 3-col variant** — Lovable has responsive 2→3→4 col grid; our grid is 2→4 jump at md breakpoint
+5. **Rich-text section** — WakeUnifiedStrip uses `border-y border-border` separators; our rich-text has none
+6. **Mobile sort bottom-sheet** — Needs verification against Lovable's Sheet component behavior
+7. **Product page breadcrumbs** — Lovable uses `text-xs text-muted-foreground`; ours may not match
+8. **Header mega-menu** — Not compared against any Lovable navigation pattern
+9. **Testimonials star rating SVG** — Could be more refined with half-star support
+10. **`safewake-utilities.css`** — Still contains `.sw-transition-smooth` class reference (dead code)
+
+### Next Run Should Focus On
+- Rich-text section border-y separators
+- Product page breadcrumb styling
+- Collection page 3-col responsive grid
+- Testimonials section re-comparison
+- CRO + Conversion audit (Run 11 rotation)

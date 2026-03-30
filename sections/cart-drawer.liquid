@@ -335,7 +335,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    transition: var(--sw-transition-smooth);
+    transition: background 0.3s ease, color 0.3s ease;
     color: var(--sw-text-secondary);
   }
   .section-cart-drawer .drawer__close-btn:hover {
@@ -407,7 +407,7 @@
     align-items: center;
     justify-content: center;
     border-radius: var(--sw-radius-sm);
-    transition: var(--sw-transition-smooth);
+    transition: background 0.3s ease, color 0.3s ease;
     color: var(--sw-text-secondary);
     padding: 0;
   }
@@ -464,7 +464,7 @@
     border-radius: 9999px;
     font-weight: 600;
     font-size: 15px;
-    transition: var(--sw-transition-smooth);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
   .section-cart-drawer .checkout-buttons .btn:hover {
     box-shadow: var(--sw-shadow-hover);
@@ -566,7 +566,7 @@
     color: var(--sw-text-primary);
     font-size: 14px;
     padding: 10px 12px;
-    transition: var(--sw-transition-smooth);
+    transition: border-color 0.3s ease;
   }
   .section-cart-drawer .cart-drawer__note textarea:focus {
     border-color: rgba(255,255,255,0.2);
@@ -625,6 +625,18 @@
   .section-cart-drawer .cart-item-upsells .product-price {
     font-size: 12px;
     color: var(--sw-text-muted);
+  }
+  /* Cross-sell quick-add button — pill CTA */
+  .section-cart-drawer .cart-item-upsells .btn,
+  .section-cart-drawer .cart-item-upsells .add-to-cart,
+  .section-cart-drawer .cart-item-upsells button[type="submit"] {
+    border-radius: 9999px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    min-height: 32px;
+    white-space: nowrap;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 {% endstyle %}
 
