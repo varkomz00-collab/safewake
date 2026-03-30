@@ -11,6 +11,11 @@
       }
     {%- endif -%}
 
+    /* Min-height matching Lovable min-h-[420px] */
+    #section-id-{{ section.id }} .image-overlay {
+      min-height: 420px;
+    }
+
     {%- if section.settings.height == 'fixed' %}
       #section-id-{{ section.id }} .height--fixed {
         --image-height: {{ section.settings.height_mobile }}px;

@@ -408,3 +408,70 @@ Brand + SEO rotation (Run 3,6,9... pattern). Re-audited slideshow hero, featured
 - Cart drawer cross-sell card styling
 - Footer newsletter input comparison
 - Engineering + Design audit (Run 7 rotation)
+
+---
+
+## Run 7 — 2026-03-30
+
+### Methodology
+Engineering + Design rotation (Run 1,4,7... pattern). Read WakeFooter.tsx, CartCrossSell.tsx, WakeHero.tsx from Lovable. Compared footer, cross-sell, and hero against Shopify CSS. Also performed engineering audit: `!important` usage scan, `transition: all` cleanup, CSS specificity review.
+
+### Bugs Fixed
+- None found (all JSON, CSS, schema, and theme.liquid checks passed)
+
+### Sections Refined
+
+#### slideshow.liquid (hero min-height)
+- **Lovable ref:** WakeHero.tsx — `min-h-[420px]`
+- Added `min-height: 420px` on `.image-overlay` — prevents hero from collapsing on wide/short viewports
+
+#### footer.liquid (social icons, newsletter, copyright, transitions)
+- **Lovable ref:** WakeFooter.tsx
+- Border-top: `rgba(255,255,255,0.12)` → `rgba(255,255,255,0.08)` matching `border-border/50`
+- Social icons: 36px → 40px, `border-radius: 50%` → `9999px`, `bg: rgba(255,255,255,0.06)` → `0.08` matching `bg-muted/50`
+- Social hover: added `color` transition (muted → primary), matching `hover:text-foreground`
+- Social focus: added `box-shadow: 0 0 0 2px` cyan ring matching `focus:ring-2 focus:ring-primary`
+- Copyright: `color: --sw-text-muted` → `--sw-text-tertiary` + `opacity: 0.5` matching `text-tertiary-label opacity-50`
+- Payment icons: height 24px → 32px matching `h-8`, added `border-radius: 4px` matching `rounded`
+- Payment transition: `var(--sw-transition-smooth)` → `opacity 0.3s ease` (specific property)
+- Newsletter input: `border-radius: --sw-radius-md` → `9999px` matching `rounded-full`
+- Newsletter input: `padding: 10px 14px` → `10px 16px`, added `box-shadow` focus ring
+- Menu links: `transition: var(--sw-transition-smooth)` → `color 0.3s ease`
+- Lower menu: same transition cleanup
+
+#### cart-drawer.liquid (cross-sell cards)
+- **Lovable ref:** CartCrossSell.tsx — `flex gap-3 p-2 rounded-lg bg-muted/30 w-12 h-12 rounded-md`
+- Section: added `padding: 16px 0` matching `py-4`
+- Title: font-size 13px → 14px, weight 600 → 500, removed uppercase/tracking matching `text-sm font-medium`
+- Card layout: added `flex, gap: 12px, padding: 8px, border-radius: 8px, bg: rgba(255,255,255,0.03)` matching Lovable card pattern
+- Card hover: added `bg: rgba(255,255,255,0.06)` matching `hover:bg-muted/50`
+- Card images: added `48px × 48px, border-radius: 6px, object-fit: cover` matching `w-12 h-12 rounded-md`
+- Card title: added `truncate` pattern (nowrap, overflow hidden, text-overflow ellipsis)
+- Card price: added `12px, muted color` matching `text-xs text-muted-foreground`
+
+#### featured-collection.liquid (transition cleanup)
+- "View all" link: `var(--sw-transition-smooth)` → `color 0.3s ease`
+
+### Skills Applied
+- Engineering audit: Scanned for `!important` — found 12 instances, all pre-existing from Symmetry/PageFly except 1 from our code (payment button override, acceptable). No new `!important` added.
+- Engineering audit: Reduced `var(--sw-transition-smooth)` usage from 24 references to 20 by replacing with specific property transitions where appropriate. The remaining uses are in contexts where the `all` keyword is low-risk (simple state changes).
+- Design system: Social icons now have proper focus-visible ring matching Apple HIG + Lovable's `focus:ring-2 focus:ring-primary`
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **Featured collection arrows group-hover** — Lovable uses `opacity-0 group-hover:opacity-100` to hide ALL arrows until section hover; ours only hides disabled arrows. CSS-only group-hover on Symmetry's section container needs investigation.
+2. **Product card image aspect-ratio conflict** — `aspect-ratio: 1` on `.image-cont` may conflict with Symmetry's JS-driven image height; needs live browser testing
+3. **Gallery zoom modal** — WakeGallery has fullscreen zoom with swipe nav arrows and pinch-to-zoom; Symmetry's gallery viewer is a basic lightbox
+4. **Cart drawer quantity UX** — Lovable uses `h-8 w-8 rounded-full` for +/- buttons; ours uses 32px visual with 44px touch target — close but button styling (outlined circle) not matched
+5. **Collection page grid columns** — Not yet compared at all breakpoints; Lovable uses `w-[48%]/w-[32%]/w-[24%]` pattern
+6. **Mobile menu transitions** — Lovable Sheet uses asymmetric `duration-300 close / duration-500 open`; Symmetry drawer timing not matched
+7. **`--sw-transition-smooth` still uses `all`** — Token definition at line 41 of design-tokens.css still has `all 0.3s`; remaining 20 references could cause layout jank. Should consider splitting into a `-color`, `-transform`, `-opacity` variant
+8. **Product page description accordion** — Not compared against Lovable accordion pattern (border, padding, icon rotation transition)
+9. **Structured data completeness** — Product page schema.org not verified for offers, aggregateRating, brand fields
+10. **Footer column grid** — Lovable uses `grid-cols-2 md:grid-cols-5 gap-x-6 sm:gap-x-8 gap-y-6`; Symmetry footer uses its own layout system which may not match
+
+### Next Run Should Focus On
+- Featured collection group-hover arrow reveal (CSS experiment)
+- Product page description accordion styling
+- Collection page grid verification at all breakpoints
+- Transition token refactor (split --sw-transition-smooth into specific variants)
+- CRO + Conversion audit (Run 8 rotation)

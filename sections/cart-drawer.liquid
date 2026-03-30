@@ -579,16 +579,52 @@
     color: var(--sw-text-muted);
   }
 
-  /* Cross-sell / upsell section */
+  /* Cross-sell / upsell section — Lovable CartCrossSell patterns */
   .section-cart-drawer .cart-item-upsells {
-    border-top: 1px solid rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 16px 0;
   }
   .section-cart-drawer .cart-item-upsells .product-info-label {
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sw-text-primary);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-bottom: 12px;
+  }
+  /* Cross-sell product cards */
+  .section-cart-drawer .cart-item-upsells .product-block,
+  .section-cart-drawer .cart-item-upsells .mini-product-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    transition: background 0.3s ease;
+  }
+  .section-cart-drawer .cart-item-upsells .product-block:hover,
+  .section-cart-drawer .cart-item-upsells .mini-product-block:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .section-cart-drawer .cart-item-upsells .product-block img,
+  .section-cart-drawer .cart-item-upsells .mini-product-block img {
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .section-cart-drawer .cart-item-upsells .product-block__title {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .section-cart-drawer .cart-item-upsells .product-price {
+    font-size: 12px;
     color: var(--sw-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
   }
 {% endstyle %}
 
