@@ -1,3 +1,36 @@
+<style>
+  .product-block {
+    border-radius: var(--sw-radius-md);
+    border: var(--sw-border-hairline);
+    overflow: hidden;
+    transition: var(--sw-transition-smooth);
+  }
+  .product-block:hover {
+    border-color: rgba(255,255,255,0.22);
+    box-shadow: var(--sw-shadow-medium);
+    transform: translateY(-2px);
+  }
+  .product-block__image {
+    background-color: var(--sw-surface-product);
+  }
+  .product-block__title {
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  .product-block .product-price,
+  .product-block .price__current {
+    font-weight: 600;
+  }
+  .product-block .price--on-sale .price__current {
+    color: var(--sw-stock-in);
+  }
+  .product-block .price__was {
+    text-decoration: line-through;
+    color: var(--sw-text-muted);
+  }
+</style>
+
 {%- comment -%}
 Parameters:
   - product {Object} - Product object.

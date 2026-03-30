@@ -1,10 +1,20 @@
 {% style %}
   /* Apple-inspired compact rich text layout, scoped to this section only */
+
+  /* 1. Section padding: tighter vertical spacing */
   #section-{{ section.id }}.section-rich-text--apple {
     --rt-apple-max-width: 720px;
     --rt-apple-body-size: 0.95rem;
-    --rt-apple-eyebrow-size: 0.75rem;
-    --rt-apple-muted-opacity: 0.7;
+    --rt-apple-eyebrow-size: 11px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+
+  @media (min-width: 768px) {
+    #section-{{ section.id }}.section-rich-text--apple {
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
   }
 
   #section-{{ section.id }} .rt-apple-inner {
@@ -13,23 +23,33 @@
     margin-right: auto;
   }
 
+  /* 2. Eyebrow text: uppercase, tracked, muted */
   #section-{{ section.id }} .rt-apple__eyebrow {
-    font-size: var(--rt-apple-eyebrow-size);
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    opacity: var(--rt-apple-muted-opacity);
+    color: var(--sw-text-muted, #9CA1AB);
     margin-bottom: 0.2rem;
   }
 
+  /* 3. Heading: tight tracking, semi-bold, max-width centered */
   #section-{{ section.id }} .rt-apple__title {
     margin: 0;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
+  /* 4. Body text: relaxed line-height, secondary color, max-width centered */
   #section-{{ section.id }} .rt-apple__text {
     font-size: var(--rt-apple-body-size);
-    line-height: 1.5;
-    max-width: 60ch;
+    line-height: 1.7;
+    color: var(--sw-text-secondary, #CDD0D6);
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   #section-{{ section.id }} .rt-apple__actions {

@@ -7,6 +7,64 @@
   assign collection = collections[section.settings.collection]
 -%}
 
+{%- style -%}
+  /* SafeWake: Featured Collection - Apple-style refinements */
+
+  /* Section heading */
+  .section-id-{{ section.id }} .hometitle {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  /* "View all" link */
+  .section-id-{{ section.id }} .small-feature-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sw-text-muted);
+    transition: var(--sw-transition-smooth);
+  }
+  .section-id-{{ section.id }} .small-feature-link:hover {
+    color: var(--sw-text-primary);
+  }
+
+  /* Product card styling */
+  .section-id-{{ section.id }} .product-block {
+    border-radius: var(--sw-radius-md);
+    border: var(--sw-border-hairline);
+    overflow: hidden;
+    transition: box-shadow 0.3s var(--sw-ease-smooth), transform 0.3s var(--sw-ease-smooth);
+  }
+  .section-id-{{ section.id }} .product-block:hover {
+    box-shadow: var(--sw-shadow-hover);
+    transform: translateY(-2px);
+  }
+
+  /* Product image zone */
+  .section-id-{{ section.id }} .product-block .image-inner,
+  .section-id-{{ section.id }} .product-block .media-image {
+    background-color: var(--sw-surface-product);
+  }
+
+  /* Carousel nav arrows */
+  .section-id-{{ section.id }} .slider-nav__btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: var(--sw-border-hairline);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--sw-transition-smooth);
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .section-id-{{ section.id }} .slider-nav__btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: var(--sw-shadow-soft);
+  }
+{%- endstyle -%}
+
 <div class="section-id-{{ section.id }} collection-slider-row {% if section.settings.color_scheme != 'default' %}use-color-scheme use-color-scheme--{{ section.settings.color_scheme }}{% endif %}">
   <div class="container{% if section.settings.enable_carousel %} container--not-mobile{% endif %}{% if section.settings.full_width %} container--no-max{% endif %}">
     {%- if section.settings.enable_carousel -%}

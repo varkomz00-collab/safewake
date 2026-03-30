@@ -151,27 +151,51 @@
       {% endif %}
     {%- endfor -%}
 
-    /* Apple-style video hero overlay */
+    /* Apple-style video container */
     #section-id-{{ section.id }} .video-hero__shell {
       position: relative;
     }
 
-    #section-id-{{ section.id }} .video-hero__overlay-inner {
-      max-width: 420px;
-      padding: 14px 18px;
-      border-radius: 18px;
-      background: transparent;          /* no black box */
-      backdrop-filter: none;            /* optional – remove glass blur */
-      -webkit-backdrop-filter: none;    /* optional */
-      border: none;                     /* optional – remove subtle border */
+    #section-id-{{ section.id }} .height--fixed,
+    #section-id-{{ section.id }} .height--adapt {
+      border-radius: var(--sw-radius-lg, 1rem);
+      overflow: hidden;
     }
 
+    /* Bottom-only gradient overlay */
+    #section-id-{{ section.id }} .image-overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 40%, transparent 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #section-id-{{ section.id }} .image-overlay__over {
+      z-index: 2;
+    }
+
+    /* Content overlay positioned at bottom */
+    #section-id-{{ section.id }} .video-hero__overlay-inner {
+      max-width: 420px;
+      padding: var(--sw-space-4, 16px);
+      border-radius: 18px;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+    }
+
+    /* Eyebrow text - Apple style */
     #section-id-{{ section.id }} .video-hero__eyebrow {
-      font-size: 11px;
-      letter-spacing: 0.12em;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      opacity: 0.85;
-      margin-bottom: 4px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 6px;
+      opacity: 1;
     }
 
     #section-id-{{ section.id }} .video-hero__title {
@@ -196,12 +220,12 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+      transition: var(--sw-transition-smooth, transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease);
     }
 
     #section-id-{{ section.id }} .video-hero__primary-btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--sw-shadow-hover, 0 12px 30px rgba(0, 0, 0, 0.4));
     }
 
     #section-id-{{ section.id }} .video-hero__primary-meta {
@@ -221,17 +245,15 @@
     }
 
     #section-id-{{ section.id }} .video-hero__drawer {
-      border-radius: 16px;
+      border-radius: var(--sw-radius-lg, 1rem);
       border: 1px solid rgba(255, 255, 255, 0.12);
       background: rgba(10, 10, 10, 0.85);
       padding: 0;
       overflow: hidden;
+      transition: background 0.3s var(--sw-ease-smooth, ease);
     }
 
-    /* STATIC "Shop the look" row:
-       - no background bubble
-       - no border
-       - text sits directly over the section */
+    /* STATIC "Shop the look" row */
     #section-id-{{ section.id }} .video-hero__drawer--static {
       background: transparent;
       border: none;
@@ -245,7 +267,7 @@
       padding-right: 0;
     }
 
-    /* Keep dark card only for open accordions (overview / countdown) */
+    /* Dark card for open accordions */
     #section-id-{{ section.id }} .video-hero__drawer[open]:not(.video-hero__drawer--static) {
       background: rgba(15, 15, 15, 0.94);
     }
@@ -287,6 +309,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.3s var(--sw-ease-smooth, ease);
+    }
+
+    #section-id-{{ section.id }} .video-hero__drawer[open] .video-hero__drawer-chevron {
+      transform: rotate(180deg);
     }
 
     #section-id-{{ section.id }} .video-hero__drawer-body {
@@ -305,15 +332,30 @@
       gap: 8px;
     }
 
+    /* Product list scroll area */
     #section-id-{{ section.id }} .video-hero__drawer-body--products {
       padding-top: 8px;
+    }
+
+    #section-id-{{ section.id }} .video-hero__drawer-body--products .slider {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    #section-id-{{ section.id }} .video-hero__drawer-body--products .slider::-webkit-scrollbar {
+      display: none;
+    }
+
+    #section-id-{{ section.id }} .video-hero__drawer-body--products .product-grid {
+      gap: var(--sw-space-4, 16px);
     }
 
     #section-id-{{ section.id }} .video-hero__countdown {
       margin-top: 10px;
     }
 
-    /* Quick board-type chips (always visible, iPhone-style) */
+    /* Quick board-type chips */
     #section-id-{{ section.id }} .shop-look__chips {
       display: flex;
       flex-wrap: wrap;
@@ -332,12 +374,22 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      transition: var(--sw-transition-smooth, background 0.3s ease, border-color 0.3s ease);
+    }
+
+    #section-id-{{ section.id }} .shop-look__chip-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     #section-id-{{ section.id }} .shop-look__chip-btn--primary {
       background: #ffffff;
       color: #000000;
       border-color: rgba(255, 255, 255, 0.9);
+    }
+
+    #section-id-{{ section.id }} .shop-look__chip-btn--primary:hover {
+      background: rgba(255, 255, 255, 0.9);
     }
 
     #section-id-{{ section.id }} .shop-look__chip-btn--link {
@@ -349,6 +401,10 @@
     @media (min-width: 768px) {
       #section-id-{{ section.id }} .video-hero__drawers {
         margin-top: 18px;
+      }
+
+      #section-id-{{ section.id }} .video-hero__overlay-inner {
+        padding: var(--sw-space-8, 32px);
       }
     }
 
@@ -365,6 +421,12 @@
         overflow-x: auto;
         white-space: nowrap;
         padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      #section-id-{{ section.id }} .shop-look__chips::-webkit-scrollbar {
+        display: none;
       }
 
       #section-id-{{ section.id }} .shop-look__chip-btn {

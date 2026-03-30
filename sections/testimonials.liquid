@@ -26,6 +26,7 @@
 
 <div id="section-id-{{ section.id }}" class="{% if section.settings.color_scheme != 'default' %}use-color-scheme use-color-scheme--{{ section.settings.color_scheme }} fully-padded-row--medium{% else %}fully-spaced-row--medium{% endif %}">
   {%- style -%}
+    /* Original quote text sizing */
     #section-id-{{ section.id }} .testimonial__blockquote {
       font-size: {{ section.settings.quote_text_size_mobile }}px;
       {%- if section.settings.quote_text_size_mobile >= 90 -%}
@@ -48,6 +49,70 @@
         line-height: 1em;
         {%- endif %}
       }
+    }
+
+    /* SafeWake: Testimonials - Apple-style refinements */
+
+    /* Testimonial card */
+    #section-id-{{ section.id }} .testimonial {
+      border-radius: var(--sw-radius-lg);
+      border: var(--sw-border-hairline);
+      background: var(--sw-surface-card);
+      box-shadow: var(--sw-shadow-soft);
+      padding: 2rem;
+      transition: box-shadow 0.3s var(--sw-ease-smooth);
+    }
+    #section-id-{{ section.id }} .testimonial:hover {
+      box-shadow: var(--sw-shadow-medium);
+    }
+
+    /* Star rating */
+    #section-id-{{ section.id }} .testimonial__star-rating {
+      color: #f5c452;
+    }
+    #section-id-{{ section.id }} .testimonial__star svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Quote text */
+    #section-id-{{ section.id }} .testimonial__blockquote {
+      letter-spacing: -0.01em;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    @media (min-width: 768px) {
+      #section-id-{{ section.id }} .testimonial__blockquote {
+        font-size: 18px;
+      }
+    }
+
+    /* Author name */
+    #section-id-{{ section.id }} .testimonial__author {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--sw-text-secondary);
+    }
+
+    /* Author meta / subheading */
+    #section-id-{{ section.id }} .subheading {
+      color: var(--sw-text-muted);
+      font-size: 13px;
+    }
+
+    /* Carousel navigation dots (slideshow-nav buttons as dot indicators) */
+    #section-id-{{ section.id }} .slideshow-nav__btn {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      opacity: 0.4;
+      transition: var(--sw-transition-smooth);
+      padding: 0;
+      overflow: hidden;
+    }
+    #section-id-{{ section.id }} .slideshow-nav__btn:hover,
+    #section-id-{{ section.id }} .slideshow-nav__btn.is-active {
+      opacity: 1;
     }
   {%- endstyle -%}
 

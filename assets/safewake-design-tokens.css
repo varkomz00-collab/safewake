@@ -1,0 +1,89 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   SAFEWAKE DESIGN TOKENS
+   Ported from Lovable design system (Josef Albers' color interaction principles)
+   Additive — does NOT override Symmetry's main.css
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* LAYOUT */
+  --sw-container-max: 1152px;
+  --sw-gutter: clamp(16px, 4vw, 32px);
+  --sw-section-spacing: 48px;
+  --sw-section-spacing-md: 64px;
+  --sw-touch-target: 44px;
+
+  /* SPACING SCALE (Apple HIG) */
+  --sw-space-1: 4px;
+  --sw-space-2: 8px;
+  --sw-space-3: 12px;
+  --sw-space-4: 16px;
+  --sw-space-6: 24px;
+  --sw-space-8: 32px;
+  --sw-space-10: 40px;
+  --sw-space-12: 48px;
+  --sw-space-16: 64px;
+
+  /* BRAND GLOW (derived from existing Shopify accent #0aa3ff) */
+  --sw-glow-h: 205;
+  --sw-glow-s: 100%;
+  --sw-glow-l: 52%;
+  --sw-glow: var(--sw-glow-h) var(--sw-glow-s) var(--sw-glow-l);
+
+  /* SHADOWS (dark-mode optimized — stronger on dark backgrounds) */
+  --sw-shadow-soft: 0 1px 3px hsla(0, 0%, 0%, 0.30);
+  --sw-shadow-medium: 0 4px 12px hsla(0, 0%, 0%, 0.40);
+  --sw-shadow-hover: 0 8px 24px hsla(0, 0%, 0%, 0.55);
+  --sw-shadow-glow: 0 0 20px hsla(var(--sw-glow-h), var(--sw-glow-s), var(--sw-glow-l), 0.25);
+
+  /* TRANSITIONS */
+  --sw-ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --sw-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --sw-transition-smooth: all 0.3s var(--sw-ease-smooth);
+  --sw-transition-spring: all 0.4s var(--sw-ease-spring);
+
+  /* BORDERS */
+  --sw-border-hairline: 1px solid rgba(255, 255, 255, 0.08);
+  --sw-border-subtle: 1px solid rgba(255, 255, 255, 0.12);
+  --sw-border-hover: 1px solid rgba(255, 255, 255, 0.22);
+  --sw-radius-sm: 0.5rem;
+  --sw-radius-md: 0.75rem;
+  --sw-radius-lg: 1rem;
+  --sw-radius-xl: 1.5rem;
+  --sw-radius-pill: 999px;
+
+  /* SURFACES (dark mode layered depths) */
+  --sw-surface-void: #07090D;
+  --sw-surface-paper: #0C0D13;
+  --sw-surface-section: #101218;
+  --sw-surface-card: #15171E;
+  --sw-surface-subtle: #1A1C23;
+  --sw-surface-product: #1F2129;
+
+  /* TYPOGRAPHY */
+  --sw-text-primary: #F5F5F5;
+  --sw-text-secondary: #CDD0D6;
+  --sw-text-muted: #9CA1AB;
+  --sw-text-tertiary: #8A8A8A;
+
+  /* STOCK INDICATORS */
+  --sw-stock-in: #22C55E;
+  --sw-stock-low: #EAB308;
+  --sw-stock-urgent: #F97316;
+  --sw-stock-out: #EF4444;
+
+  /* SEMANTIC */
+  --sw-success: #15803D;
+  --sw-destructive: #B91C1C;
+  --sw-warning: #C2410C;
+}
+
+/* STOCK PULSE ANIMATIONS */
+@keyframes sw-pulse-green {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+@keyframes sw-pulse-red {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.15); }
+}

@@ -1,3 +1,28 @@
+<style>
+  .collection-block {
+    border-radius: var(--sw-radius-sm);
+    border: var(--sw-border-hairline);
+    overflow: hidden;
+    transition: var(--sw-transition-smooth);
+  }
+  .collection-block:hover {
+    border-color: rgba(255,255,255,0.22);
+    box-shadow: var(--sw-shadow-medium);
+    transform: translateY(-2px);
+  }
+  .collection-block .product-block__title,
+  .collection-block .text-overlay__title h2 {
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .collection-block .product-block__image img {
+    object-fit: cover;
+    width: 100%;
+  }
+</style>
+
 {%- comment -%}
   Parameters:
   - collection {Collection} - Collection object.

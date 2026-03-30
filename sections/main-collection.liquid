@@ -1,48 +1,53 @@
 <div data-section-id="{{ section.id }}" data-cc-animate>
 
 {% style %}
-  /* Safewake related collections compact carousel */
+  /* ============================================================
+     SAFEWAKE COLLECTION PAGE — Apple-style design refinements
+     Uses design tokens from safewake-design-tokens.css
+     ============================================================ */
+
+  /* -----------------------------------------------------------
+     1. RELATED COLLECTIONS COMPACT CAROUSEL
+     ----------------------------------------------------------- */
   .collections-widget {
     width: 100%;
-    background: #0f0f0f;
-    padding: 0.75rem 0 1rem; /* tighter top + bottom */
-    color: #f2f2f2;
+    background: var(--sw-surface-section, #101218);
+    padding: 0.75rem 0 1rem;
+    color: var(--sw-text-primary, #F5F5F5);
   }
 
   .collections-widget .collections-container {
-    max-width: 100%; /* use full content width */
+    max-width: 100%;
     margin: 0 auto;
-    padding: 0 0.75rem; /* small side gutters */
+    padding: 0 0.75rem;
   }
 
-  /* Hook into existing Symmetry slider markup – NOW SCROLLABLE */
   .collections-widget .collections-carousel .slider {
-    overflow-x: auto;          /* allow horizontal scroll/swipe */
+    overflow-x: auto;
     overflow-y: hidden;
     width: 100%;
-    -webkit-overflow-scrolling: touch; /* iOS smooth swipe */
-    scroll-behavior: smooth;           /* smooth programmatic scroll */
-    touch-action: pan-x;               /* hint for touch gesture */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    touch-action: pan-x;
   }
 
-  /* Hide native scrollbar but keep scrollability */
   .collections-widget .collections-carousel .slider::-webkit-scrollbar {
     display: none;
   }
   .collections-widget .collections-carousel .slider {
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
   }
 
   .collections-widget .collections-carousel .slider__grid {
     display: flex;
     gap: 0;
-    margin-left: -0.25rem; /* less negative margin to reduce gap */
+    margin-left: -0.25rem;
   }
 
   .collections-widget .collection-item {
-    flex: 0 0 24%; /* 4 across on small screens */
+    flex: 0 0 24%;
     min-width: 0;
-    padding-left: 0.25rem; /* smaller gutter */
+    padding-left: 0.25rem;
   }
 
   .collections-widget .collection-link {
@@ -50,20 +55,18 @@
     position: relative;
     aspect-ratio: 4 / 5;
     overflow: hidden;
-    border-radius: 0.5rem;
-    background: #1a1a1a; /* fallback if no image */
-    border: 1px solid #2a2a2a;
-    transition: all 0.3s ease;
+    border-radius: var(--sw-radius-sm, 0.5rem);
+    background: var(--sw-surface-card, #15171E);
+    border: var(--sw-border-hairline, 1px solid rgba(255,255,255,0.06));
+    transition: var(--sw-transition-smooth, all 0.3s cubic-bezier(0.4, 0, 0.2, 1));
     text-decoration: none;
   }
 
-  /* Hover: subtle, neutral – NO brand blue */
   .collections-widget .collection-link:hover {
-    border-color: #3a3a3a;
-    background: rgba(26, 26, 26, 0.9);
+    filter: brightness(1.12);
+    border-color: rgba(255, 255, 255, 0.12);
   }
 
-  /* Highlight current collection in carousel – ONLY this uses blue */
   .collections-widget .collection-link--active {
     border-color: #2badd4;
     box-shadow: 0 0 0 2px rgba(43, 173, 212, 0.55);
@@ -74,10 +77,9 @@
   }
 
   .collections-widget .collection-link--active .collection-secondary {
-    color: #f2f2f2;
+    color: var(--sw-text-primary, #F5F5F5);
   }
 
-  /* Background image for collection cards (from collection image) */
   .collections-widget .collection-image {
     position: absolute;
     inset: 0;
@@ -86,13 +88,17 @@
     object-fit: cover;
     object-position: center;
     z-index: 0;
+    transition: transform 0.4s var(--sw-ease-smooth, cubic-bezier(0.4, 0, 0.2, 1));
   }
 
-  /* Dark overlay for text readability */
+  .collections-widget .collection-link:hover .collection-image {
+    transform: scale(1.04);
+  }
+
   .collections-widget .collection-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.05) 100%);
     z-index: 1;
     pointer-events: none;
   }
@@ -110,9 +116,9 @@
   }
 
   .collections-widget .collection-primary {
-    color: #f2f2f2;
+    color: var(--sw-text-primary, #F5F5F5);
     font-weight: 900;
-    font-size: 0.5625rem; /* ~9px on mobile */
+    font-size: 0.5625rem;
     text-transform: uppercase;
     line-height: 1;
     margin-bottom: 0.125rem;
@@ -120,20 +126,13 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: color 0.3s ease;
+    transition: color 0.3s var(--sw-ease-smooth, ease);
   }
-
-  /* removed blue-on-hover to avoid confusion */
-  /*
-  .collections-widget .collection-link:hover .collection-primary {
-    color: #2badd4;
-  }
-  */
 
   .collections-widget .collection-secondary {
-    color: #a1a1a1;
+    color: var(--sw-text-muted, #9CA1AB);
     font-weight: 500;
-    font-size: 0.4375rem; /* ~7px on mobile */
+    font-size: 0.4375rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     line-height: 1;
@@ -141,26 +140,20 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: color 0.3s ease;
+    transition: color 0.3s var(--sw-ease-smooth, ease);
   }
 
-  /*
-  .collections-widget .collection-link:hover .collection-secondary {
-    color: #f2f2f2;
-  }
-  */
-
-  /* Navigation buttons – reuse existing slider-nav buttons, just reskin */
   .collections-widget .slider-nav__btn {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 9999px;
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
+    width: var(--sw-touch-target, 44px);
+    height: var(--sw-touch-target, 44px);
+    border-radius: var(--sw-radius-pill, 999px);
+    background: var(--sw-surface-card, #15171E);
+    border: var(--sw-border-hairline, 1px solid rgba(255,255,255,0.06));
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: var(--sw-transition-smooth, all 0.3s ease);
+    box-shadow: var(--sw-shadow-soft, 0 2px 8px rgba(0,0,0,0.2));
   }
 
   .collections-widget .slider-nav__btn svg {
@@ -169,18 +162,18 @@
   }
 
   .collections-widget .slider-nav__btn:hover:not(:disabled) {
-    background: #2a2a2a;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: var(--sw-shadow-medium, 0 4px 16px rgba(0,0,0,0.3));
   }
 
   .collections-widget .slider-nav__btn:disabled {
-    opacity: 0.5;
+    opacity: 0.35;
     cursor: not-allowed;
   }
 
-  /* Responsive density – show more cards as the screen grows */
   @media (min-width: 640px) {
     .collections-widget .collection-item {
-      flex: 0 0 20%; /* ~5 across */
+      flex: 0 0 20%;
     }
     .collections-widget .collection-primary {
       font-size: 0.875rem;
@@ -192,7 +185,7 @@
 
   @media (min-width: 960px) {
     .collections-widget .collection-item {
-      flex: 0 0 12.5%; /* ~8 across */
+      flex: 0 0 12.5%;
     }
     .collections-widget .collection-primary {
       font-size: 0.95rem;
@@ -204,8 +197,316 @@
 
   @media (min-width: 1280px) {
     .collections-widget .collection-item {
-      flex: 0 0 10%; /* ~10 across on big desktops */
+      flex: 0 0 10%;
     }
+  }
+
+  /* -----------------------------------------------------------
+     7. COLLECTION HEADER — tight letter-spacing, muted desc
+     ----------------------------------------------------------- */
+  .page-header h1,
+  .page-header .collection-title {
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    color: var(--sw-text-primary, #F5F5F5);
+  }
+
+  .page-header .rte,
+  .page-header .text-overlay__rte {
+    color: var(--sw-text-muted, #9CA1AB);
+  }
+
+  /* -----------------------------------------------------------
+     2. FILTER SIDEBAR / STRIP
+     ----------------------------------------------------------- */
+  .filter-container {
+    transition: var(--sw-transition-smooth, all 0.3s cubic-bezier(0.4, 0, 0.2, 1));
+  }
+
+  /* Toggle button */
+  .toggle-btn[data-toggle-filters] {
+    min-height: var(--sw-touch-target, 44px);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    transition: var(--sw-transition-smooth, all 0.3s ease);
+  }
+
+  .toggle-btn__chevron {
+    transition: transform 0.3s var(--sw-ease-smooth, cubic-bezier(0.4, 0, 0.2, 1));
+  }
+
+  .toggle-btn--revealed-desktop .toggle-btn__chevron,
+  .filter-container--show-filters-desktop .toggle-btn__chevron {
+    transform: rotate(90deg);
+  }
+
+  /* Hairline dividers between filter groups */
+  .cc-accordion .cc-accordion__panel + .cc-accordion__panel,
+  .filter-group + .filter-group,
+  .faceted-filters__group + .faceted-filters__group {
+    border-top: var(--sw-border-hairline, 1px solid rgba(255,255,255,0.06));
+  }
+
+  /* Smooth expand/collapse for filter panels */
+  .cc-accordion__body,
+  .faceted-filters__body {
+    transition: max-height 0.35s var(--sw-ease-smooth, cubic-bezier(0.4, 0, 0.2, 1)),
+                opacity 0.25s ease;
+    overflow: hidden;
+  }
+
+  /* Filter group headings */
+  .cc-accordion__heading button,
+  .faceted-filters__heading button {
+    min-height: var(--sw-touch-target, 44px);
+    font-weight: 500;
+    color: var(--sw-text-secondary, #CDD0D6);
+    letter-spacing: -0.01em;
+  }
+
+  /* -----------------------------------------------------------
+     5. ACTIVE FILTER TAGS — pill-shaped
+     ----------------------------------------------------------- */
+  .active-filters__tag,
+  .tag-list__tag--active,
+  .faceted-filters__active-tag,
+  .toggle-btn__count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: var(--sw-surface-card, #15171E);
+    border: var(--sw-border-hairline, 1px solid rgba(255,255,255,0.06));
+    border-radius: var(--sw-radius-pill, 999px);
+    padding: 0.25rem 0.625rem;
+    font-size: 0.75rem;
+    color: var(--sw-text-secondary, #CDD0D6);
+    line-height: 1.4;
+    transition: var(--sw-transition-smooth, all 0.3s ease);
+    white-space: nowrap;
+  }
+
+  .active-filters__tag:hover,
+  .faceted-filters__active-tag:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .active-filters__tag .active-filters__remove,
+  .faceted-filters__active-tag .remove-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    border-radius: var(--sw-radius-pill, 999px);
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+
+  .active-filters__tag:hover .active-filters__remove,
+  .faceted-filters__active-tag:hover .remove-tag {
+    opacity: 1;
+  }
+
+  /* -----------------------------------------------------------
+     3. SORT DROPDOWN — clean styling
+     ----------------------------------------------------------- */
+  .link-dropdown__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: var(--sw-touch-target, 44px);
+    padding: 0.5rem 0.75rem;
+    color: var(--sw-text-secondary, #CDD0D6);
+    font-size: 0.875rem;
+    transition: var(--sw-transition-smooth, all 0.3s ease);
+  }
+
+  .link-dropdown__button-icon {
+    transition: transform 0.3s var(--sw-ease-smooth, cubic-bezier(0.4, 0, 0.2, 1));
+  }
+
+  .link-dropdown__button[aria-expanded="true"] .link-dropdown__button-icon {
+    transform: rotate(180deg);
+  }
+
+  .link-dropdown__options {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: 100;
+    min-width: 12rem;
+    background: var(--sw-surface-card, #15171E);
+    border: var(--sw-border-hairline, 1px solid rgba(255,255,255,0.06));
+    border-radius: var(--sw-radius-md, 0.75rem);
+    box-shadow: var(--sw-shadow-medium, 0 4px 16px rgba(0,0,0,0.3));
+    padding: 0.375rem;
+    overflow: hidden;
+  }
+
+  .link-dropdown__link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--sw-radius-sm, 0.5rem);
+    color: var(--sw-text-secondary, #CDD0D6);
+    font-size: 0.875rem;
+    transition: background 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+  }
+
+  .link-dropdown__link:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--sw-text-primary, #F5F5F5);
+  }
+
+  .link-dropdown__link--active {
+    color: var(--sw-text-primary, #F5F5F5);
+    font-weight: 600;
+    background: rgba(43, 173, 212, 0.1);
+  }
+
+  /* Mobile sort — bottom-sheet feel */
+  @media (max-width: 639px) {
+    .link-dropdown__options {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: auto;
+      border-radius: var(--sw-radius-lg, 1rem) var(--sw-radius-lg, 1rem) 0 0;
+      padding: 0.5rem 0.5rem 1.5rem;
+      max-height: 60vh;
+      overflow-y: auto;
+      box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .link-dropdown__link {
+      min-height: var(--sw-touch-target, 44px);
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+    }
+  }
+
+  /* -----------------------------------------------------------
+     4. PRODUCT GRID — consistent spacing
+     ----------------------------------------------------------- */
+  .product-grid {
+    gap: var(--sw-space-3, 12px);
+  }
+
+  /* Ensure the grid gap uses the token on all breakpoints */
+  .collection-listing .product-grid {
+    row-gap: var(--sw-space-3, 12px);
+    column-gap: var(--sw-space-3, 12px);
+  }
+
+  /* -----------------------------------------------------------
+     6. PAGINATION — clean, 44px touch targets, brand glow
+     ----------------------------------------------------------- */
+  .pagination-row {
+    padding: 2rem 0;
+  }
+
+  .pagination__item,
+  .pagination a,
+  .pagination span,
+  .pagination-control a,
+  .pagination-control span.current {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--sw-touch-target, 44px);
+    min-height: var(--sw-touch-target, 44px);
+    padding: 0 0.5rem;
+    border-radius: var(--sw-radius-sm, 0.5rem);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--sw-text-secondary, #CDD0D6);
+    text-decoration: none;
+    transition: var(--sw-transition-smooth, all 0.3s ease);
+  }
+
+  .pagination a:hover,
+  .pagination-control a:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--sw-text-primary, #F5F5F5);
+  }
+
+  .pagination .current,
+  .pagination span[aria-current="page"],
+  .pagination-control span.current {
+    background: rgba(43, 173, 212, 0.15);
+    color: #2badd4;
+    font-weight: 600;
+    box-shadow: 0 0 12px rgba(43, 173, 212, 0.2);
+    border: 1px solid rgba(43, 173, 212, 0.3);
+  }
+
+  .pagination .prev,
+  .pagination .next,
+  .pagination-control .prev,
+  .pagination-control .next {
+    min-width: var(--sw-touch-target, 44px);
+    min-height: var(--sw-touch-target, 44px);
+  }
+
+  /* -----------------------------------------------------------
+     8. EMPTY STATE — centered, clean typography
+     ----------------------------------------------------------- */
+  .collection-listing h5.align-centre,
+  .collection-listing .align-centre {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40vh;
+    color: var(--sw-text-muted, #9CA1AB);
+    font-weight: 500;
+    font-size: 1.125rem;
+    letter-spacing: -0.01em;
+    text-align: center;
+  }
+
+  /* -----------------------------------------------------------
+     UTILITY BAR refinements
+     ----------------------------------------------------------- */
+  .utility-bar {
+    border-bottom: var(--sw-border-hairline, 1px solid rgba(255,255,255,0.06));
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .utility-bar__item {
+    color: var(--sw-text-secondary, #CDD0D6);
+    font-size: 0.875rem;
+  }
+
+  /* Layout switcher icons */
+  .layout-switch {
+    min-width: var(--sw-touch-target, 44px);
+    min-height: var(--sw-touch-target, 44px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--sw-radius-sm, 0.5rem);
+    transition: var(--sw-transition-smooth, all 0.3s ease);
+  }
+
+  .layout-switch:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .layout-switch--active {
+    color: var(--sw-text-primary, #F5F5F5);
+  }
+
+  /* -----------------------------------------------------------
+     DESCRIPTION below products
+     ----------------------------------------------------------- */
+  .container--reading-width .rte {
+    color: var(--sw-text-muted, #9CA1AB);
+    line-height: 1.7;
   }
 {% endstyle %}
 

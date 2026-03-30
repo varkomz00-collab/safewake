@@ -1,3 +1,27 @@
+<style>
+  .price .price__current {
+    font-weight: 600;
+  }
+  .price--on-sale .price__current {
+    color: var(--sw-stock-in);
+    font-weight: 600;
+  }
+  .price .price__was {
+    text-decoration: line-through;
+    color: var(--sw-text-muted);
+    font-size: 0.85em;
+  }
+  .price__default {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4em;
+    flex-wrap: wrap;
+  }
+  .price-label {
+    margin-top: 0.25em;
+  }
+</style>
+
 {% comment %}
   Parameters:
   - product {Object} - Product object.

@@ -17,14 +17,67 @@
 
 <div id="section-id-{{ section.id }}" class="{% unless section.settings.full_width %}container fully-spaced-row{% endunless %} video-section video-section--background" data-cc-animate>
   {% style %}
+    /* Responsive heights */
     #section-id-{{ section.id }} .height--fixed {
       --image-height: {{ section.settings.height_mobile }}px;
+      transition: height 0.4s var(--sw-ease-smooth, ease);
     }
 
     @media (min-width: 768px) {
       #section-id-{{ section.id }} .height--fixed {
         --image-height: {{ section.settings.height_desktop }}px;
       }
+    }
+
+    /* Bottom-only gradient overlay */
+    #section-id-{{ section.id }} .image-overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 40%, transparent 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #section-id-{{ section.id }} .image-overlay__over {
+      z-index: 2;
+    }
+
+    /* Non-full-width variant: rounded corners */
+    #section-id-{{ section.id }}.container .height--fixed {
+      border-radius: var(--sw-radius-lg, 1rem);
+      overflow: hidden;
+    }
+
+    /* Clean text overlay positioning */
+    #section-id-{{ section.id }} .text-overlay__inner {
+      transition: opacity 0.4s var(--sw-ease-smooth, ease);
+    }
+
+    #section-id-{{ section.id }} .text-overlay__title {
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    #section-id-{{ section.id }} .text-overlay__subheading {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    #section-id-{{ section.id }} .text-overlay__rte {
+      color: var(--sw-text-secondary, #CDD0D6);
+    }
+
+    #section-id-{{ section.id }} .text-overlay__button-row .btn {
+      border-radius: 999px;
+      transition: var(--sw-transition-smooth, transform 0.3s ease, box-shadow 0.3s ease);
+    }
+
+    #section-id-{{ section.id }} .text-overlay__button-row .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--sw-shadow-hover, 0 12px 30px rgba(0, 0, 0, 0.3));
     }
 
     {%- for block in section.blocks -%}

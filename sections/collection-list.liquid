@@ -470,6 +470,92 @@
 {% endschema %}
 
 {% style %}
+  /* ── SafeWake Apple-style collection cards ── */
+
+  /* Section heading: tight tracking, semibold */
+  .section-id-{{ section.id }} .hometitle,
+  .section-id-{{ section.id }} .has-paging__title {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  /* Card container: hairline border, rounded, smooth transitions */
+  .section-id-{{ section.id }} .collection-block .block-inner {
+    border-radius: var(--sw-radius-sm, 0.5rem);
+    border: var(--sw-border-hairline, 1px solid rgba(255, 255, 255, 0.08));
+    overflow: hidden;
+    background: var(--sw-surface-card, #15171E);
+    transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  }
+
+  /* Card hover: brighter border, subtle lift + shadow */
+  .section-id-{{ section.id }} .collection-block .block-inner:hover {
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow: var(--sw-shadow-hover, 0 8px 24px rgba(0, 0, 0, 0.25));
+    transform: translateY(-2px);
+  }
+
+  /* Card image: cover, maintain aspect ratio */
+  .section-id-{{ section.id }} .collection-block .image-cont {
+    overflow: hidden;
+    border-radius: var(--sw-radius-sm, 0.5rem) var(--sw-radius-sm, 0.5rem) 0 0;
+  }
+
+  .section-id-{{ section.id }} .collection-block .product-block__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Card title: uppercase, tight tracking, small bold text */
+  .section-id-{{ section.id }} .collection-block .product-block__title,
+  .section-id-{{ section.id }} .collection-block .text-overlay__title h2 {
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    color: var(--sw-text-primary, #F5F5F5);
+  }
+
+  @media (min-width: 750px) {
+    .section-id-{{ section.id }} .collection-block .product-block__title,
+    .section-id-{{ section.id }} .collection-block .text-overlay__title h2 {
+      font-size: 12px;
+    }
+  }
+
+  /* Product count: muted text */
+  .section-id-{{ section.id }} .collection-block .small-text,
+  .section-id-{{ section.id }} .collection-block .small {
+    color: var(--sw-text-muted, #9CA1AB);
+    font-size: 10px;
+    letter-spacing: 0.03em;
+  }
+
+  /* Card detail area padding */
+  .section-id-{{ section.id }} .collection-block .product-block__detail {
+    padding: 0.625rem 0.5rem;
+  }
+
+  /* Grid gap between cards */
+  .section-id-{{ section.id }} .product-grid {
+    gap: 12px;
+  }
+
+  /* Carousel: smooth scroll, snap, touch-friendly */
+  .section-id-{{ section.id }} .collection-listing--carousel .slider__grid {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .section-id-{{ section.id }} .slider__item {
+    scroll-snap-align: start;
+  }
+
+  /* ── Invert mode ── */
   .section-id-{{ section.id }}.collection-slider-row--invert {
     background: #fff !important;
     color: #000 !important;
@@ -490,6 +576,26 @@
   .section-id-{{ section.id }}.collection-slider-row--invert h6,
   .section-id-{{ section.id }}.collection-slider-row--invert .slider-nav__btn {
     color: inherit !important;
+  }
+
+  /* Invert: card surfaces and borders swap to light mode */
+  .section-id-{{ section.id }}.collection-slider-row--invert .collection-block .block-inner {
+    background: #F5F5F5;
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .section-id-{{ section.id }}.collection-slider-row--invert .collection-block .block-inner:hover {
+    border-color: rgba(0, 0, 0, 0.22);
+  }
+
+  .section-id-{{ section.id }}.collection-slider-row--invert .collection-block .product-block__title,
+  .section-id-{{ section.id }}.collection-slider-row--invert .collection-block .text-overlay__title h2 {
+    color: #111;
+  }
+
+  .section-id-{{ section.id }}.collection-slider-row--invert .collection-block .small-text,
+  .section-id-{{ section.id }}.collection-slider-row--invert .collection-block .small {
+    color: #6B7280;
   }
 
   .section-id-{{ section.id }} .collection-listing-expander {

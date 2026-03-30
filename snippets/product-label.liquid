@@ -1,3 +1,47 @@
+<style>
+  .product-label-container {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-end;
+  }
+  .product-label {
+    border-radius: var(--sw-radius-pill);
+    padding: 2px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.6;
+    display: inline-block;
+  }
+  .product-label--sale {
+    background-color: var(--sw-stock-out);
+    color: #fff;
+  }
+  .product-label--sold-out,
+  .price-label--sold-out {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--sw-text-muted);
+  }
+  .product-label--new-in {
+    background-color: rgba(255,255,255,0.12);
+    color: var(--sw-text-primary);
+  }
+  .product-label--stock {
+    background-color: rgba(234,179,8,0.15);
+    color: var(--sw-stock-low);
+  }
+  .product-label--meta {
+    background-color: rgba(255,255,255,0.12);
+    color: var(--sw-text-primary);
+  }
+</style>
+
 {%- capture label_html -%}
   {%- assign label_count = 0 -%}
   {%- if product.metafields.theme.label != blank -%}

@@ -48,6 +48,8 @@
   </style>
 
   {{ 'main.css' | asset_url | stylesheet_tag: preload: true }}
+  {{ 'safewake-design-tokens.css' | asset_url | stylesheet_tag }}
+  {{ 'safewake-utilities.css' | asset_url | stylesheet_tag }}
 
   {%- if settings.swatch_enabled and settings.swatch_value_list != blank -%}
     <link rel="stylesheet" href="{{ 'swatches.css' | asset_url }}" media="print" onload="this.media='all'">

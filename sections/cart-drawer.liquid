@@ -288,6 +288,222 @@
 {%- endunless -%}
 
 
+{% style %}
+  /* ── SafeWake Cart Drawer: Apple-style refinements ── */
+
+  /* Overlay – blurred dark backdrop */
+  .section-cart-drawer .drawer__overlay,
+  .js-cart-drawer::before {
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* Drawer panel */
+  .section-cart-drawer .cart-drawer,
+  .section-cart-drawer .js-cart-drawer {
+    background: var(--sw-surface-card);
+    border-top-left-radius: var(--sw-radius-md);
+    border-bottom-left-radius: var(--sw-radius-md);
+  }
+
+  /* Header */
+  .section-cart-drawer .cart-drawer__header {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .section-cart-drawer .cart-drawer__title {
+    color: var(--sw-text-primary);
+    font-weight: 600;
+  }
+  .section-cart-drawer .cart-drawer__title-count {
+    color: var(--sw-text-muted);
+    font-weight: 400;
+  }
+
+  /* Close button */
+  .section-cart-drawer .drawer__close-btn {
+    width: var(--sw-touch-target);
+    height: var(--sw-touch-target);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--sw-transition-smooth);
+    color: var(--sw-text-secondary);
+  }
+  .section-cart-drawer .drawer__close-btn:hover {
+    background: rgba(255,255,255,0.06);
+    color: var(--sw-text-primary);
+  }
+
+  /* Cart items – hairline dividers */
+  .section-cart-drawer .cart-item {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding-block: 16px;
+  }
+  .section-cart-drawer .cart-item:last-child {
+    border-bottom: none;
+  }
+
+  /* Item thumbnails – rounded corners */
+  .section-cart-drawer .cart-item__image-container,
+  .section-cart-drawer .cart-item__image,
+  .section-cart-drawer .cart-item img {
+    border-radius: var(--sw-radius-sm);
+    overflow: hidden;
+  }
+
+  /* Item details typography */
+  .section-cart-drawer .cart-item__title {
+    color: var(--sw-text-primary);
+    font-weight: 500;
+    font-size: 14px;
+  }
+  .section-cart-drawer .cart-item__meta,
+  .section-cart-drawer .cart-item__variant,
+  .section-cart-drawer .cart-item__property {
+    color: var(--sw-text-muted);
+    font-size: 12px;
+  }
+
+  /* Quantity buttons – 44px touch targets */
+  .section-cart-drawer .cart-item__qty-btn,
+  .section-cart-drawer .cart-item__quantity-btn,
+  .section-cart-drawer .qty-adjuster__btn,
+  .section-cart-drawer .qty-btn {
+    min-width: var(--sw-touch-target);
+    min-height: var(--sw-touch-target);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--sw-radius-sm);
+    transition: var(--sw-transition-smooth);
+    color: var(--sw-text-secondary);
+  }
+  .section-cart-drawer .cart-item__qty-btn:hover,
+  .section-cart-drawer .cart-item__quantity-btn:hover,
+  .section-cart-drawer .qty-adjuster__btn:hover,
+  .section-cart-drawer .qty-btn:hover {
+    background: rgba(255,255,255,0.06);
+    color: var(--sw-text-primary);
+  }
+
+  /* Footer / subtotal area */
+  .section-cart-drawer .cart-drawer__footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    background: var(--sw-surface-card);
+  }
+  .section-cart-drawer .subtotal {
+    font-weight: 600;
+    color: var(--sw-text-primary);
+  }
+
+  /* Cart policies / tax info */
+  .section-cart-drawer .cart-policies {
+    font-size: 12px;
+    color: var(--sw-text-muted);
+  }
+
+  /* Checkout button – full-width pill */
+  .section-cart-drawer .checkout-buttons .btn {
+    width: 100%;
+    border-radius: var(--sw-radius-pill);
+    min-height: var(--sw-touch-target);
+    font-weight: 600;
+    font-size: 15px;
+    transition: var(--sw-transition-smooth);
+  }
+  .section-cart-drawer .checkout-buttons .btn:hover {
+    box-shadow: var(--sw-shadow-hover);
+    transform: translateY(-1px);
+  }
+
+  /* Empty cart state */
+  .section-cart-drawer .cart-drawer__empty-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--sw-surface-card);
+  }
+  .section-cart-drawer .cart-drawer__empty-content .majortitle {
+    color: var(--sw-text-primary);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .section-cart-drawer .cart-drawer__empty-content .rte {
+    color: var(--sw-text-muted);
+    font-size: 14px;
+  }
+  .section-cart-drawer .cart-drawer__empty-content .btn {
+    border-radius: var(--sw-radius-pill);
+    min-height: var(--sw-touch-target);
+  }
+  .section-cart-drawer .cart-drawer__empty-content .icon--large {
+    color: var(--sw-text-muted);
+    opacity: 0.5;
+  }
+
+  /* Free shipping bar – slim with glow */
+  .section-cart-drawer .free-shipping-bar__progress,
+  .section-cart-drawer .shipping-bar__progress {
+    height: 4px;
+    border-radius: var(--sw-radius-pill);
+    background: rgba(255,255,255,0.08);
+    overflow: hidden;
+  }
+  .section-cart-drawer .free-shipping-bar__progress-bar,
+  .section-cart-drawer .shipping-bar__progress-fill {
+    height: 100%;
+    border-radius: var(--sw-radius-pill);
+    background: var(--sw-stock-in);
+    box-shadow: 0 0 8px rgba(34,197,94,0.4);
+    transition: width 0.4s ease;
+  }
+
+  /* Discount labels */
+  .section-cart-drawer .cart-discount__icon {
+    color: var(--sw-stock-in);
+  }
+  .section-cart-drawer .cart-discount {
+    font-size: 13px;
+    color: var(--sw-text-secondary);
+  }
+
+  /* Order note */
+  .section-cart-drawer .cart-drawer__note textarea {
+    background: transparent;
+    border: var(--sw-border-hairline);
+    border-radius: var(--sw-radius-sm);
+    color: var(--sw-text-primary);
+    font-size: 14px;
+    padding: 10px 12px;
+    transition: var(--sw-transition-smooth);
+  }
+  .section-cart-drawer .cart-drawer__note textarea:focus {
+    border-color: rgba(255,255,255,0.2);
+    outline: none;
+  }
+
+  /* Terms checkbox */
+  .section-cart-drawer .terms-agreement label {
+    font-size: 12px;
+    color: var(--sw-text-muted);
+  }
+
+  /* Cross-sell / upsell section */
+  .section-cart-drawer .cart-item-upsells {
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .section-cart-drawer .cart-item-upsells .product-info-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sw-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+{% endstyle %}
+
 {% schema %}
 {
   "name": "Cart drawer",
