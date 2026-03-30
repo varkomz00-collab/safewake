@@ -62,24 +62,28 @@
     background-color: var(--sw-surface-product);
   }
 
-  /* Carousel nav arrows */
+  /* Carousel nav arrows — hidden until section hover on desktop */
   .section-id-{{ section.id }} .slider-nav__btn {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    border: var(--sw-border-hairline);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: var(--sw-transition-smooth);
+    transition: opacity 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
     background: rgba(11, 13, 16, 0.9);
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
   }
   .section-id-{{ section.id }} .slider-nav__btn:hover {
     background: rgba(11, 13, 16, 0.95);
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.15), 0 4px 6px -4px rgba(0,0,0,0.15);
+  }
+  .section-id-{{ section.id }} .slider-nav__btn:disabled {
+    opacity: 0;
+    pointer-events: none;
   }
 {%- endstyle -%}
 

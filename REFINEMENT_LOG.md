@@ -346,3 +346,65 @@ Read WakeGallery.tsx, CatalogProductCard.tsx, CartDrawer.tsx (empty state) from 
 - Collection page heading typography
 - Cart drawer cross-sell card styling
 - Brand + SEO audit (Run 6 rotation: heading hierarchy, structured data)
+
+---
+
+## Run 6 — 2026-03-30
+
+### Methodology
+Brand + SEO rotation (Run 3,6,9... pattern). Re-audited slideshow hero, featured collection, and product badges against current Lovable source. Compared exact Tailwind values for CTA, gradient overlay, badge positioning, and carousel nav arrows.
+
+### Bugs Fixed
+- None found (all validation checks passed)
+
+### Sections Refined
+
+#### slideshow.liquid (hero CTA + gradient)
+- **Lovable ref:** WakeHero.tsx — `text-xs sm:text-sm font-medium bg-white/20 backdrop-blur-xl border-white/30 transition-all duration-300 bg-gradient-to-t from-black/60`
+- CTA font-weight: 600 → 500 matching `font-medium`
+- CTA font-size: added 12px mobile / 14px sm (matching `text-xs sm:text-sm`)
+- CTA letter-spacing: 0.03em → 0 (Lovable has none)
+- CTA padding: added responsive `24px inline / 10px block` at sm breakpoint (matching `sm:px-6 sm:py-2.5`)
+- CTA transition: 150ms → 300ms matching `duration-300`
+- Gradient overlay: `rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 40%, transparent` → `rgba(0,0,0,0.6) 0%, transparent 50%` matching `from-black/60 via-transparent to-transparent` — significantly lighter, lets more of the image show
+
+#### snippets/product-label.liquid (badge positioning)
+- **Lovable ref:** CatalogProductCard.tsx — `absolute top-3 left-3 z-10 flex flex-col gap-1.5`
+- Container position: `top: 8px; right: 8px` → `top: 12px; left: 12px` matching `top-3 left-3`
+- Container alignment: `align-items: flex-end` → `flex-start` (badges now left-aligned)
+- Container z-index: 2 → 10 matching `z-10`
+- Container gap: 4px → 6px matching `gap-1.5`
+- Badge font-weight: 600 → 500 matching `font-medium`
+- Badge letter-spacing: 0.06em → 0 (Lovable doesn't track badges)
+- Badge text-transform: uppercase → none (Lovable badges use natural case)
+- Badge padding: `2px 10px` → `2px 8px` matching `px-2 py-0.5`
+
+#### featured-collection.liquid (nav arrows)
+- **Lovable ref:** WakeCollectionProductsCarousel.tsx — `disabled:opacity-0`
+- Arrow transition: generic `var(--sw-transition-smooth)` → specific `opacity 0.3s, background 0.3s, box-shadow 0.3s`
+- Arrow border: `var(--sw-border-hairline)` → explicit `1px solid rgba(255,255,255,0.12)` matching `border-border/50`
+- Added `disabled:opacity-0; pointer-events:none` — disabled arrows now fade out completely
+
+### Skills Applied
+- Brand review: CTA now uses `font-medium` (500) not semi-bold (600) — Apple CTAs are never heavy, they're calm and inviting
+- SEO: Heading hierarchy verified — `<h2>` for section titles, `<h1>` only on product pages. Collection pages use semantic `<h1>` for collection title. ✅
+- Design system: gradient overlay lightened from 80% → 60% opacity — matches Apple's principle that "images are king" (let the product photography breathe)
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **Collection page heading typography** — No explicit responsive font-size set; Lovable collection header not found (uses grid component). Need to verify sizing at 375px vs 1440px
+2. **Cart drawer cross-sell cards** — Mini product cards in cart not yet styled against Lovable patterns
+3. **Product card image aspect-ratio conflict** — `aspect-ratio: 1` may fight with Symmetry's JS image height logic; needs live testing
+4. **Gallery zoom modal** — WakeGallery has fullscreen zoom with swipe nav; Symmetry's gallery viewer may not match
+5. **Slideshow hero height** — Lovable uses `min-h-[420px]`; ours doesn't have a min-height which could cause issues on very wide/short viewports
+6. **Featured collection arrow visibility** — Lovable hides arrows until section hover (`opacity-0 group-hover:opacity-100`); ours only hides disabled arrows, not all arrows on non-hover
+7. **Product page related products carousel** — Nav arrow styles not yet matched to featured-collection arrows
+8. **Footer newsletter input** — Not compared against Lovable's input styling (rounded-full, border-border, focus ring)
+9. **Mobile menu transitions** — Lovable Sheet uses `duration-300 close / duration-500 open`; Symmetry drawer may use different timing
+10. **Structured data** — Product page schema.org markup not verified for completeness (offers, aggregateRating, brand fields)
+
+### Next Run Should Focus On
+- Slideshow min-height (420px minimum)
+- Featured collection section hover to reveal arrows (group-hover pattern)
+- Cart drawer cross-sell card styling
+- Footer newsletter input comparison
+- Engineering + Design audit (Run 7 rotation)

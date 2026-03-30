@@ -126,7 +126,7 @@
       inset: 0;
       z-index: 1;
       pointer-events: none;
-      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 40%, transparent 100%);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 50%);
     }
 
     #section-id-{{ section.id }} .image-overlay__image {
@@ -210,8 +210,9 @@
         0 0 0 1px rgba(255, 255, 255, 0.04);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      font-weight: 600;
-      letter-spacing: 0.03em;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0;
       text-transform: none;
       display: inline-flex;
       align-items: center;
@@ -219,12 +220,12 @@
       gap: 0.45rem;
       color: #ffffff;
       transition:
-        transform 150ms ease-out,
-        box-shadow 150ms ease-out,
-        background 150ms ease-out,
-        border-color 150ms ease-out,
-        opacity 150ms ease-out,
-        color 150ms ease-out;
+        transform 300ms ease,
+        box-shadow 300ms ease,
+        background 300ms ease,
+        border-color 300ms ease,
+        opacity 300ms ease,
+        color 300ms ease;
     }
 
     #section-id-{{ section.id }} .text-overlay__button-row .text-overlay__button.btn:nth-child(2) {
@@ -255,6 +256,14 @@
       box-shadow:
         0 8px 26px rgba(0, 0, 0, 0.7),
         0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    @media (min-width: 640px) {
+      #section-id-{{ section.id }} .text-overlay__button.btn {
+        font-size: 14px;
+        padding-inline: 24px;
+        padding-block: 10px;
+      }
     }
 
     /* 3. Dot navigation: pill-expand active state (Lovable pattern) */
