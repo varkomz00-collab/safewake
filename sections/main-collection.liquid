@@ -426,7 +426,13 @@
     }
   }
 
-  @media (min-width: 768px) {
+  /* 3-col intermediate step — match Lovable 2→3→4 responsive grid */
+  @media (min-width: 640px) {
+    .product-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (min-width: 960px) {
     .product-grid {
       grid-template-columns: repeat(4, 1fr);
     }

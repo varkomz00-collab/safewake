@@ -663,3 +663,72 @@ Read WakeLifestyleVideoBlock.tsx (shop-the-look button: `bg-white text-slate-900
 - Collection page 3-col responsive grid
 - Testimonials section re-comparison
 - CRO + Conversion audit (Run 11 rotation)
+
+## Run 11 — 2026-03-30
+
+### Methodology
+Read Lovable TestimonialsSlider.tsx (horizontal layout, 96/128px round avatars, 16px stars, text-xl/text-2xl quotes), WakeUnifiedStrip.tsx (border-b border-border), WakeHeader.tsx (breadcrumb styling text-xs text-muted-foreground). Applied CRO lens per Run 11 rotation: quote readability, trust signals, grid density.
+
+### Bugs Fixed
+- **Dead code removal**: `.sw-transition-smooth` utility class removed from `safewake-utilities.css` — no consumers remain anywhere in the codebase. CSS budget reduced to 4,212 bytes (under 5KB target).
+
+### Sections Refined
+
+#### rich-text.liquid (Border Separators)
+- Added `border-top` and `border-bottom: 1px solid rgba(255,255,255,0.06)` — matches Lovable `border-y border-border` pattern
+- Creates visual rhythm between homepage sections without heavy dividers
+
+#### testimonials.liquid (Major Overhaul)
+- **Card border**: `rgba(255,255,255,0.5)` → `rgba(255,255,255,0.06)` — was WAY too bright, now matches theme hairline standard
+- **Card padding**: 16px → 24px — more breathing room
+- **Card max-width**: added `56rem` (max-w-4xl) — matches Lovable constraint
+- **Stars**: 14px → 16px, color changed from brand-glow yellow to `var(--sw-text-primary)` with `opacity: 0.7` — matches Lovable `fill-foreground/70`
+- **Star gap**: 2px → 4px — matches Lovable `gap-1`
+- **Quote**: 14px → 20px mobile / 24px desktop — matches Lovable `text-xl md:text-2xl`
+- **Quote weight**: added `font-weight: 500` — matches Lovable `font-medium`
+- **Quote line-height**: 1.5 → 1.625 — matches Lovable `leading-relaxed`
+- **Quote color**: `var(--sw-text-muted)` → `var(--sw-text-primary)` — quotes should be prominent, not muted
+- **Removed**: `-webkit-line-clamp: 2` — quotes should show fully, not truncate
+- **Author border**: removed `border-top: 1px solid rgba(255,255,255,0.5)` — cleaner without separator
+- **Author color**: added `color: var(--sw-text-muted)` to differentiate from quote text
+- **Avatar**: added round styling — `96px × 96px` mobile, `128px × 128px` desktop, `border-radius: 9999px` — matches Lovable `w-24 h-24 md:w-32 md:h-32 rounded-full`
+
+#### main-product.liquid (Breadcrumbs)
+- Font size: 13px → 12px — matches Lovable `text-xs`
+- Added link hover state: `color: var(--sw-text-muted)` → `var(--sw-text-primary)` with 0.2s transition
+- Breadcrumb links now have `text-decoration: none` for cleaner look
+
+#### main-collection.liquid (3-Column Grid)
+- Added intermediate 3-column grid at `640px` (sm breakpoint) — was jumping from 2 to 4 columns at 768px
+- 4-column grid now triggers at `960px` instead of `768px` — better card density at tablet sizes
+- Grid progression now: 2-col (mobile) → 3-col (640px) → 4-col (960px) — matches Lovable pattern
+
+#### safewake-utilities.css (Dead Code)
+- Removed `.sw-transition-smooth` utility class — zero consumers remain
+- File size: 1,250 → 1,183 bytes
+
+### Skills Applied
+- **CRO + Conversion audit (Run 11 rotation)**:
+  - **Quote readability**: Removing line-clamp and increasing quote font size to 20-24px significantly improves testimonial impact — social proof is most effective when fully readable
+  - **Star rating prominence**: Larger 16px stars with foreground color (not yellow) feel more premium for a UAE luxury watersports market
+  - **Grid density**: 3-col intermediate step at 640px prevents cards from being too wide on tablets, improving scan-ability — users can compare more products without scrolling
+  - **Trust signal hierarchy**: Breadcrumb links at 12px with subtle hover transitions maintain wayfinding without visual competition with the buy flow
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **Gallery zoom modal CSS** — Lovable has fullscreen swipe gallery; Symmetry's modal needs radius + overlay verification
+2. **Header mega-menu** — Not compared against any Lovable navigation pattern; WakeHeader uses grid-cols-2 dropdown
+3. **Mobile sort bottom-sheet** — Needs radius + backdrop-filter verification against Lovable's Sheet component
+4. **Testimonials carousel navigation** — Arrow buttons positioning needs re-check after card dimension changes
+5. **Product card aspect-ratio** — `aspect-ratio: 1` in product-block may conflict with Symmetry JS at certain viewports
+6. **Collection strip active state** — Using hardcoded `#2badd4` instead of design token for active border
+7. **Rich-text CTA buttons** — Not compared against Lovable button styles; may need pill shape
+8. **Newsletter section** — Not refined yet; exists in footer but may need standalone section treatment
+9. **Video-with-text section** — Not compared against any Lovable component
+10. **Hover states on touch devices** — `:hover` group-hover patterns on slideshow/featured-collection won't activate on iOS
+
+### Next Run Should Focus On
+- Gallery zoom modal styling
+- Header/nav comparison with WakeHeader
+- Collection strip active state token fix
+- Video-with-text section comparison
+- Brand + SEO audit (Run 12 rotation)

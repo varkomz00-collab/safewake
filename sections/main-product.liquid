@@ -1391,11 +1391,21 @@
     outline: none;
   }
 
-  /* Breadcrumbs */
+  /* Breadcrumbs — match Lovable text-xs text-muted-foreground */
   .section-{{ section.id }} ~ .container .page-header,
   .section-{{ section.id }} .page-header {
     color: var(--sw-text-muted);
-    font-size: 0.8125rem;
+    font-size: 12px;
+  }
+  .section-{{ section.id }} ~ .container .page-header a,
+  .section-{{ section.id }} .page-header a {
+    color: var(--sw-text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .section-{{ section.id }} ~ .container .page-header a:hover,
+  .section-{{ section.id }} .page-header a:hover {
+    color: var(--sw-text-primary);
   }
 
   /* View details link (quickbuy) */

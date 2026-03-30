@@ -10,7 +10,6 @@
 .sw-shadow-glow { box-shadow: var(--sw-shadow-glow); }
 
 /* TRANSITION UTILITIES */
-.sw-transition-smooth { transition: var(--sw-transition-smooth); }
 .sw-transition-spring { transition: var(--sw-transition-spring); }
 
 /* TOUCH TARGET (Apple HIG: 44px minimum) */
