@@ -479,10 +479,10 @@
     letter-spacing: -0.02em;
   }
 
-  /* Card container: hairline border, rounded, smooth transitions */
+  /* Card container: hairline border, rounded-lg (8px), smooth transitions — matches Lovable rounded-lg */
   .section-id-{{ section.id }} .collection-block .block-inner {
-    border-radius: 12px;
-    border: var(--sw-border-hairline, 1px solid rgba(255, 255, 255, 0.08));
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     overflow: hidden;
     background: var(--sw-surface-card, #15171E);
     transition: border-color 200ms ease;
@@ -496,7 +496,7 @@
   /* Card image: cover, maintain aspect ratio */
   .section-id-{{ section.id }} .collection-block .image-cont {
     overflow: hidden;
-    border-radius: var(--sw-radius-sm, 0.5rem) var(--sw-radius-sm, 0.5rem) 0 0;
+    border-radius: 8px 8px 0 0;
   }
 
   .section-id-{{ section.id }} .collection-block .product-block__image img {
@@ -512,21 +512,21 @@
     }
   }
 
-  /* Card title: uppercase, tight tracking, small bold text */
+  /* Card title: bold, uppercase, tiny — matches Lovable text-[8px] sm:text-[10px] */
   .section-id-{{ section.id }} .collection-block .product-block__title,
   .section-id-{{ section.id }} .collection-block .text-overlay__title h2 {
     font-weight: 700;
-    font-size: 10px;
+    font-size: 8px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    line-height: 1.2;
+    line-height: 1.25;
     color: var(--sw-text-primary, #F5F5F5);
   }
 
-  @media (min-width: 750px) {
+  @media (min-width: 640px) {
     .section-id-{{ section.id }} .collection-block .product-block__title,
     .section-id-{{ section.id }} .collection-block .text-overlay__title h2 {
-      font-size: 12px;
+      font-size: 10px;
     }
   }
 
@@ -559,21 +559,27 @@
     scroll-snap-align: start;
   }
 
-  /* Compact carousel items — match Lovable w-[130px] sm:[150px] md:[180px] */
+  /* Compact carousel items — match Lovable WakeCollectionsCarousel flex percentages */
   .section-id-{{ section.id }} .product-grid--carousel .slider__item {
-    max-width: 130px;
-    flex-shrink: 0;
+    flex: 0 0 22%;
+    min-width: 0;
   }
 
   @media (min-width: 640px) {
     .section-id-{{ section.id }} .product-grid--carousel .slider__item {
-      max-width: 150px;
+      flex: 0 0 16%;
     }
   }
 
   @media (min-width: 768px) {
     .section-id-{{ section.id }} .product-grid--carousel .slider__item {
-      max-width: 180px;
+      flex: 0 0 12%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-id-{{ section.id }} .product-grid--carousel .slider__item {
+      flex: 0 0 9%;
     }
   }
 

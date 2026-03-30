@@ -911,3 +911,47 @@ Convergence prompt: tiered fix-and-verify pass addressing specific user complain
 - XL screen collection card sizing
 - PageFly cleanup (if no longer used)
 - CRO + Brand audit (Run 15 rotation)
+
+---
+
+## Run 15 — 2026-03-30 (Convergence Pass — Tier 3 continued)
+
+### Tier Status
+- Tier 1 (Site Loads): ✅ VERIFIED
+- Tier 2 (Navigation): ✅ VERIFIED
+- Tier 3 (Design Match): 12/14 homepage sections matched (slideshow, rich-text, collection-list ×2, shop-the-look ×2, featured-collection ×3, scrolling-banner, background-video, testimonials)
+- Tier 4 (Polish): Pending
+
+### What I Fixed
+
+#### collection-list.liquid — Card sizing re-done from Lovable source
+- **CORRECTED**: Run 14 used WakeCategoryGrid pixel widths (130/150/180px). Re-read WakeCollectionsCarousel.tsx — actual Lovable uses **percentage-based flex**: `flex: 0 0 22%` → `16%` → `12%` → `9%` at sm/md/lg. Replaced max-width with flex percentages.
+- **Aspect ratio**: Changed from `portrait-45` (4:5) to `portrait-23` (2:3) — matches Lovable `aspect-[3/4]`
+- **Card radius**: 12px → 8px — matches Lovable `rounded-lg` (0.5rem)
+- **Title font-size**: 10px/12px → 8px/10px — matches Lovable `text-[8px] sm:text-[10px]`
+
+#### shop-the-look.liquid — Title typography
+- **letter-spacing**: -0.025em → -0.015em — matches Lovable `tracking-tight`
+- **Added**: `font-weight: 600; line-height: 1.25` — matches `font-semibold leading-tight`
+
+#### background-video.liquid — Title typography
+- Same tracking fix: -0.025em → -0.015em
+- Added: `font-weight: 600; line-height: 1.25`
+
+### What I Verified Works
+- Collection card flex percentages: 22%/16%/12%/9% confirmed in CSS
+- Image shape: `portrait-23` (2:3) in both collection-list template settings
+- Hero slideshow: All values exact match Lovable WakeHero (border-radius, height, gradient, typography, dots, buttons)
+- Collection strip: sticky, blur, z-index all match WakeUnifiedStrip
+
+### Remaining (Prioritized)
+1. **TIER 3: Product card aspect-ratio** — `product-block.liquid` forces `aspect-ratio: 1` on all cards
+2. **TIER 3: Footer layout** — Lovable uses `grid-cols-2 md:grid-cols-5`; Symmetry uses flex
+3. **TIER 4: Mobile sort bottom-sheet** — radius + backdrop not verified
+4. **TIER 4: Header search overlay** — Lovable has dedicated search UI
+5. **TIER 4: Cart drawer trust badges** — styling not verified post-Run 2
+6. **PageFly cleanup** — ~2KB unused CSS/JS in theme.liquid
+7. **Tamara widget** — loads on every page, should be conditional
+8. **Filter count** — `show_filter_counts: False` hides useful info
+
+### Next Run: Start at Tier 3, focus on product-block snippet + footer layout
