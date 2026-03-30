@@ -168,6 +168,77 @@
 </div>
 
 
+{% style %}
+  /* ── SafeWake: Video-with-text — matching WakeLifestyleVideoBlock ── */
+
+  /* Video container: rounded corners, controlled height */
+  .section-video-with-text .video-section {
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .section-video-with-text .video-section .height--adapt {
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  /* Text column: tighter spacing */
+  .section-video-with-text .feature-text-paired {
+    max-width: 480px;
+  }
+
+  /* Subheading/eyebrow: 10px uppercase, widest tracking, muted */
+  .section-video-with-text .subheading {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    color: var(--sw-text-muted, #9CA1AB);
+    opacity: 0.6;
+  }
+
+  /* Heading: semibold, tight tracking */
+  .section-video-with-text .majortitle {
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+
+  /* Body text: secondary color, relaxed line-height */
+  .section-video-with-text .rte {
+    color: var(--sw-text-secondary, #CDD0D6);
+    line-height: 1.625;
+    font-size: 14px;
+  }
+
+  /* CTA button: solid white pill matching WakeLifestyleVideoBlock */
+  .section-video-with-text .btn {
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 10px 20px;
+    min-height: 40px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  /* Play button: glassmorphic circle */
+  .section-video-with-text .video-section__play-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .section-video-with-text .video-section__play-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+  }
+{% endstyle %}
+
 {% schema %}
 {
   "name": "Video with text",

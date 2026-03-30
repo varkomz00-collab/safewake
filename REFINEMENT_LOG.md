@@ -801,3 +801,67 @@ Read WakeHeader.tsx (dropdown/mega-menu/mobile drawer classes), WakeGallery.tsx 
 - Footer social icon refinements
 - Touch device hover state fixes (`@media (hover: hover)`)
 - CRO + Conversion audit (Run 13 rotation)
+
+---
+
+## Run 13 — 2026-03-30
+
+### Methodology
+Read WakeLifestyleVideoBlock.tsx (video section: `rounded-2xl h-56 md:h-80`, label `text-[10px] tracking-widest`, heading `text-lg md:text-3xl font-semibold tracking-tight`), WakeUnifiedStrip.tsx (CTA button patterns), WakeFooter.tsx (social icons, grid layout). Performed Engineering + Design audit rotation: CSS specificity, `!important` usage, duplicate declarations, `transition: all` elimination verification, selector scoping, and touch device hover guards.
+
+### Bugs Fixed
+- **Footer social focus-visible: duplicate box-shadow** — Two `box-shadow` declarations on `.section-footer .social a:focus-visible`. The second used `var(--sw-glow, #0aa3ff)` which is invalid (the token stores space-separated HSL parts `205 100% 52%`, not a color). Removed duplicate, kept correct `hsl(var(--sw-glow-h), var(--sw-glow-s), var(--sw-glow-l))` declaration.
+
+### Sections Refined
+
+#### video-with-text.liquid (New Styling)
+- **Video container**: Added `border-radius: 16px; overflow: hidden` — matches Lovable `rounded-2xl`
+- **Subheading/eyebrow**: `font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; opacity: 0.6` — matches Lovable `text-[10px] font-medium uppercase tracking-widest text-white/60`
+- **Heading**: `font-weight: 600; letter-spacing: -0.025em; line-height: 1.15` — matches Lovable `font-semibold tracking-tight`
+- **Body text**: `color: var(--sw-text-secondary); line-height: 1.625; font-size: 14px` — matches Lovable `text-xs md:text-sm text-white/60`
+- **CTA button**: Pill shape `border-radius: 9999px; font-size: 12px; font-weight: 500` — matches Lovable `text-xs font-medium`
+- **Play button**: Glassmorphic circle `border-radius: 9999px; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px)` with hover scale
+
+#### rich-text.liquid (CTA Button Upgrade)
+- **Button styling**: Added `border-radius: 9999px; font-size: 14px; font-weight: 500; padding: 12px 24px; min-height: 44px` — pill shape matching Lovable's button pattern
+- **Hover lift**: `translateY(-1px)` wrapped in `@media (hover: hover)` — only on pointer devices
+- **Transition**: Specific properties `background-color 0.3s, transform 0.3s, box-shadow 0.3s`
+
+#### slideshow.liquid (Touch Device Fix)
+- **Arrow hover guard**: `@media (min-width: 768px)` → `@media (min-width: 768px) and (hover: hover)` — arrows now stay visible on iPad/touch tablets instead of being permanently hidden (no hover event fires on touch)
+
+#### featured-collection.liquid (Touch Device Fix)
+- **Arrow hover guard**: Same `(hover: hover)` addition — carousel nav arrows visible by default on touch devices
+
+#### footer.liquid (Focus Ring Fix)
+- Removed invalid duplicate `box-shadow` declaration using broken `var(--sw-glow)` token
+- Retained correct `hsl(var(--sw-glow-h, 205), var(--sw-glow-s, 100%), var(--sw-glow-l, 52%))` focus ring
+
+### Skills Applied
+- **Engineering + Design audit (Run 13 rotation)**:
+  - **`transition: all` audit**: Zero instances in any section CSS — all transitions use specific properties. Clean.
+  - **`var(--sw-transition-smooth)` audit**: Zero references in sections/snippets. Only exists in token definition (as intended) and REFINEMENT_LOG history.
+  - **`!important` audit**: 1 instance in SafeWake CSS (`.shopify-payment-button__button border-radius`) — justified because Shopify's dynamic checkout injects inline styles. Other `!important` instances are Symmetry's responsive image overrides — not ours, won't touch.
+  - **Duplicate declaration fix**: Footer social focus ring had two box-shadow values; second was invalid. Fixed.
+  - **Selector scoping audit**: All section CSS properly scoped via `.section-[class]` or `#section-{{ section.id }}` or `.section-id-{{ section.id }}`. No global selectors found in our additions.
+  - **Touch device hover**: Added `(hover: hover)` media query to group-hover arrow patterns in slideshow and featured-collection. On iPad/iOS, `:hover` events don't fire on parent containers, so arrows were permanently invisible on touch devices.
+  - **CSS budget**: 4,212 bytes total (under 5KB target). No change this run — all new CSS is in `{% style %}` blocks.
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **Scrolling banner** — WakeExpressBanner uses `bg-success-fill/10` with `border-y border-success-fill/20` color scheme not matched in `scrolling-banner.liquid`
+2. **Product popups modal** — Size guide and shipping info modals use default Symmetry styling; should match gallery zoom modal dark treatment
+3. **Mobile sort bottom-sheet** — Radius + backdrop-filter not verified against Lovable Sheet component (`rounded-t-2xl bg-card`)
+4. **Product card aspect-ratio** — `aspect-ratio: 1` in product-block may conflict with Symmetry's JS-calculated heights at certain viewports
+5. **Collection-list hover** — Lovable `WakeCategoryGrid` uses `group-hover:scale-105` on images inside cards; our implementation may need `(hover: hover)` guard too
+6. **Announcement bar** — Not compared against Lovable's `AnnouncementBar.tsx` — may have different font-size/padding
+7. **Cart drawer trust badges** — Placement and styling not verified against Lovable's cart patterns
+8. **Header search overlay** — Lovable has a dedicated search UI with `w-full justify-start gap-3 h-11 rounded-xl`; ours uses Symmetry's default search
+9. **Sticky buy box safe-area** — `env(safe-area-inset-bottom)` padding may not apply correctly on iPhone notch devices
+10. **Footer column count** — Lovable uses `grid-cols-2 md:grid-cols-5`; Symmetry uses flex wrapping — different layout behavior at breakpoints
+
+### Next Run Should Focus On
+- Scrolling banner color scheme comparison
+- Product popups modal dark styling
+- Collection-list image hover guard
+- Announcement bar comparison with Lovable
+- CRO + Conversion audit (Run 14 rotation)

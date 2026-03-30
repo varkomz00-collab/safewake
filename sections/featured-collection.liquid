@@ -77,8 +77,8 @@
     background: rgba(11, 13, 16, 0.9);
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
   }
-  /* Desktop: arrows hidden by default, visible on section hover */
-  @media (min-width: 768px) {
+  /* Desktop: arrows hidden by default, visible on section hover (pointer devices only) */
+  @media (min-width: 768px) and (hover: hover) {
     .section-id-{{ section.id }} .slider-nav__btn {
       opacity: 0;
     }

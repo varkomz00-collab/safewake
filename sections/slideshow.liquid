@@ -349,8 +349,8 @@
         box-shadow 150ms ease-out,
         border-color 150ms ease-out;
     }
-    /* Desktop: arrows visible on hover only */
-    @media (min-width: 768px) {
+    /* Desktop: arrows visible on hover only (pointer devices only) */
+    @media (min-width: 768px) and (hover: hover) {
       #section-id-{{ section.id }} .slideshow-nav__btn {
         opacity: 0;
       }

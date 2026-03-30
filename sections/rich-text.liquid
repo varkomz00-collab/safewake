@@ -69,10 +69,22 @@
   #section-{{ section.id }} .rt-apple__actions .button-row__btn {
     min-width: auto;
     white-space: nowrap;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 24px;
+    min-height: 44px;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   #section-{{ section.id }} .rt-apple__actions .button-row__btn:first-child {
     font-weight: 500;
+  }
+
+  @media (hover: hover) {
+    #section-{{ section.id }} .rt-apple__actions .button-row__btn:hover {
+      transform: translateY(-1px);
+    }
   }
 
   #section-{{ section.id }} .rt-apple__media {
