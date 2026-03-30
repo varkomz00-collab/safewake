@@ -140,7 +140,7 @@
       background: transparent;
       opacity: 1;
       border: none;
-      transition: all 300ms ease;
+      transition: opacity 300ms ease;
       padding: 0;
       overflow: hidden;
       min-width: 44px;
@@ -158,7 +158,7 @@
       border-radius: 9999px;
       background: var(--sw-text-secondary, currentColor);
       opacity: 0.3;
-      transition: all 300ms ease;
+      transition: width 300ms ease, opacity 300ms ease;
     }
     #section-id-{{ section.id }} .slideshow-nav__btn:hover::before {
       opacity: 0.6;

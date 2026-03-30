@@ -11,9 +11,17 @@
      ----------------------------------------------------------- */
   .collections-widget {
     width: 100%;
+    background: rgba(var(--sw-glow-h, 205), 10%, 10%, 0.8);
     background: var(--sw-surface-section, #101218);
     padding: 0.75rem 0 1rem;
     color: var(--sw-text-primary, #F5F5F5);
+    position: sticky;
+    top: 60px;
+    z-index: 20;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    background-color: rgba(16, 18, 24, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .collections-widget .collections-container {

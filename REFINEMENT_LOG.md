@@ -162,3 +162,62 @@ Addressed top 5 remaining issues from Run 1. Read Lovable component source for e
 - Rich-text sticky navigation strip (backdrop-blur-lg, sticky positioning)
 - Mobile menu drawer: rounded sheet with backdrop blur
 - Mobile CRO viewport audit on iPhone SE 375px
+
+---
+
+## Run 3 — 2026-03-30
+
+### Methodology
+Focused on CSS budget, `transition: all` cleanup, sticky collection strip, and mobile menu drawer. Audited safewake-utilities.css for dead code, searched all sections for `transition: all`, read WakeUnifiedStrip.tsx for sticky strip values, read Sheet.tsx for drawer patterns.
+
+### Bugs Fixed
+- None found (validation clean on entry)
+
+### Sections Refined
+
+#### safewake-utilities.css (CSS budget fix)
+- **MAJOR** — Removed 12 unused utility classes: `.sw-glow-hover`, `.sw-glow-focus`, `.sw-container`, `.sw-section-spacing`, `.sw-surface-textured`, `.sw-nav-link`, `.sw-card`, `.sw-product-card`, `.sw-btn-pill`, `.sw-label-pill`, `.sw-stock-dot`, `.sw-gradient-bottom`, `.sw-backdrop-blur`, `.sw-safe-bottom`, `.sw-safe-top`
+- File size: 5,488 bytes → 1,250 bytes (77% reduction)
+- **Total CSS budget: 8,517 bytes → 4,279 bytes** — now under 5KB target
+
+#### testimonials.liquid (transition: all cleanup)
+- Nav button: `transition: all 300ms ease` → `transition: opacity 300ms ease`
+- Nav dot pseudo-element: `transition: all 300ms ease` → `transition: width 300ms ease, opacity 300ms ease`
+- Zero remaining `transition: all` instances across entire theme
+
+#### main-collection.liquid (sticky collection strip)
+- **Lovable ref:** WakeUnifiedStrip.tsx — `sticky top-[60px] z-20 bg-background/80 backdrop-blur-lg border-b`
+- `.collections-widget`: added `position: sticky; top: 60px; z-index: 20`
+- Added `backdrop-filter: blur(16px)` with webkit prefix
+- Background: semi-transparent `rgba(16, 18, 24, 0.8)` for blur-through effect
+- Added `border-bottom: 1px solid rgba(255, 255, 255, 0.06)` hairline separator
+
+#### header.liquid (mobile menu drawer)
+- **Lovable ref:** Sheet.tsx bottom variant — `rounded-t-2xl`, `shadow-lg`, slide animations
+- `.mobile-navigation-drawer`: added `border-radius: 16px 16px 0 0` (rounded-t-2xl)
+- Added `backdrop-filter: blur(16px)` with webkit prefix
+- Added `box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4)` upward shadow for depth
+
+### Skills Applied
+- Performance: CSS budget audit found 77% dead code; file went from 5.5KB to 1.25KB
+- Engineering: `transition: all` replaced with specific properties to prevent layout jank
+- Design system: verified sticky strip values (top: 60px, z-20, blur-lg) against WakeUnifiedStrip source
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **Mobile CRO: ATC visibility** — Need to verify add-to-cart button is visible above fold on iPhone SE (375×667px) without scrolling
+2. **Collection filter strip** — WakeFilterStrip.tsx has express delivery toggle with `animate-shake` animation; not implemented (requires JS)
+3. **Product page trust strip** — WakeTrustStrip.tsx uses specific `gap-x-3 gap-y-1 py-2` layout; not yet verified against our implementation
+4. **Responsive product card widths** — Lovable uses `w-[48%]/w-[32%]/w-[24%]/w-[20%]` breakpoint pattern; Shopify grid handles this differently
+5. **Cart drawer empty state** — Lovable has illustrated empty cart with CTA; ours uses default Symmetry empty state
+6. **Announcement bar** — Not yet compared against Lovable's AnnouncementBar.tsx patterns
+7. **Product card hover** — snippets/product-block.liquid needs shadow+translateY hover matching Lovable WakeProductCard.tsx
+8. **Gallery thumbnails scroll** — main-product.liquid thumbnail strip may need scroll-snap for mobile swipe UX
+9. **Footer social icons** — WakeFooter.tsx uses hover:scale(1.1) transition; not yet verified
+10. **Sticky collection strip scroll-snap** — WakeUnifiedStrip pills have scroll-into-view on active collection; our carousel doesn't auto-scroll to active pill
+
+### Next Run Should Focus On
+- Product card hover effects (snippets/product-block.liquid)
+- Product page trust strip verification against WakeTrustStrip.tsx
+- Announcement bar comparison against Lovable
+- Footer social icon hover scale
+- Mobile CRO viewport audit on iPhone SE 375px
