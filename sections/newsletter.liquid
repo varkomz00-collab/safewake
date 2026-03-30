@@ -38,6 +38,89 @@
   </div>
 </div>
 
+{% style %}
+  /* ── SafeWake Newsletter — Apple-style refinements ── */
+  .section-newsletter {
+    background: var(--sw-surface-section, #101218);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .section-newsletter .hometitle {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--sw-text-primary, #F5F5F5);
+  }
+
+  .section-newsletter .rte {
+    color: var(--sw-text-muted, #9CA1AB);
+    max-width: 28rem;
+    margin-inline: auto;
+  }
+
+  .section-newsletter .signup-form__inline-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 28rem;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 640px) {
+    .section-newsletter .signup-form__inline-container {
+      flex-direction: row;
+    }
+  }
+
+  .section-newsletter .signup-form__email {
+    flex: 1;
+    height: 48px;
+    border-radius: 9999px;
+    padding-inline: 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--sw-text-primary, #F5F5F5);
+    font-size: 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .section-newsletter .signup-form__email:focus {
+    outline: none;
+    border-color: hsla(var(--sw-glow-h, 205), var(--sw-glow-s, 100%), var(--sw-glow-l, 52%), 0.5);
+    box-shadow: 0 0 0 3px hsla(var(--sw-glow-h, 205), var(--sw-glow-s, 100%), var(--sw-glow-l, 52%), 0.15);
+  }
+
+  .section-newsletter .signup-form__email::placeholder {
+    color: var(--sw-text-muted, #9CA1AB);
+  }
+
+  .section-newsletter .signup-form__button {
+    height: 48px;
+    padding-inline: 32px;
+    border-radius: 9999px;
+    background: var(--sw-text-primary, #F5F5F5);
+    color: var(--sw-surface-void, #07090D);
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .section-newsletter .signup-form__button:hover {
+    background: rgba(245, 245, 245, 0.9);
+    transform: translateY(-1px);
+  }
+
+  .section-newsletter .signup-form__response--success {
+    color: var(--sw-stock-in, #22C55E);
+  }
+
+  .section-newsletter .signup-form__response--error .error {
+    color: var(--sw-destructive, #B91C1C);
+  }
+{% endstyle %}
+
 {% schema %}
 {
   "name": "Newsletter",

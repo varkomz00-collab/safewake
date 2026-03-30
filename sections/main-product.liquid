@@ -983,6 +983,77 @@
     }
   }
 
+  /* --- Gallery Zoom Modal (matching WakeGallery lightbox) --- */
+  .gallery-viewer-modal .modal__window {
+    background: #000;
+    border: none;
+    border-radius: 0;
+  }
+
+  .gallery-viewer__button {
+    background: rgba(255, 255, 255, 0.10);
+    color: #fff;
+    border-radius: 9999px;
+    padding: 12px;
+    transition: background-color 0.2s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .gallery-viewer__button:hover {
+    background: rgba(255, 255, 255, 0.20);
+  }
+
+  .gallery-viewer__button svg {
+    stroke: #fff;
+  }
+
+  .gallery-viewer__close {
+    top: 16px;
+    right: 16px;
+  }
+
+  .gallery-viewer__prev {
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .gallery-viewer__next {
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .gallery-viewer__thumbs {
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 9999px;
+    padding: 6px 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 24px;
+  }
+
+  .gallery-viewer__thumb {
+    background: transparent;
+    border-radius: var(--sw-radius-md, 0.75rem);
+    overflow: hidden;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+  }
+
+  .gallery-viewer__thumb:hover,
+  .gallery-viewer__thumb--active {
+    opacity: 1;
+  }
+
+  .gallery-viewer__thumb--active::after {
+    background: #fff;
+    border-radius: 2px;
+  }
+
   /* --- 2. Product Title --- */
   .section-{{ section.id }} .product-title {
     letter-spacing: -0.02em;

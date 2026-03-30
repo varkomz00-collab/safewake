@@ -222,6 +222,67 @@
     min-height: var(--sw-touch-target, 44px);
   }
 
+  /* ── Desktop dropdown menus ── */
+  @media (min-width: 768px) {
+    .navigation .navigation__item--with-small-menu > .navigation__tier-2-container {
+      background: var(--sw-surface-card, #15171E);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--sw-radius-lg, 1rem);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      min-width: 192px;
+      overflow: hidden;
+    }
+
+    .navigation .navigation__item--with-small-menu > .navigation__tier-2-container .container {
+      padding: 8px;
+    }
+
+    .navigation .navigation__item--with-small-menu > .navigation__tier-2-container .navigation__tier-2 .navigation__link {
+      padding: 8px 12px;
+      border-radius: var(--sw-radius-md, 0.75rem);
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .navigation .navigation__item--with-small-menu > .navigation__tier-2-container .navigation__tier-2 .navigation__link:hover {
+      background-color: rgba(255, 255, 255, 0.06);
+    }
+
+    /* Mega-menu panel */
+    .navigation .navigation__item--with-mega-menu > .navigation__tier-2-container {
+      background: var(--sw-surface-card, #15171E);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  /* ── Mobile drawer: collapsible section headers ── */
+  .mobile-navigation-drawer .navigation__children-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--sw-touch-target, 44px);
+    min-height: var(--sw-touch-target, 44px);
+    transition: transform 0.2s ease;
+  }
+
+  .mobile-navigation-drawer .navigation__tier-2-container {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .mobile-navigation-drawer .navigation__tier-2 .navigation__link {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 12px 10px 16px;
+    border-radius: var(--sw-radius-md, 0.75rem);
+    transition: background-color 0.15s ease;
+  }
+
+  .mobile-navigation-drawer .navigation__tier-2 .navigation__link:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+
   /* ── Header shade overlay ── */
   .header-shade {
     background-color: rgba(0, 0, 0, 0.5);

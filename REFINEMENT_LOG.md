@@ -732,3 +732,72 @@ Read Lovable TestimonialsSlider.tsx (horizontal layout, 96/128px round avatars, 
 - Collection strip active state token fix
 - Video-with-text section comparison
 - Brand + SEO audit (Run 12 rotation)
+
+---
+
+## Run 12 — 2026-03-30
+
+### Methodology
+Read WakeHeader.tsx (dropdown/mega-menu/mobile drawer classes), WakeGallery.tsx (zoom modal/lightbox), NewsletterSection.tsx, and WakeLifestyleVideoBlock.tsx from Lovable source. Extracted exact Tailwind-to-CSS values. Compared against current Shopify sections. Fixed hardcoded color tokens, added missing dropdown/modal/newsletter styling.
+
+### Bugs Fixed
+- **Hardcoded `#2badd4` in main-collection.liquid** — 3 instances (collection-link active, pagination current) replaced with `hsl(var(--sw-glow-h), var(--sw-glow-s), var(--sw-glow-l))` design tokens. This ensures brand color changes propagate everywhere.
+
+### Sections Refined
+
+#### main-collection.liquid (Token Fix)
+- Collection strip active state: `#2badd4` → `hsl(var(--sw-glow-h, 205), var(--sw-glow-s, 100%), var(--sw-glow-l, 52%))`
+- Active box-shadow: `rgba(43, 173, 212, 0.55)` → `hsla(var(--sw-glow-h), ..., 0.55)`
+- Pagination current: all 4 hardcoded values replaced with glow token HSL
+
+#### header.liquid (Dropdown + Mobile Drawer)
+- **Desktop dropdown**: Added `bg-card` background (`var(--sw-surface-card)`), `border-radius: 1rem`, `box-shadow: 0 8px 24px rgba(0,0,0,0.4)`, `min-width: 192px` — matches Lovable `w-48 bg-card border border-border`
+- **Dropdown links**: `padding: 8px 12px`, `border-radius: 0.75rem`, `font-size: 14px`, `font-weight: 500`, hover `bg-white/6%` — matches Lovable dropdown menu item styling
+- **Mega-menu panel**: Dark card background + border-bottom hairline
+- **Mobile drawer tier-2**: Subtle `bg-white/2%` background, link styling `14px font-medium`, `border-radius: 0.75rem`, hover `bg-white/4%` — matches Lovable collapsible section links
+- **Mobile children-toggle**: 44px touch targets with transition on chevron
+
+#### main-product.liquid (Gallery Zoom Modal)
+- **Modal background**: `background: #000; border: none; border-radius: 0` — matches Lovable `bg-black border-none`
+- **Nav/close buttons**: `background: rgba(255,255,255,0.10)`, hover `rgba(255,255,255,0.20)`, `border-radius: 9999px`, `padding: 12px`, `backdrop-filter: blur(8px)` — matches Lovable `bg-white/10 hover:bg-white/20 rounded-full p-3`
+- **Button positioning**: Close at `top: 16px; right: 16px`, prev/next at `50%` vertical — matches Lovable `absolute top-4 right-4` and `top-1/2 -translate-y-1/2`
+- **Thumbnails bar**: `bg-white/10`, `backdrop-blur(8px)`, `border-radius: 9999px`, centered via `left: 50%; translateX(-50%)`, `bottom: 24px` — matches Lovable `bg-white/10 backdrop-blur-sm rounded-full`
+- **Thumb styling**: Transparent bg, `border-radius: 0.75rem`, `opacity: 0.5` default → `1` on hover/active
+- **SVG strokes**: White (#fff) for dark modal background
+
+#### newsletter.liquid (New Styling)
+- **Section background**: `var(--sw-surface-section)` with border-y hairlines — matches Lovable `bg-surface-subtle`
+- **Title**: `font-weight: 600; letter-spacing: -0.02em` — Apple-style heading
+- **Subtitle**: `color: var(--sw-text-muted)` with `max-width: 28rem; margin-inline: auto` for centered reading width
+- **Form layout**: Flex column on mobile → row at 640px — matches Lovable `flex-col sm:flex-row gap-3`
+- **Email input**: `height: 48px; border-radius: 9999px; padding-inline: 20px; bg: rgba(255,255,255,0.04); border: rgba(255,255,255,0.08)` — matches Lovable `h-12 rounded-full px-5 bg-muted/50 border-border`
+- **Input focus**: Glow token ring (`0 0 0 3px`) with brand color — premium focus indicator
+- **Submit button**: `height: 48px; border-radius: 9999px; bg: var(--sw-text-primary); color: var(--sw-surface-void)` — matches Lovable `h-12 rounded-full bg-foreground text-background`
+- **Button hover**: `background: rgba(245,245,245,0.9); translateY(-1px)` — subtle lift
+- **Success/error states**: Using `--sw-stock-in` and `--sw-destructive` tokens
+
+### Skills Applied
+- **Brand + SEO audit (Run 12 rotation)**:
+  - **Token consistency**: Eliminating hardcoded `#2badd4` ensures the brand glow color is single-sourced — changing `--sw-glow-h/s/l` now updates collection strip, pagination, nav underlines, cart badge, and all hover glows simultaneously
+  - **Dropdown UX**: Dark card dropdowns with rounded corners and item hover states match Apple's menu pattern — prevents the jarring "white box on dark site" that default Symmetry would produce
+  - **Newsletter conversion**: Pill-shaped inputs and full-width CTA on mobile follow Lovable's tested signup pattern; the glow focus ring draws attention to the active input without being aggressive
+  - **Gallery modal**: Dark fullscreen modal with glassmorphic nav buttons is standard for premium e-commerce — ensures product images are the sole visual focus during zoom
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **Video-with-text section** — shop-the-look.liquid partially matches WakeLifestyleVideoBlock but needs video container height verification (`h-56 md:h-80` in Lovable vs current implementation)
+2. **Rich-text CTA buttons** — Not compared against Lovable button styles; may need pill shape + hover lift
+3. **Testimonials carousel navigation** — Arrow button positioning needs re-check after Run 11 card dimension changes
+4. **Product card aspect-ratio** — `aspect-ratio: 1` in product-block may conflict with Symmetry JS at certain viewports
+5. **Hover states on touch devices** — `:hover` group-hover patterns on slideshow/featured-collection won't activate on iOS; need `@media (hover: hover)` wrapper
+6. **Mobile sort bottom-sheet** — Needs radius + backdrop-filter verification against Lovable Sheet component
+7. **Footer social icons** — Lovable uses `w-10 h-10 rounded-full border border-border` with hover scale; not verified
+8. **Scrolling banner** — WakeExpressBanner uses specific bg-success-fill/10 color scheme not matched
+9. **Product popups modal** — Size guide/shipping modals may need dark styling to match gallery modal
+10. **Announcement bar marquee** — Lovable smooth scroll speed not verified against Shopify's implementation
+
+### Next Run Should Focus On
+- Video-with-text section height/overlay comparison
+- Rich-text CTA button styling
+- Footer social icon refinements
+- Touch device hover state fixes (`@media (hover: hover)`)
+- CRO + Conversion audit (Run 13 rotation)
