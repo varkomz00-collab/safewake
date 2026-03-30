@@ -906,11 +906,20 @@
     border-radius: 16px;
     overflow: hidden;
     box-shadow: var(--sw-shadow-soft);
-    transition: box-shadow var(--sw-transition-smooth);
+    transition: box-shadow 0.3s ease;
+    cursor: zoom-in;
   }
 
   .section-{{ section.id }} .main-image:hover {
     box-shadow: var(--sw-shadow-medium);
+  }
+
+  .section-{{ section.id }} .main-image img {
+    transition: transform 0.3s ease;
+  }
+
+  .section-{{ section.id }} .main-image:hover img {
+    transform: scale(1.02);
   }
 
   .section-{{ section.id }} .slider__item img,
@@ -931,31 +940,40 @@
 
   /* Thumbnail strip */
   .section-{{ section.id }} .thumbnails .slider__grid {
-    gap: 10px;
+    gap: 8px;
     padding: 12px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .section-{{ section.id }} .thumbnails .slider__grid::-webkit-scrollbar {
+    display: none;
   }
 
   .section-{{ section.id }} .thumbnails .slider__item {
-    border-radius: var(--sw-radius-md);
+    border-radius: var(--sw-radius-lg, 12px);
     overflow: hidden;
     width: 64px;
     height: 64px;
-    transition: outline-color var(--sw-transition-smooth);
+    flex-shrink: 0;
+    aspect-ratio: 1;
+    transition: outline-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   .section-{{ section.id }} .thumbnails .slider__item.is-active {
-    outline: 2px solid hsl(var(--sw-glow-h), var(--sw-glow-s), var(--sw-glow-l));
-    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--sw-surface-paper, #0C0D13), 0 0 0 4px currentColor;
   }
 
   .section-{{ section.id }} .thumbnails .slider__item:hover:not(.is-active) {
-    outline: 2px solid hsl(var(--sw-glow-h), var(--sw-glow-s), var(--sw-glow-l) / 0.4);
-    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--sw-surface-paper, #0C0D13), 0 0 0 4px rgba(255, 255, 255, 0.2);
   }
 
   .section-{{ section.id }} .thumbnail {
-    border-radius: var(--sw-radius-sm);
+    border-radius: var(--sw-radius-lg, 12px);
     overflow: hidden;
+    aspect-ratio: 1;
+    width: 100%;
+    height: 100%;
   }
 
   @media (min-width: 640px) {
@@ -1233,13 +1251,14 @@
       left: 0;
       right: 0;
       z-index: 10;
-      background: hsl(0 0% 8% / 0.85);
+      background: rgba(12, 13, 19, 0.85);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       backdrop-filter: blur(20px) saturate(180%);
-      padding: 16px;
+      padding: 12px 16px;
       padding-bottom: max(12px, env(safe-area-inset-bottom));
       border-radius: 16px 16px 0 0;
       box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
   }
 

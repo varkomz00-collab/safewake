@@ -281,3 +281,68 @@ Read CatalogProductCard.tsx, WakeTrustStrip.tsx, and AnnouncementBar.tsx from Lo
 - Cart drawer empty state illustration
 - Collection strip auto-scroll to active pill
 - Mobile CRO viewport audit on iPhone SE 375px
+
+---
+
+## Run 5 — 2026-03-30
+
+### Methodology
+Read WakeGallery.tsx, CatalogProductCard.tsx, CartDrawer.tsx (empty state) from Lovable. Compared exact Tailwind values against Shopify CSS for gallery, product cards, cart drawer empty state, and mobile buy flow. CRO-focused run (Run 2,5,8... rotation).
+
+### Bugs Fixed
+- None found (all validation checks passed — JSON, CSS brackets, schemas, theme.liquid)
+
+### Sections Refined
+
+#### snippets/product-block.liquid (product card)
+- **Lovable ref:** CatalogProductCard.tsx — `aspect-square rounded-2xl line-clamp-2 transition-opacity duration-300`
+- Image container: added `aspect-ratio: 1` matching Lovable's `aspect-square`
+- Image container: added `overflow: hidden; border-radius` for top corners
+- Title: added `line-clamp-2` via `-webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden`
+- Image swap: added `transition: opacity 0.3s ease` on images, hover shows secondary image
+- Detail area: added `padding: 12px` and `margin-top: 4px` spacing between children matching `space-y-1`
+
+#### main-product.liquid (gallery + mobile buy)
+- **Lovable ref:** WakeGallery.tsx — `gap-2 overflow-x-auto scrollbar-hide flex-shrink-0 aspect-square rounded-xl ring-2 ring-offset-2`
+- Thumbnail strip: gap 10px → 8px matching `gap-2`
+- Thumbnail strip: added `overflow-x: auto; scrollbar-width: none` with `-webkit-scrollbar: display: none` for hidden scrollbar
+- Thumbnails: added `flex-shrink: 0; aspect-ratio: 1` for mobile horizontal scroll
+- Thumbnail radius: `--sw-radius-md` → `--sw-radius-lg` (12px) matching `rounded-xl`
+- Active thumbnail: changed from `outline` to `box-shadow` ring pattern matching Lovable's `ring-2 ring-offset-2 ring-offset-background`
+- Hover thumbnail: matching ring pattern at 20% opacity
+- Thumbnail inner: added `aspect-ratio: 1; width/height: 100%` for proper sizing
+- Main image: added `cursor: zoom-in` matching Lovable
+- Main image hover: added `transform: scale(1.02)` matching `group-hover:scale-[1.02]`
+- Main image img: added `transition: transform 0.3s ease`
+- Mobile buy box: background `hsl(0 0% 8% / 0.85)` → `rgba(12, 13, 19, 0.85)` using design token color
+- Mobile buy box: padding `16px` → `12px 16px` (tighter vertical for more content above fold)
+- Mobile buy box: added `border-top: 1px solid rgba(255,255,255,0.06)` hairline separator
+
+#### cart-drawer.liquid (empty state)
+- **Lovable ref:** CartDrawer.tsx empty — `h-12 w-12 text-muted-foreground mx-auto mb-4`
+- Empty cart icon: added explicit `width: 48px; height: 48px` matching `h-12 w-12`
+- Icon: added `margin: 0 auto 16px` matching `mx-auto mb-4`
+- Icon: added `display: block` for proper centering
+
+### Skills Applied
+- CRO (Run 5 rotation): Mobile buy flow audit — verified sticky ATC bar with backdrop-blur is fixed to bottom with safe-area padding on iPhone SE 375px. Tightened vertical padding from 16px to 12px to maximize above-fold content.
+- Design system: Gallery ring pattern now uses box-shadow to simulate Tailwind's `ring-2 ring-offset-2` since CSS `outline` doesn't support offset backgrounds.
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **Collection strip auto-scroll** — WakeUnifiedStrip auto-scrolls to active pill on mount; our collection carousel doesn't (requires JS)
+2. **Product card image aspect-ratio** — `aspect-ratio: 1` may conflict with Symmetry's image sizing JS that sets height dynamically; needs testing
+3. **Gallery zoom modal** — WakeGallery has full-screen zoom dialog with swipe navigation; Symmetry's gallery viewer may not match
+4. **Product card badge positioning** — Lovable uses `absolute top-3 left-3 z-10 flex flex-col gap-1.5`; ours uses Symmetry default positioning
+5. **Featured collection section padding** — Not re-compared against Lovable since Run 1; may have drifted
+6. **Slideshow hero CTA** — WakeHero CTA glass effect needs re-verification (blur-xl value may have changed)
+7. **Main collection page heading** — Typography not yet compared against Lovable's collection header patterns
+8. **Product page related products** — Carousel nav arrows style not verified against featured-collection arrows
+9. **Mobile menu search** — Lovable has inline search in mobile nav; Symmetry uses separate predictive search
+10. **Cart drawer cross-sell cards** — Lovable has mini product cards in cart; our cross-sell styling not verified
+
+### Next Run Should Focus On
+- Featured collection + slideshow re-audit against current Lovable
+- Product card badge positioning (top-3 left-3 flex-col gap-1.5)
+- Collection page heading typography
+- Cart drawer cross-sell card styling
+- Brand + SEO audit (Run 6 rotation: heading hierarchy, structured data)
