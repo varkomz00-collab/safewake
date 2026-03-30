@@ -955,3 +955,43 @@ Convergence prompt: tiered fix-and-verify pass addressing specific user complain
 8. **Filter count** — `show_filter_counts: False` hides useful info
 
 ### Next Run: Start at Tier 3, focus on product-block snippet + footer layout
+
+---
+
+## Run 15c — 2026-03-30 (Convergence — Tier 3 completion + Tier 4 start)
+
+### Tier Status
+- Tier 1 (Site Loads): ✅ VERIFIED
+- Tier 2 (Navigation): ✅ VERIFIED
+- Tier 3 (Design Match): 14/14 homepage sections matched
+- Tier 4 (Polish): In progress
+
+### What I Fixed
+
+#### footer.liquid — Typography match
+- Column titles: removed uppercase/tracking, now `12px/14px font-weight: 500` (Lovable `text-xs sm:text-sm font-medium`)
+- Links: responsive `12px/14px` (Lovable `text-xs sm:text-sm`)
+- Payment icons: `border-radius: 4px → 6px` (Lovable `rounded`)
+
+#### video-with-text.liquid, rich-text.liquid, testimonials.liquid — Tracking consistency
+- All heading `letter-spacing: -0.025em → -0.015em` (Tailwind `tracking-tight` = `-0.015em`)
+- video-with-text heading `line-height: 1.15 → 1.25` (Lovable `leading-tight`)
+
+#### snippets/product-block.liquid — Image contain + touch guards
+- Added `object-fit: contain` on `.product-block .image-cont img` — matches Lovable `object-contain` for Shopify product cards. Shows full product within square frame, background fills gaps.
+- Added `@media (hover: hover)` guards on card hover and image swap — prevents stuck states on touch devices
+
+### What I Verified Works
+- Zero instances of `letter-spacing: -0.025em` remaining in sections
+- Footer typography values match Lovable WakeFooter exactly
+- Product card images now use contain — full product visible in square frame
+
+### Remaining (Prioritized)
+1. **TIER 4: Mobile sort bottom-sheet** — radius + backdrop not verified against Lovable Sheet
+2. **TIER 4: Header search overlay** — Lovable has dedicated search UI with `rounded-xl h-11`
+3. **TIER 4: Cart drawer trust badges** — styling not verified post-Run 2
+4. **PageFly cleanup** — remnant `pagefly-head` render in theme.liquid adds ~2KB
+5. **Tamara widget** — external script loads on every page; should be conditional to product/cart
+6. **Filter count** — `show_filter_counts: False` hides matching counts from users
+
+### Next Run: Tier 4 polish — mobile sort sheet, header search, cart drawer
