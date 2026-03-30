@@ -485,14 +485,12 @@
     border: var(--sw-border-hairline, 1px solid rgba(255, 255, 255, 0.08));
     overflow: hidden;
     background: var(--sw-surface-card, #15171E);
-    transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+    transition: border-color 200ms ease;
   }
 
-  /* Card hover: brighter border, subtle lift + shadow */
+  /* Card hover: brighter border only — no lift, matches Lovable hover:border-foreground/30 */
   .section-id-{{ section.id }} .collection-block .block-inner:hover {
-    border-color: rgba(255, 255, 255, 0.22);
-    box-shadow: var(--sw-shadow-hover, 0 8px 24px rgba(0, 0, 0, 0.25));
-    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.30);
   }
 
   /* Card image: cover, maintain aspect ratio */
@@ -543,9 +541,9 @@
     padding: 0.625rem 0.5rem;
   }
 
-  /* Grid gap between cards */
+  /* Grid gap — match Lovable gap-1.5 (6px) */
   .section-id-{{ section.id }} .product-grid {
-    gap: 12px;
+    gap: 6px;
   }
 
   /* Carousel: smooth scroll, snap, touch-friendly */

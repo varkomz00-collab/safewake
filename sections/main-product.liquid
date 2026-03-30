@@ -1276,6 +1276,34 @@
     }
   }
 
+  /* --- Desktop Grid: match Lovable grid-cols-[1fr_420px] md / [1fr_480px] lg --- */
+  @media (min-width: 768px) {
+    .section-{{ section.id }} .product-column-right {
+      max-width: 420px;
+    }
+  }
+  @media (min-width: 1100px) {
+    .section-{{ section.id }} .product-column-right {
+      max-width: 480px;
+    }
+  }
+
+  /* Gallery sticky on desktop — match Lovable sticky top-16 self-start */
+  @media (min-width: 768px) {
+    .section-{{ section.id }} .media-gallery__inner.sticky-content-container {
+      position: sticky;
+      top: 64px;
+      align-self: start;
+      max-height: calc(100vh - 64px);
+      overflow: hidden;
+    }
+  }
+
+  /* Buy box spacing — match Lovable space-y-4 (16px) + px-4 mobile */
+  .section-{{ section.id }} .detail .product-form > * + * {
+    margin-top: 16px;
+  }
+
   /* --- General Product Detail Polish --- */
   .section-{{ section.id }} .detail {
     color: var(--sw-text-secondary);

@@ -532,3 +532,59 @@ CRO + Conversion rotation (Run 2,5,8... pattern). Read accordion.tsx, WakeProduc
 - Featured collection group-hover arrow experiment
 - Image-with-text section comparison
 - Brand + SEO audit (Run 9 rotation)
+
+## Run 9 — 2026-03-30
+
+### Methodology
+Compared Lovable WakeProductTemplate.tsx grid layout (`grid-cols-[1fr_420px]` md, `grid-cols-[1fr_480px]` lg), WakeCollectionsCarousel.tsx hover patterns (`hover:border-foreground/30`, no translateY), and hero arrow group-hover behavior against current Shopify CSS. Fixed remaining `--sw-transition-smooth` token misuse bugs discovered in announcement-bar.liquid.
+
+### Bugs Fixed
+- **CRITICAL: 3 more transition token bugs** in `announcement-bar.liquid` — `transition: background var(--sw-transition-smooth)` expanded to invalid CSS `transition: background all 0.3s ...`. Fixed by using `0.3s var(--sw-ease-smooth)` pattern (same fix as Run 8).
+
+### Sections Refined
+
+#### main-product.liquid (Desktop Layout)
+- Added desktop buybox max-width: 420px at md, 480px at lg — matches Lovable `grid-cols-[1fr_420px]` / `grid-cols-[1fr_480px]`
+- Added gallery sticky on desktop: `sticky; top: 64px; max-height: calc(100vh - 64px)` — matches Lovable `md:sticky md:top-16`
+- Added buy box vertical spacing: `> * + * { margin-top: 16px }` — matches Lovable `space-y-4`
+
+#### featured-collection.liquid (Group-Hover Arrows)
+- Desktop arrows now hidden by default (`opacity: 0`), revealed on section hover (`:hover .slider-nav__btn { opacity: 1 }`)
+- Product card hover: removed `translateY(-2px)` and `shadow-hover`, replaced with subtle `border-color: rgba(255,255,255,0.18)` + `box-shadow: 0 1px 3px` — matches product-block snippet pattern
+- Card radius: `var(--sw-radius-md)` → `var(--sw-radius-lg, 1rem)` — consistent with product-block snippet
+
+#### slideshow.liquid (Hero Arrow Reveal)
+- Desktop arrows: added `opacity: 0` → section hover `opacity: 1` pattern — cleaner Apple-style progressive disclosure
+- Added opacity to transition list for smooth appearance
+
+#### collection-list.liquid (Hover + Grid)
+- Card hover: removed `translateY(-2px)` and `box-shadow: shadow-hover`, replaced with `border-color: rgba(255,255,255,0.30)` only — matches Lovable `hover:border-foreground/30`
+- Simplified transition to `border-color 200ms ease` only
+- Grid gap: 12px → 6px — matches Lovable `gap-1.5`
+
+#### announcement-bar.liquid (Transition Fixes)
+- Fixed 3 broken transition patterns: `background var(--sw-transition-smooth)` → `background 0.3s var(--sw-ease-smooth)`
+- Same fix applied to opacity and dismiss button transitions
+
+### Skills Applied
+- **Brand consistency audit**: Verified hover patterns across all card components (product-block, collection-list, featured-collection) now follow same philosophy: border-only hover, no translateY lifts
+- **Design system audit**: Confirmed all `--sw-transition-smooth` token misuse is now eliminated across all sections
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **Product card aspect-ratio conflict** — `aspect-ratio: 1` on `.image-cont` may conflict with Symmetry's JS image resizing
+2. **Gallery zoom modal** — Lovable has fullscreen swipe gallery; Symmetry's modal needs verification
+3. **Tab-style UI on desktop** — Lovable uses tabs for product details; we use accordions (Symmetry limitation)
+4. **Shop-the-look product overlay** — Not compared against Lovable WakeLifestyleVideoBlock overlay pattern
+5. **Scrolling banner marquee speed** — Animation speed not verified against Lovable WakeExpressBanner
+6. **Collection page 3-col variant** — Lovable has responsive 2→3→4 col grid; our grid is 2→4 jump
+7. **Cart drawer cross-sell CTA** — Quick add button inside cart drawer not styled with pill pattern
+8. **Background-video section** — uses `var(--sw-transition-smooth)` as full value (works, but less precise than per-property)
+9. **main-collection filter pills** — Lovable WakeFilterStrip uses rounded-full pills; ours may not fully match
+10. **Rich-text section** — WakeUnifiedStrip uses border-y separators not present in our version
+
+### Next Run Should Focus On
+- Shop-the-look product overlay comparison
+- Cart drawer cross-sell CTA polish
+- Collection page filter strip refinement
+- Background-video transition cleanup
+- Engineering + Design audit (Run 10 rotation)
