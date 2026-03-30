@@ -987,11 +987,59 @@ Convergence prompt: tiered fix-and-verify pass addressing specific user complain
 - Product card images now use contain — full product visible in square frame
 
 ### Remaining (Prioritized)
-1. **TIER 4: Mobile sort bottom-sheet** — radius + backdrop not verified against Lovable Sheet
-2. **TIER 4: Header search overlay** — Lovable has dedicated search UI with `rounded-xl h-11`
-3. **TIER 4: Cart drawer trust badges** — styling not verified post-Run 2
-4. **PageFly cleanup** — remnant `pagefly-head` render in theme.liquid adds ~2KB
-5. **Tamara widget** — external script loads on every page; should be conditional to product/cart
-6. **Filter count** — `show_filter_counts: False` hides matching counts from users
+1. ~~**TIER 4: Header search overlay**~~ ✅ Fixed Run 16
+2. ~~**Filter count**~~ ✅ Fixed Run 16
+3. **PageFly cleanup** — remnant `pagefly-head` render in theme.liquid adds ~2KB
+4. **Tamara widget** — external script loads on every page; should be conditional to product/cart
 
-### Next Run: Tier 4 polish — mobile sort sheet, header search, cart drawer
+---
+
+## Run 16 — 2026-03-30
+
+### Methodology
+Compared header, buy box, collection filters against fresh Lovable component data (WakeHeader, ProductBuyBox, WakeCollectionFilters). All three already matched. Scanned for remaining polish gaps: hover guards, search overlay, filter UX, accessibility.
+
+### Fixes Applied (6 issues)
+
+#### header.liquid — Search overlay dark-glass styling
+- Added `background: rgba(11, 13, 16, 0.95)` + `backdrop-filter: blur(40px)` to `.section-header .main-search`
+- Search input: `bg: #15171E`, `border-radius: 1.25rem` (rounded-xl), `min-height: 44px`, glow focus ring
+- Close button: 44px round touch target with hover bg
+- Suggestions heading: 12px uppercase muted
+
+#### collection.json — Enable filter counts
+- Changed `show_filter_counts: false → true` — users now see matching product counts per filter facet
+
+#### main-product.liquid — Hover guards (4 added)
+- `.main-image:hover` box-shadow → wrapped in `@media (hover: hover)`
+- `.main-image:hover img` scale(1.02) → wrapped in `@media (hover: hover)`
+- `.product-media-collage__item:hover` → wrapped in `@media (hover: hover)`
+- `.add-to-cart:hover` translateY(-1px) → wrapped in `@media (hover: hover)`
+
+#### main-product.liquid — Focus-visible indicators (accessibility)
+- Variant pills: `outline: 2px solid brand-glow` with `outline-offset: 2px` on `:focus-visible`
+- CTA button: same focus-visible outline pattern
+
+#### main-product.liquid — Variant pill hover guard
+- `.opt-label:hover`, `.opt-btn:hover`, `.swatch-label:hover` → wrapped in `@media (hover: hover)`
+
+#### main-collection.liquid — Hover guards (4 added)
+- `.collection-link:hover` brightness(1.12) → wrapped in `@media (hover: hover)`
+- `.collection-link:hover .collection-image` scale(1.04) → wrapped in `@media (hover: hover)`
+- `.slider-nav__btn:hover` → wrapped in `@media (hover: hover)`
+- `.layout-switch:hover` → wrapped in `@media (hover: hover)`
+
+### Verification
+- `collection.json`: valid JSON ✅
+- Header search: 3 CSS rules for input, placeholder, focus ✅
+- Product page: 4 `@media (hover: hover)` guards + 2 focus-visible rules ✅
+- Collection page: 4 `@media (hover: hover)` guards ✅
+- Confirmed header/buy box/filters already match Lovable values:
+  - Header: blur(40px), rgba(11,13,16,0.9), 56px/64px heights ✅
+  - Buy box: border-2, px-5 py-2.5 pills, h-12 CTA, 44px quantity buttons ✅
+  - Filters: rounded-full toggle, pill tags, 44px touch targets ✅
+
+### Remaining (Prioritized)
+1. **PageFly cleanup** — remnant `pagefly-head` render in theme.liquid adds ~2KB
+2. **Tamara widget** — external script loads on every page; should be conditional to product/cart
+3. **Mobile sort bottom-sheet** — verify radius + backdrop matches Lovable Sheet component

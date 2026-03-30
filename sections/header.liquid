@@ -283,6 +283,70 @@
     background-color: rgba(255, 255, 255, 0.04);
   }
 
+  /* ── Search overlay — dark glass (Lovable WakeSearch parity) ── */
+  .section-header .main-search {
+    background: rgba(11, 13, 16, 0.95);
+    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px);
+  }
+
+  input[type="text"].main-search__input {
+    background: var(--sw-surface-card, #15171E);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--sw-radius-xl, 1.25rem);
+    min-height: 44px;
+    padding: 0 48px 0 16px;
+    color: var(--sw-text-primary, #F5F5F5);
+    font-size: 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  input[type="text"].main-search__input::placeholder {
+    color: var(--sw-text-muted, #9CA1AB);
+  }
+
+  input[type="text"].main-search__input:focus {
+    border-color: hsl(var(--sw-glow-h, 205), var(--sw-glow-s, 100%), var(--sw-glow-l, 52%) / 0.5);
+    box-shadow: 0 0 0 3px hsl(var(--sw-glow-h, 205), var(--sw-glow-s, 100%), var(--sw-glow-l, 52%) / 0.15);
+    outline: none;
+  }
+
+  .main-search__button {
+    color: var(--sw-text-muted, #9CA1AB);
+    transition: color 0.2s ease;
+  }
+
+  .main-search__button:hover {
+    color: var(--sw-text-primary, #F5F5F5);
+  }
+
+  .main-search button.main-search__close {
+    color: var(--sw-text-muted, #9CA1AB);
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .main-search button.main-search__close:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--sw-text-primary, #F5F5F5);
+  }
+
+  /* Search results / suggestions dark styling */
+  .main-search__results,
+  .main-search__suggestions {
+    text-align: left;
+  }
+
+  .main-search__suggestions .h4 {
+    color: var(--sw-text-muted, #9CA1AB);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
   /* ── Header shade overlay ── */
   .header-shade {
     background-color: rgba(0, 0, 0, 0.5);

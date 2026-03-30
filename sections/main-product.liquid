@@ -910,16 +910,20 @@
     cursor: zoom-in;
   }
 
-  .section-{{ section.id }} .main-image:hover {
-    box-shadow: var(--sw-shadow-medium);
+  @media (hover: hover) {
+    .section-{{ section.id }} .main-image:hover {
+      box-shadow: var(--sw-shadow-medium);
+    }
   }
 
   .section-{{ section.id }} .main-image img {
     transition: transform 0.3s ease;
   }
 
-  .section-{{ section.id }} .main-image:hover img {
-    transform: scale(1.02);
+  @media (hover: hover) {
+    .section-{{ section.id }} .main-image:hover img {
+      transform: scale(1.02);
+    }
   }
 
   .section-{{ section.id }} .slider__item img,
@@ -934,8 +938,10 @@
     transition: box-shadow 0.3s var(--sw-ease-smooth);
   }
 
-  .section-{{ section.id }} .product-media-collage__item:hover {
-    box-shadow: var(--sw-shadow-medium);
+  @media (hover: hover) {
+    .section-{{ section.id }} .product-media-collage__item:hover {
+      box-shadow: var(--sw-shadow-medium);
+    }
   }
 
   /* Thumbnail strip */
@@ -1123,10 +1129,20 @@
     background: hsl(var(--sw-glow-h), var(--sw-glow-s), var(--sw-glow-l) / 0.08);
   }
 
-  .section-{{ section.id }} .option-selector label input[type="radio"]:hover + .opt-label,
-  .section-{{ section.id }} .option-selector .opt-btn:hover,
-  .section-{{ section.id }} .option-selector .swatch-label:hover {
-    border-color: hsl(var(--sw-glow-h), var(--sw-glow-s), var(--sw-glow-l) / 0.5);
+  @media (hover: hover) {
+    .section-{{ section.id }} .option-selector label input[type="radio"]:hover + .opt-label,
+    .section-{{ section.id }} .option-selector .opt-btn:hover,
+    .section-{{ section.id }} .option-selector .swatch-label:hover {
+      border-color: hsl(var(--sw-glow-h), var(--sw-glow-s), var(--sw-glow-l) / 0.5);
+    }
+  }
+
+  /* Focus-visible for variant pills — accessibility */
+  .section-{{ section.id }} .option-selector label input[type="radio"]:focus-visible + .opt-label,
+  .section-{{ section.id }} .option-selector .opt-btn:focus-visible,
+  .section-{{ section.id }} .option-selector .swatch-label:focus-visible {
+    outline: 2px solid hsl(var(--sw-glow-h), var(--sw-glow-s), var(--sw-glow-l));
+    outline-offset: 2px;
   }
 
   /* Custom select dropdowns */
@@ -1159,16 +1175,25 @@
     box-shadow: var(--sw-shadow-soft);
   }
 
-  .section-{{ section.id }} .add-to-cart:hover,
-  .section-{{ section.id }} .quantity-submit-row__submit .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--sw-shadow-hover);
+  @media (hover: hover) {
+    .section-{{ section.id }} .add-to-cart:hover,
+    .section-{{ section.id }} .quantity-submit-row__submit .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--sw-shadow-hover);
+    }
   }
 
   .section-{{ section.id }} .add-to-cart:active,
   .section-{{ section.id }} .quantity-submit-row__submit .btn:active {
     transform: translateY(0);
     box-shadow: var(--sw-shadow-soft);
+  }
+
+  /* Focus-visible for CTA — accessibility */
+  .section-{{ section.id }} .add-to-cart:focus-visible,
+  .section-{{ section.id }} .quantity-submit-row__submit .btn:focus-visible {
+    outline: 2px solid hsl(var(--sw-glow-h), var(--sw-glow-s), var(--sw-glow-l));
+    outline-offset: 2px;
   }
 
   /* Dynamic payment button (Shop Pay, etc.) */
