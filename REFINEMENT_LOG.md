@@ -1090,4 +1090,42 @@ Compared Lovable dark-mode design tokens (index.css:162-214) against safewake-de
 
 ### Remaining (Prioritized)
 1. **Tamara widget** — external script loads on every page; should be conditional to product/cart
-2. **Remaining color-only hovers** — footer links, header nav, cart drawer — intentionally left unguarded (brief tap state, no transform/shadow changes)
+
+---
+
+## Run 18 — 2026-03-30
+
+### Methodology
+Compared WakeFooter.tsx against footer.liquid. Compared WakeHeader.tsx class values (confirmed match). Swept cart-drawer.liquid for unguarded transform hovers.
+
+### Fixes Applied (3 issues)
+
+#### footer.liquid — Background color correction
+- `background: var(--sw-surface-section)` → `var(--sw-surface-card, #15171E)`
+- Lovable footer uses `bg-card` = `#15171E`, not `bg-section` = `#101218`
+- Footer now matches Lovable's card-level surface depth
+
+#### footer.liquid + cart-drawer.liquid — Hover guards
+- Footer social icons `scale(1.1)` hover → wrapped in `@media (hover: hover)` (was sticking on mobile)
+- Cart drawer checkout `.btn:hover` with `translateY(-1px)` → wrapped in `@media (hover: hover)`
+
+#### footer.liquid — Payment icons container
+- Added `justify-content: center` (Lovable: `justify-center`)
+- Added `padding-block: 16px` (Lovable: `py-4`)
+- Added `border-top + border-bottom: 1px solid rgba(255,255,255,0.05)` (Lovable: `border-y border-border/30`)
+
+### Verification
+- Footer bg: `var(--sw-surface-card, #15171E)` ✅
+- Footer social: `@media (hover: hover)` guard ✅
+- Cart drawer: `@media (hover: hover)` guard ✅
+- Payment icons: centered + padded + bordered ✅
+
+### Tier Status
+- Tier 1 (Site Loads): ✅ VERIFIED
+- Tier 2 (Navigation): ✅ VERIFIED
+- Tier 3 (Design Match): ✅ 14/14 sections matched
+- Tier 4 (Polish): ✅ 25+ hover guards, glow tokens, focus-visible, footer matched
+
+### Remaining (Prioritized)
+1. **Tamara widget** — external script loads on every page; should be conditional to product/cart
+2. **All transform/shadow hovers now protected** — color-only hovers left intentionally unguarded

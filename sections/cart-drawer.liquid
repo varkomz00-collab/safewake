@@ -466,9 +466,11 @@
     font-size: 15px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
-  .section-cart-drawer .checkout-buttons .btn:hover {
-    box-shadow: var(--sw-shadow-hover);
-    transform: translateY(-1px);
+  @media (hover: hover) {
+    .section-cart-drawer .checkout-buttons .btn:hover {
+      box-shadow: var(--sw-shadow-hover);
+      transform: translateY(-1px);
+    }
   }
 
   /* Trust badges */

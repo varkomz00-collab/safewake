@@ -209,7 +209,7 @@
   /* Top border separation — border-border/50 */
   .section-footer {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
-    background: var(--sw-surface-section);
+    background: var(--sw-surface-card, #15171E);
   }
 
   /* Column titles — matches Lovable text-xs sm:text-sm font-medium */
@@ -257,11 +257,13 @@
     color: var(--sw-text-muted);
     transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
   }
-  .section-footer .social a:hover,
-  .section-footer .social-media a:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: var(--sw-text-primary);
-    transform: scale(1.1);
+  @media (hover: hover) {
+    .section-footer .social a:hover,
+    .section-footer .social-media a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--sw-text-primary);
+      transform: scale(1.1);
+    }
   }
   .section-footer .social a:focus-visible,
   .section-footer .social-media a:focus-visible {
@@ -277,12 +279,16 @@
     opacity: 0.5;
   }
 
-  /* Payment icons */
+  /* Payment icons — Lovable: flex-wrap justify-center gap-2 py-4 border-y border-border/30 */
   .section-footer .section-footer__payment-icons {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
+    padding-block: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
   .section-footer .section-footer__payment-icon {
     height: 32px;
