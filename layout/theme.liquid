@@ -13,6 +13,11 @@
   {%- render 'doc-head-core' -%}
   {%- render 'doc-head-social' -%}
 
+  {%- comment -%} Preconnect hints for faster resource loading {%- endcomment -%}
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+  <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
+
   {%- liquid
     assign base_font = settings.type_base_font
     assign base_font_bold = base_font | font_modify: 'weight', 'bolder'
