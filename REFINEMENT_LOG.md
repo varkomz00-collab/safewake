@@ -221,3 +221,63 @@ Focused on CSS budget, `transition: all` cleanup, sticky collection strip, and m
 - Announcement bar comparison against Lovable
 - Footer social icon hover scale
 - Mobile CRO viewport audit on iPhone SE 375px
+
+---
+
+## Run 4 — 2026-03-30
+
+### Methodology
+Read CatalogProductCard.tsx, WakeTrustStrip.tsx, and AnnouncementBar.tsx from Lovable. Compared exact Tailwind values against current Shopify CSS for product cards, trust strip, and announcement bar. Also verified footer social icons (already matching).
+
+### Bugs Fixed
+- None found (validation clean on entry)
+
+### Sections Refined
+
+#### snippets/product-block.liquid (product card hover)
+- **Lovable ref:** CatalogProductCard.tsx — `rounded-2xl border-border/40 hover:border-border hover:shadow-sm transition-all duration-300`
+- Border-radius: `--sw-radius-md` (12px) → `--sw-radius-lg` (16px) matching `rounded-2xl`
+- Border: `--sw-border-hairline` (0.08 opacity) → `rgba(255,255,255,0.10)` matching `border-border/40`
+- Hover shadow: `--sw-shadow-medium` (heavy) → `0 1px 3px rgba(0,0,0,0.12)` matching `shadow-sm`
+- Hover border: 0.22 opacity → 0.18 opacity matching `hover:border-border`
+- Removed `translateY(-2px)` — Lovable cards don't lift on hover
+- Transition: `var(--sw-transition-smooth)` → specific `border-color 0.3s ease, box-shadow 0.3s ease`
+
+#### main-product.liquid (trust strip)
+- **Lovable ref:** WakeTrustStrip.tsx — `flex flex-wrap items-center gap-x-3 gap-y-1 py-2 text-xs text-muted-foreground h-3 w-3`
+- Trust box: added `display: flex; flex-wrap: wrap; align-items: center`
+- Gap: custom → `12px 12px` matching `gap-x-3 gap-y-1`
+- Padding: `1rem 1.25rem` → `8px 12px` matching `py-2`
+- Font size: default → 12px matching `text-xs`
+- Color: default → `--sw-text-muted` matching `text-muted-foreground`
+- Icons: added explicit `12px` sizing matching `h-3 w-3`
+
+#### announcement-bar.liquid
+- **Lovable ref:** AnnouncementBar.tsx — `py-2 px-4 text-xs sm:text-sm font-medium absolute right-3 top-1/2 -translate-y-1/2 hover:opacity-70 h-3.5 w-3.5`
+- Container padding: `padding-block: 2px` → `8px` matching Lovable's `py-2`
+- Dismiss button: changed from flow-positioned to `position: absolute; right: 12px; top: 50%; transform: translateY(-50%)` matching Lovable's absolute positioning
+- Dismiss touch target: added `min-width: 44px; min-height: 44px` for Apple HIG compliance
+
+### Skills Applied
+- Design system: verified CatalogProductCard hover pattern (shadow-sm, no lift) — more restrained than our previous shadow-medium + translateY
+- Accessibility: announcement dismiss button now has 44px touch target
+- Typography: trust strip tightened to match Lovable's compact `text-xs` pattern
+
+### Remaining Issues (MUST LIST AT LEAST 5)
+1. **Mobile CRO: ATC visibility** — Need to verify add-to-cart button is visible above fold on iPhone SE (375×667px)
+2. **Collection filter strip** — WakeFilterStrip.tsx express delivery toggle with `animate-shake`; requires JS, CSS-only not feasible
+3. **Responsive product card widths** — Lovable `w-[48%]/w-[32%]/w-[24%]/w-[20%]` vs Shopify grid system
+4. **Cart drawer empty state** — Lovable has illustrated empty cart with CTA; ours uses default Symmetry
+5. **Gallery thumbnails scroll-snap** — main-product.liquid thumbnail strip needs scroll-snap for mobile swipe
+6. **Sticky collection strip scroll-snap** — WakeUnifiedStrip pills auto-scroll to active; our carousel doesn't
+7. **Product card image aspect ratio** — CatalogProductCard uses `aspect-square`; ours uses theme setting which may differ
+8. **Product card line-clamp** — CatalogProductCard uses `line-clamp-2` on title; ours doesn't truncate
+9. **Price typography** — CatalogProductCard uses `font-semibold` (600); ours already matches
+10. **Hover image swap speed** — product-block image swap transition timing not verified against Lovable
+
+### Next Run Should Focus On
+- Gallery thumbnail scroll-snap for mobile
+- Product card image aspect ratio and line-clamp
+- Cart drawer empty state illustration
+- Collection strip auto-scroll to active pill
+- Mobile CRO viewport audit on iPhone SE 375px

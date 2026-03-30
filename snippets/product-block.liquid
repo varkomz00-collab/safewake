@@ -1,14 +1,13 @@
 <style>
   .product-block {
-    border-radius: var(--sw-radius-md);
-    border: var(--sw-border-hairline);
+    border-radius: var(--sw-radius-lg, 1rem);
+    border: 1px solid rgba(255, 255, 255, 0.10);
     overflow: hidden;
-    transition: var(--sw-transition-smooth);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
   .product-block:hover {
-    border-color: rgba(255,255,255,0.22);
-    box-shadow: var(--sw-shadow-medium);
-    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   }
   .product-block__image {
     background-color: var(--sw-surface-product);

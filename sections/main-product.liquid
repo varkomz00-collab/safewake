@@ -1141,9 +1141,21 @@
   }
 
   .section-{{ section.id }} .product-info-block.text-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 12px;
     border-radius: var(--sw-radius-md);
     border: var(--sw-border-hairline);
-    padding: 1rem 1.25rem;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--sw-text-muted, #9CA1AB);
+  }
+  .section-{{ section.id }} .product-info-block.text-box svg,
+  .section-{{ section.id }} .product-info-block.text-box .icon {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
   }
 
   .section-{{ section.id }} .product-info-label {

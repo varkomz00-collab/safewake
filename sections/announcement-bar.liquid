@@ -41,7 +41,7 @@
         max-width: 1280px;
         margin: 0 auto;
         padding-inline: 12px;
-        padding-block: 2px;
+        padding-block: 8px;
         font-size: 12px;
         font-weight: 500;
         letter-spacing: 0.02em;
@@ -134,9 +134,14 @@
       }
 
       #section-id-{{ section.id }} .announcement__dismiss {
-        margin-left: auto;
-        width: 20px;
-        height: 20px;
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 28px;
+        height: 28px;
+        min-width: 44px;
+        min-height: 44px;
         border-radius: var(--sw-radius-pill, 999px);
         border: none;
         background: transparent;
