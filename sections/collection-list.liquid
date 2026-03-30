@@ -481,7 +481,7 @@
 
   /* Card container: hairline border, rounded, smooth transitions */
   .section-id-{{ section.id }} .collection-block .block-inner {
-    border-radius: var(--sw-radius-sm, 0.5rem);
+    border-radius: 12px;
     border: var(--sw-border-hairline, 1px solid rgba(255, 255, 255, 0.08));
     overflow: hidden;
     background: var(--sw-surface-card, #15171E);
@@ -506,6 +506,10 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 500ms ease;
+  }
+  .section-id-{{ section.id }} .collection-block:hover img {
+    transform: scale(1.05);
   }
 
   /* Card title: uppercase, tight tracking, small bold text */
@@ -514,7 +518,7 @@
     font-weight: 700;
     font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.1em;
     line-height: 1.2;
     color: var(--sw-text-primary, #F5F5F5);
   }

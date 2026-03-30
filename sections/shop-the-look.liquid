@@ -191,7 +191,7 @@
     #section-id-{{ section.id }} .video-hero__eyebrow {
       font-size: 10px;
       font-weight: 500;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: rgba(255, 255, 255, 0.6);
       margin-bottom: 6px;
@@ -200,6 +200,14 @@
 
     #section-id-{{ section.id }} .video-hero__title {
       margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.025em;
+    }
+
+    @media (min-width: 768px) {
+      #section-id-{{ section.id }} .video-hero__title {
+        font-size: 30px;
+      }
     }
 
     #section-id-{{ section.id }} .video-hero__primary-action {

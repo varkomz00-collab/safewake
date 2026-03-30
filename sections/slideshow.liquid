@@ -82,16 +82,29 @@
       --slideshow-glass-bg: 8, 10, 14;
     }
 
+    @media (min-width: 768px) {
+      #section-id-{{ section.id }} {
+        --slideshow-radius: 28px;
+      }
+    }
+
     #section-id-{{ section.id }} .slideshow {
       border-radius: var(--slideshow-radius);
       overflow: hidden;
     }
 
-    /* 1. Hero height: responsive vh with min/max */
+    /* 1. Hero height: responsive svh/vh with min/max */
     #section-id-{{ section.id }} .slideshow__slide {
       min-height: 420px;
       max-height: 800px;
-      height: 75vh;
+      height: 75svh;
+      height: 75vh; /* fallback */
+    }
+
+    @supports (height: 1svh) {
+      #section-id-{{ section.id }} .slideshow__slide {
+        height: 75svh;
+      }
     }
 
     @media (min-width: 768px) {
@@ -120,9 +133,9 @@
       position: relative;
     }
 
-    /* 7. Smooth slide transitions: 220ms ease-out */
+    /* 7. Smooth slide transitions: 700ms for content feel */
     #section-id-{{ section.id }} .slideshow__slide {
-      transition: opacity 220ms ease-out, transform 220ms ease-out;
+      transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1), transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     #section-id-{{ section.id }} .slideshow__slide.is-active {
@@ -138,20 +151,37 @@
     /* Text block: compact, readable, “one decision” feel */
     #section-id-{{ section.id }} .text-overlay__inner {
       max-width: 44rem;
+      padding-inline: 20px;
+      padding-bottom: 32px;
+    }
+
+    @media (min-width: 768px) {
+      #section-id-{{ section.id }} .text-overlay__inner {
+        padding-inline: 32px;
+        padding-bottom: 40px;
+      }
     }
 
     /* 6. Typography: heading with tight tracking */
     #section-id-{{ section.id }} .text-overlay__title {
       letter-spacing: -0.04em;
-      font-weight: 700;
+      font-weight: 600;
+      line-height: 1.25;
     }
 
     /* 6. Typography: subheading as eyebrow */
     #section-id-{{ section.id }} .text-overlay__subheading {
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-size: 11px;
-      opacity: 0.78;
+      letter-spacing: 0.15em;
+      font-size: 10px;
+      font-weight: 500;
+      opacity: 0.7;
+    }
+
+    @media (min-width: 768px) {
+      #section-id-{{ section.id }} .text-overlay__subheading {
+        font-size: 12px;
+      }
     }
 
     #section-id-{{ section.id }} .text-overlay__button-row {
@@ -173,15 +203,13 @@
       min-height: 44px;
       padding-inline: 1.7em;
       padding-block: 0.7em;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04)),
-        rgba(var(--slideshow-glass-bg), 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.2);
       box-shadow:
         0 18px 40px rgba(0, 0, 0, 0.55),
         0 0 0 1px rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       font-weight: 600;
       letter-spacing: 0.03em;
       text-transform: none;
@@ -229,23 +257,33 @@
         0 0 0 1px rgba(255, 255, 255, 0.08);
     }
 
-    /* 3. Dot navigation: 8px circles, opacity-based active state */
+    /* 3. Dot navigation: pill-expand active state (Lovable pattern) */
     #section-id-{{ section.id }} .slideshow-pagination {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    @media (min-width: 768px) {
+      #section-id-{{ section.id }} .slideshow-pagination {
+        margin-top: 24px;
+      }
     }
 
     #section-id-{{ section.id }} .slideshow-pagination .page-btn {
       position: relative;
-      width: 1.2rem;
-      height: 1.2rem;
+      min-width: 44px;
+      min-height: 44px;
       padding: 0;
       border-radius: 999px;
       border: 0;
       background: transparent;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     #section-id-{{ section.id }} .slideshow-pagination .page-btn__circle {
@@ -254,18 +292,20 @@
 
     #section-id-{{ section.id }} .slideshow-pagination .page-btn::before {
       content: “”;
-      position: absolute;
-      inset: 50%;
       width: 8px;
       height: 8px;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
+      border-radius: 9999px;
       background: #ffffff;
-      opacity: 0.4;
-      transition: opacity 200ms ease-out;
+      opacity: 0.3;
+      transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #section-id-{{ section.id }} .slideshow-pagination .page-btn:hover::before {
+      opacity: 0.5;
     }
 
     #section-id-{{ section.id }} .slideshow-pagination .page-btn[aria-current=”true”]::before {
+      width: 32px;
       opacity: 1;
     }
 

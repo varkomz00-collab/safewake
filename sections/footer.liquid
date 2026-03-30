@@ -196,9 +196,19 @@
 {% style %}
   /* ── SafeWake Footer: Apple-style refinements ── */
 
+  /* Section padding */
+  .section-footer {
+    padding: 48px 0;
+  }
+  @media (min-width: 640px) {
+    .section-footer {
+      padding: 64px 0;
+    }
+  }
+
   /* Top border separation */
   .section-footer {
-    border-top: 1px solid rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.12);
     background: var(--sw-surface-section);
   }
 
@@ -230,6 +240,7 @@
     justify-content: center;
     width: 36px;
     height: 36px;
+    padding: 10px;
     border-radius: 50%;
     background: rgba(255,255,255,0.06);
     transition: var(--sw-transition-smooth);

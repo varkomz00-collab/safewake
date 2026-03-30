@@ -49,7 +49,16 @@
   .logo-area {
     display: flex;
     align-items: center;
-    min-height: 64px;
+    min-height: 56px;
+    padding-inline: 12px;
+  }
+
+  @media (min-width: 768px) {
+    .logo-area {
+      min-height: 64px;
+      padding-inline: 0;
+      gap: 16px;
+    }
   }
 
   .logo__link {
@@ -65,10 +74,10 @@
   /* ── Nav links: glow underline pattern ── */
   .navigation__link {
     position: relative;
-    opacity: 0.7;
-    transition: opacity var(--sw-transition-smooth, 0.25s ease);
+    opacity: 0.6;
+    transition: color 0.2s ease, opacity 0.2s ease;
     text-decoration: none;
-    padding-bottom: 4px;
+    padding-bottom: 6px;
   }
 
   .navigation__link:hover,
@@ -80,29 +89,31 @@
     content: '';
     position: absolute;
     left: 0;
-    bottom: 0;
-    width: 100%;
+    right: 0;
+    bottom: -6px;
     height: 2px;
     background: hsl(
       var(--sw-glow-h, 205),
       var(--sw-glow-s, 100%),
       var(--sw-glow-l, 52%)
     );
-    box-shadow: 0 0 8px hsla(
+    box-shadow: 0 0 14px hsla(
       var(--sw-glow-h, 205),
       var(--sw-glow-s, 100%),
       var(--sw-glow-l, 52%),
-      0.5
+      0.35
     );
-    border-radius: 1px;
+    border-radius: 9999px;
     transform: scaleX(0);
-    transform-origin: center;
-    transition: transform var(--sw-transition-smooth, 0.25s ease);
+    transform-origin: left;
+    transition: transform 160ms ease, opacity 160ms ease;
+    opacity: 0;
   }
 
   .navigation__link:hover::after,
   .navigation__link:focus-visible::after {
     transform: scaleX(1);
+    opacity: 1;
   }
 
   .navigation__item--active .navigation__link {
@@ -120,11 +131,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: var(--sw-touch-target, 44px);
-    min-height: var(--sw-touch-target, 44px);
-    border-radius: var(--sw-radius-sm, 0.5rem);
-    transition: background-color var(--sw-transition-smooth, 0.25s ease),
-                box-shadow var(--sw-transition-smooth, 0.25s ease);
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   .show-search-link:hover,
@@ -193,6 +204,10 @@
   .mobile-navigation-drawer .navigation__mobile-header {
     border-bottom: var(--sw-border-hairline, 1px solid rgba(255, 255, 255, 0.08));
     padding-block: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   .mobile-nav-toggle {
