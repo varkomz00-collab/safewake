@@ -1,0 +1,1226 @@
+<div data-section-id="{{ section.id }}" data-cc-animate>
+
+{% style %}
+  /* Safewake related collections compact carousel */
+  .collections-widget {
+    width: 100%;
+    background: #0f0f0f;
+    padding: 0.75rem 0 1rem; /* tighter top + bottom */
+    color: #f2f2f2;
+  }
+
+  .collections-widget .collections-container {
+    max-width: 100%; /* use full content width */
+    margin: 0 auto;
+    padding: 0 0.75rem; /* small side gutters */
+  }
+
+  /* Hook into existing Symmetry slider markup – NOW SCROLLABLE */
+  .collections-widget .collections-carousel .slider {
+    overflow-x: auto;          /* allow horizontal scroll/swipe */
+    overflow-y: hidden;
+    width: 100%;
+    -webkit-overflow-scrolling: touch; /* iOS smooth swipe */
+    scroll-behavior: smooth;           /* smooth programmatic scroll */
+    touch-action: pan-x;               /* hint for touch gesture */
+  }
+
+  /* Hide native scrollbar but keep scrollability */
+  .collections-widget .collections-carousel .slider::-webkit-scrollbar {
+    display: none;
+  }
+  .collections-widget .collections-carousel .slider {
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .collections-widget .collections-carousel .slider__grid {
+    display: flex;
+    gap: 0;
+    margin-left: -0.25rem; /* less negative margin to reduce gap */
+  }
+
+  .collections-widget .collection-item {
+    flex: 0 0 24%; /* 4 across on small screens */
+    min-width: 0;
+    padding-left: 0.25rem; /* smaller gutter */
+  }
+
+  .collections-widget .collection-link {
+    display: block;
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background: #1a1a1a; /* fallback if no image */
+    border: 1px solid #2a2a2a;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  /* Hover: subtle, neutral – NO brand blue */
+  .collections-widget .collection-link:hover {
+    border-color: #3a3a3a;
+    background: rgba(26, 26, 26, 0.9);
+  }
+
+  /* Highlight current collection in carousel – ONLY this uses blue */
+  .collections-widget .collection-link--active {
+    border-color: #2badd4;
+    box-shadow: 0 0 0 2px rgba(43, 173, 212, 0.55);
+  }
+
+  .collections-widget .collection-link--active .collection-primary {
+    color: #2badd4;
+  }
+
+  .collections-widget .collection-link--active .collection-secondary {
+    color: #f2f2f2;
+  }
+
+  /* Background image for collection cards (from collection image) */
+  .collections-widget .collection-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+  }
+
+  /* Dark overlay for text readability */
+  .collections-widget .collection-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .collections-widget .collection-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .collections-widget .collection-primary {
+    color: #f2f2f2;
+    font-weight: 900;
+    font-size: 0.5625rem; /* ~9px on mobile */
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 0.125rem;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.3s ease;
+  }
+
+  /* removed blue-on-hover to avoid confusion */
+  /*
+  .collections-widget .collection-link:hover .collection-primary {
+    color: #2badd4;
+  }
+  */
+
+  .collections-widget .collection-secondary {
+    color: #a1a1a1;
+    font-weight: 500;
+    font-size: 0.4375rem; /* ~7px on mobile */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.3s ease;
+  }
+
+  /*
+  .collections-widget .collection-link:hover .collection-secondary {
+    color: #f2f2f2;
+  }
+  */
+
+  /* Navigation buttons – reuse existing slider-nav buttons, just reskin */
+  .collections-widget .slider-nav__btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .collections-widget .slider-nav__btn svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .collections-widget .slider-nav__btn:hover:not(:disabled) {
+    background: #2a2a2a;
+  }
+
+  .collections-widget .slider-nav__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Responsive density – show more cards as the screen grows */
+  @media (min-width: 640px) {
+    .collections-widget .collection-item {
+      flex: 0 0 20%; /* ~5 across */
+    }
+    .collections-widget .collection-primary {
+      font-size: 0.875rem;
+    }
+    .collections-widget .collection-secondary {
+      font-size: 0.625rem;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .collections-widget .collection-item {
+      flex: 0 0 12.5%; /* ~8 across */
+    }
+    .collections-widget .collection-primary {
+      font-size: 0.95rem;
+    }
+    .collections-widget .collection-secondary {
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .collections-widget .collection-item {
+      flex: 0 0 10%; /* ~10 across on big desktops */
+    }
+  }
+{% endstyle %}
+
+{% paginate collection.products by section.settings.coll_num_per_page_int %}
+
+{%- liquid
+  if section.settings.show_image_behind_heading and collection.image
+    assign header_image_enabled = true
+  else
+    assign header_image_enabled = false
+  endif
+  assign current_sort = collection.sort_by | default: collection.default_sort_by
+
+  assign show_filters = section.settings.enable_filtering
+  if collection.filters == empty
+    assign show_filters = false
+  endif
+-%}
+
+{%- liquid
+  assign related_collections_count = 0
+  if section.settings.related_collections != empty
+    for loop_collection in section.settings.related_collections
+      assign related_collections_count = related_collections_count | plus: 1
+    endfor
+  endif
+-%}
+
+{%- if related_collections_count > 0 -%}
+  {% capture related_collection_html %}
+    {% if section.settings.related_collections_style == 'buttons' %}
+      <div class="container{% if header_image_enabled %} container--not-mobile{% endif %} lightish-spaced-row-above">
+        <related-collection-link-buttons class="related-collection-links related-collection-links--buttons align-center{% if header_image_enabled %} image-overlay__over{% endif %}" data-expander-btn-text="{{ 'sections.collection.view_all_related_collections' | t }}">
+          {%- for loop_collection in section.settings.related_collections -%}
+            {%- liquid
+              assign is_active_collection = false
+              if loop_collection.handle == collection.handle
+                assign is_active_collection = true
+              endif
+            -%}
+            <a
+              class="btn btn--tertiary{% if is_active_collection %} btn--primary{% endif %}"
+              {% if is_active_collection %}aria-current="page"{% endif %}
+              href="{{ loop_collection.url }}"
+            >
+              {{ loop_collection.title | escape }}
+            </a>
+          {%- endfor -%}
+        </related-collection-link-buttons>
+      </div>
+    {% else %}
+      {% unless section.settings.rel_coll_gall_full_width %}
+        <div class="container container--not-mobile{% if section.settings.rel_coll_grid_mobile == 'hide' %} desktop-only{% endif %}">
+      {% endunless %}
+
+      <div class="
+        related-collection-links
+        related-collection-links--gallery
+        {%- if section.settings.rel_coll_gall_full_width %} related-collection-links--is-full-width{% endif %}
+        {%- if header_image_enabled %} related-collection-links--under-image-header{% endif %}
+        {%- if section.settings.rel_coll_grid_mobile == 'hide' %} desktop-only{% endif %}">
+
+        <div class="collections-widget">
+          <div class="collections-container">
+            <!-- Carousel (reuses existing Symmetry slider markup, now native-scroll) -->
+            <carousel-slider class="carousel collections-carousel{% if section.settings.rel_coll_grid_mobile == 'hide' %} desktop-only{% endif %}" inactive>
+              <div class="slider slider--no-scrollbar" id="slider-{{ section.id }}">
+                <div class="slider__grid">
+                  {%- for loop_collection in section.settings.related_collections -%}
+                    {%- liquid
+                      assign is_active_collection = false
+                      if loop_collection.handle == collection.handle
+                        assign is_active_collection = true
+                      endif
+                    -%}
+                    <div class="slider__item collection-item">
+                      <a class="collection-link{% if is_active_collection %} collection-link--active{% endif %}" href="{{ loop_collection.url }}">
+                        {%- if loop_collection.image != blank -%}
+                          <img
+                            src="{{ loop_collection.image | image_url: width: 800 }}"
+                            alt="{{ loop_collection.title | escape }}"
+                            class="collection-image"
+                            loading="lazy"
+                          />
+                          <div class="collection-overlay"></div>
+                        {%- endif -%}
+
+                        <div class="collection-content">
+                          {%- liquid
+                            assign primary = ''
+                            assign secondary = ''
+
+                            # 1) Metafield overrides (admin editable for labels)
+                            if loop_collection.metafields.custom.collection_primary_label != blank
+                              assign primary = loop_collection.metafields.custom.collection_primary_label | upcase
+                            elsif loop_collection.metafields.custom.primary_label != blank
+                              assign primary = loop_collection.metafields.custom.primary_label | upcase
+                            endif
+
+                            if loop_collection.metafields.custom.collection_secondary_label != blank
+                              assign secondary = loop_collection.metafields.custom.collection_secondary_label | upcase
+                            elsif loop_collection.metafields.custom.secondary_label != blank
+                              assign secondary = loop_collection.metafields.custom.secondary_label | upcase
+                            endif
+
+                            # 2) Hard-coded mapping (only if no metafields)
+                            if primary == '' and secondary == ''
+                              case loop_collection.handle
+                                when 'boat-wakeboard'
+                                  assign primary = 'WAKEBOARD'
+                                  assign secondary = 'BOAT'
+                                when 'cable-wakeboard'
+                                  assign primary = 'WAKEBOARD'
+                                  assign secondary = 'CABLE'
+                                when 'bindings'
+                                  assign primary = 'BINDINGS'
+                                  assign secondary = 'STANDARD'
+                                when 'system-bindings'
+                                  assign primary = 'BINDINGS'
+                                  assign secondary = 'SYSTEM'
+                                when 'gloves'
+                                  assign primary = 'GLOVES'
+                                  assign secondary = 'WATERSPORT'
+                                when 'ncga-vest'
+                                  assign primary = 'VEST'
+                                  assign secondary = 'NCGA'
+                                when 'cga-life-jacket'
+                                  assign primary = 'JACKET'
+                                  assign secondary = 'CGA'
+                                when 'kneeboard'
+                                  assign primary = 'KNEEBOARD'
+                                  assign secondary = 'BOAT & CABLE'
+                                when 'rope-wakeboard'
+                                  assign primary = 'ROPE'
+                                  assign secondary = 'WAKEBOARD'
+                                when 'wake-surfer'
+                                  assign primary = 'WAKESURF'
+                                  assign secondary = 'BOARDS'
+                                when 'rope-surf'
+                                  assign primary = 'ROPE'
+                                  assign secondary = 'SURF'
+                                when 'wake-foil'
+                                  assign primary = 'FOIL'
+                                  assign secondary = 'WAKE'
+                                when 'all-bags'
+                                  assign primary = 'BAGS'
+                                  assign secondary = 'GEAR'
+                                when 'ski'
+                                  assign primary = 'SKI'
+                                  assign secondary = 'WATER'
+                                when 'ski-boots'
+                                  assign primary = 'BOOTS'
+                                  assign secondary = 'SKI'
+                                when 'rope-ski'
+                                  assign primary = 'ROPE'
+                                  assign secondary = 'SKI'
+                                when 'towables'
+                                  assign primary = 'TOWABLE'
+                                  assign secondary = 'TUBES'
+                                when 'paddleboards'
+                                  assign primary = 'PADDLE'
+                                  assign secondary = 'BOARDS'
+                                when 'kayaks'
+                                  assign primary = 'KAYAKS'
+                                  assign secondary = 'INFLATABLE'
+                                when 'inflatable-docks'
+                                  assign primary = 'DOCKS'
+                                  assign secondary = 'INFLATABLE'
+                                when 'wetsuits'
+                                  assign primary = 'WETSUITS'
+                                  assign secondary = 'NEOPRENE'
+                                when 'apparel'
+                                  assign primary = 'APPAREL'
+                                  assign secondary = 'RIDER'
+                                when 'spare-parts'
+                                  assign primary = 'PARTS'
+                                  assign secondary = 'SPARE'
+                              endcase
+                            endif
+
+                            # 3) Fallback: auto-build from title if anything is still empty
+                            if primary == '' or secondary == ''
+                              assign words = loop_collection.title | strip | split: ' '
+                              assign words_count = words | size
+
+                              if words_count > 1
+                                assign last_index = words_count | minus: 1
+                                assign last_word = words[last_index]
+                                assign rest = ''
+
+                                for w in words
+                                  if forloop.index0 < last_index
+                                    if rest != ''
+                                      assign rest = rest | append: ' '
+                                    endif
+                                    assign rest = rest | append: w
+                                  endif
+                                endfor
+
+                                if primary == ''
+                                  assign primary = last_word | upcase
+                                endif
+
+                                if secondary == ''
+                                  assign secondary = rest | upcase
+                                endif
+                              else
+                                if primary == ''
+                                  assign primary = loop_collection.title | upcase
+                                endif
+
+                                if secondary == ''
+                                  assign secondary = 'SHOP ALL'
+                                endif
+                              endif
+                            endif
+                          -%}
+
+                          <h3 class="collection-primary">
+                            {{ primary }}
+                          </h3>
+                          <p class="collection-secondary">
+                            {{ secondary }}
+                          </p>
+                        </div>
+                      </a>
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+
+              <div class="slider-nav slider-nav--floating desktop-only no-js-hidden">
+                <button
+                  type="button"
+                  class="slider-nav__btn has-ltr-icon"
+                  name="prev"
+                  aria-controls="slider-{{ section.id }}"
+                >
+                  <span class="visually-hidden">{{ 'general.slider.previous' | t }}</span>
+                  {%- render 'icon-chevron-left', stroke_width: 1.3 -%}
+                </button>
+                <button
+                  type="button"
+                  class="slider-nav__btn has-ltr-icon"
+                  name="next"
+                  aria-controls="slider-{{ section.id }}"
+                >
+                  <span class="visually-hidden">{{ 'general.slider.next' | t }}</span>
+                  {%- render 'icon-chevron-right', stroke_width: 1.3 -%}
+                </button>
+              </div>
+            </carousel-slider>
+          </div>
+        </div>
+      </div>
+
+      {% unless section.settings.rel_coll_gall_full_width %}
+        </div>
+      {% endunless %}
+    {% endif %}
+  {% endcapture %}
+{%- endif -%}
+
+{% if header_image_enabled %}
+  {%- liquid
+    assign show_header = false
+    if section.settings.show_title
+      assign show_header = true
+    endif
+    if collection.description != blank and section.settings.coll_desc_pos == 'above'
+      assign show_header = true
+    endif
+    if related_collections_count > 0 and section.settings.related_collections_style == 'buttons'
+      assign show_header = true
+    endif
+  -%}
+  {%- if show_header -%}
+    <div class="page-header page-header--with-background img-fill image-overlay image-overlay--bg-{{ section.settings.overlay_style }} page-header--padded-{{ section.settings.heading_image_height }}">
+      <div class="image-overlay__image">
+        {%- render 'image' with collection.image, loading: 'eager', fetchpriority: 'high' -%}
+      </div>
+      <div class="text-overlay text-overlay--inline text-overlay--v-center text-overlay--h-center image-overlay__over" data-cc-animate data-cc-animate-delay="0.2s">
+        <div class="text-overlay__inner">
+          <div class="text-overlay__text">
+            {% comment %} Collection title removed – we rely on highlighted tile in carousel {% endcomment %}
+
+            {% if collection.description != blank and section.settings.coll_desc_pos == 'above' %}
+              <div class="text-overlay__rte rte cf align-center reading-width large-text">{{ collection.description }}</div>
+            {% endif %}
+
+            {%- if related_collections_count > 0 and section.settings.related_collections_style == 'buttons' -%}
+              {{ related_collection_html }}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+{% else %}
+  {{ related_collection_html }}
+  {%- liquid
+    assign show_header = false
+    if section.settings.show_title
+      assign show_header = true
+    endif
+    if collection.description != blank and section.settings.coll_desc_pos == 'above'
+      assign show_header = true
+    endif
+  -%}
+  {%- if show_header -%}
+    <div class="page-header page-header--with-upper-spacing">
+      <div class="container">
+        {% comment %} Collection title removed – carousel handles naming/highlight {% endcomment %}
+
+        {% if collection.description != blank and section.settings.coll_desc_pos == 'above' %}
+          <div class="rte cf align-center reading-width">{{ collection.description }}</div>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
+
+  {%- if related_collections_count > 0 and header_image_enabled and section.settings.related_collections_style != 'buttons' -%}
+    {{ related_collection_html }}
+  {%- endif -%}
+
+  <div class="container{% if settings.use_fullwidth_layout %} container--no-max{% endif %}{% if show_header == false %} lightly-spaced-row-above{% endif %}">
+    <div class="utility-bar" data-ajax-container data-ajax-scroll-to>
+      <div class="utility-bar__left">
+        {% if section.settings.show_sort or show_filters %}
+          <a href="#" class="toggle-btn utility-bar__item{% if section.settings.collapse_tag_sidebar_by_default == false %} toggle-btn--revealed-desktop{% endif %}{% if show_filters == false %} mobile-only{% endif %}" data-toggle-filters>
+            <span class="btn-icon">{% render 'icon-filter' %}</span>
+            <span>{{ 'products.filtering.filter' | t }}</span>
+            {% liquid
+              assign filter_count = 0
+              for filter in collection.filters
+                assign filter_count = filter_count | plus: filter.active_values.size
+                if filter.type == 'price_range'
+                  if filter.min_value.value != nil or filter.max_value.value != nil
+                    assign filter_count = filter_count | plus: 1
+                  endif
+                endif
+              endfor
+            %}
+            {% if filter_count > 0 %}
+              <span class="toggle-btn__count">({{ filter_count }})</span>
+            {% endif %}
+            <span class="toggle-btn__chevron has-motion has-ltr-icon">{% render 'icon-chevron-right', stroke_width: 1.3 %}</span>
+          </a>
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_total and paginate.items > 0 %}
+        <div class="utility-bar__centre">
+          <div class="utility-bar__item">{{ 'sections.collection.product_count' | t: count: paginate.items }}</div>
+        </div>
+      {% endif %}
+
+      <div class="utility-bar__right">
+        {% if section.settings.show_sort %}
+          <span class="utility-bar__item desktop-only">
+            <link-dropdown class="link-dropdown link-dropdown--right-aligned">
+              <div class="visually-hidden" id="sort-dropdown-heading">{{ 'products.sorting.sort_by_label' | t | escape }}</div>
+              <button class="link-dropdown__button has-motion" aria-expanded="false" aria-controls="sort-dropdown-options" aria-describedby="sort-dropdown-heading">
+                <span class="link-dropdown__button-text">
+                  {%- for option in collection.sort_options -%}
+                    {%- if current_sort == option.value -%}
+                      {{ option.name | escape }}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </span>
+                <span class="link-dropdown__button-icon has-motion">{% render 'icon-chevron-down', stroke_width: 1.3 %}</span>
+              </button>
+              <div class="link-dropdown__options" id="sort-dropdown-options">
+                {%- for option in collection.sort_options -%}
+                  {%- liquid
+                    if section.settings.sort_show_featured == false and option.value == 'manual' and collection.default_sort_by != 'manual'
+                      continue
+                    endif
+                    if section.settings.sort_show_best == false and option.value == 'best-selling' and collection.default_sort_by != 'best-selling'
+                      continue
+                    endif
+                    if section.settings.sort_show_alpha == false and option.value == 'title-ascending' and collection.default_sort_by != 'title-ascending'
+                      continue
+                    endif
+                    if section.settings.sort_show_alpha == false and option.value == 'title-descending' and collection.default_sort_by != 'title-descending'
+                      continue
+                    endif
+                    if section.settings.sort_show_price == false and option.value == 'price-ascending' and collection.default_sort_by != 'price-ascending'
+                      continue
+                    endif
+                    if section.settings.sort_show_price == false and option.value == 'price-descending' and collection.default_sort_by != 'price-descending'
+                      continue
+                    endif
+                    if section.settings.sort_show_date == false and option.value == 'created-ascending' and collection.default_sort_by != 'created-ascending'
+                      continue
+                    endif
+                    if section.settings.sort_show_date == false and option.value == 'created-descending' and collection.default_sort_by != 'created-descending'
+                      continue
+                    endif
+                  -%}
+                  <a href="{{ request.path | sort_by: option.value | escape }}" class="link-dropdown__link{% if current_sort == option.value %} link-dropdown__link--active{% endif %}">{{ option.name | escape }}</a>
+                {%- endfor -%}
+              </div>
+            </link-dropdown>
+          </span>
+        {% endif %}
+        <span class="utility-bar__item mobile-only">
+          <div class="layout-switchers">
+            <a class="layout-switch layout-switch--two-columns{% if settings.prod_thumb_mob_per_row == '2' %} layout-switch--active{% endif %}" href="#" aria-label="{{ 'sections.collection.grid_layout' | t }}">{%- render 'icon-grid', stroke_width: 1.3 -%}</a>
+            <a class="layout-switch layout-switch--one-column{% if settings.prod_thumb_mob_per_row == '1' %} layout-switch--active{% endif %}" href="#" aria-label="{{ 'sections.collection.list_layout' | t }}">{%- render 'icon-box', stroke_width: 1.3 -%}</a>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <filter-container class="filter-container filter-container--side{% if section.settings.collapse_tag_sidebar_by_default == false %} filter-container--show-filters-desktop{% endif %}" data-ajax-filtering="{{ settings.ajax_products }}" data-filter-section-id="{{ section.id }}">
+      {% if section.settings.show_sort or show_filters %}
+        {% render 'faceted-filters', filter_context: collection, clear_url: collection.url, current_sort: current_sort %}
+      {% endif %}
+
+      <div class="filters-adjacent collection-listing" data-ajax-container>
+        {% if collection.products.size == 0 %}
+          <h5 class="align-centre fully-spaced-row">{{ 'sections.collection.empty' | t }}</h5>
+        {% else %}
+          <div class="product-grid product-grid--per-row-{{ section.settings.grid }} product-grid--per-row-mob-{{ settings.prod_thumb_mob_per_row }} product-grid--per-row-mob-{{ settings.prod_thumb_mob_per_row }}">
+            {%- liquid
+              if settings.prod_thumb_shape == 'portrait-23'
+                assign chosen_aspect_ratio = 0.67
+              elsif settings.prod_thumb_shape == 'portrait-45'
+                assign chosen_aspect_ratio = 0.8
+              elsif settings.prod_thumb_shape == 'square'
+                assign chosen_aspect_ratio = 1.0
+              elsif settings.prod_thumb_shape == 'landscape-54'
+                assign chosen_aspect_ratio = 1.25
+              elsif settings.prod_thumb_shape == 'landscape-32'
+                assign chosen_aspect_ratio = 1.50
+              elsif settings.prod_thumb_shape == 'tallest'
+                assign chosen_aspect_ratio = 99
+                for product in collection.products
+                  if product.featured_media.preview_image.aspect_ratio < chosen_aspect_ratio
+                    assign chosen_aspect_ratio = product.featured_media.preview_image.aspect_ratio
+                  endif
+                endfor
+              else
+                assign chosen_aspect_ratio = 0
+                for product in collection.products
+                  if product.featured_media.preview_image.aspect_ratio > chosen_aspect_ratio
+                    assign chosen_aspect_ratio = product.featured_media.preview_image.aspect_ratio
+                  endif
+                endfor
+              endif
+
+              for product in collection.products
+                assign prioritised_loading = false
+                if forloop.index0 < section.settings.grid
+                  assign prioritised_loading = true
+                endif
+                render 'product-block', product: product, custom_aspect_ratio: chosen_aspect_ratio, animate: true, prioritised_loading: prioritised_loading
+              endfor
+            -%}
+          </div>
+        {% endif %}
+      </div>
+    </filter-container>
+  </div>
+
+  <div class="container pagination-row" data-ajax-container>{% render 'pagination-control', paginate: paginate %}</div>
+
+  {% endpaginate %}
+
+  {% if collection.description != blank and section.settings.coll_desc_pos == 'below' %}
+    <div class="container container--reading-width fully-spaced-row" data-cc-animate>
+      <div class="rte cf">{{ collection.description }}</div>
+    </div>
+  {% endif %}
+</div>
+
+<script>
+  (function() {
+    function initSafewakeRelatedCarouselState() {
+      var slider = document.getElementById('slider-{{ section.id }}');
+      if (!slider || typeof window === 'undefined' || !window.sessionStorage) return;
+
+      var storageKeyScroll = 'sfw_related_carousel_scroll';
+      var storageKeyFlag   = 'sfw_related_carousel_from_carousel';
+
+      var shouldRestore = false;
+      var savedScroll   = 0;
+
+      // Check if we SHOULD restore (only when we came from this carousel)
+      try {
+        var flag = sessionStorage.getItem(storageKeyFlag);
+        if (flag === '1') {
+          var saved = sessionStorage.getItem(storageKeyScroll);
+          if (saved !== null) {
+            var scroll = parseFloat(saved);
+            if (!isNaN(scroll)) {
+              savedScroll = scroll;
+              shouldRestore = true;
+            }
+          }
+        }
+      } catch (e) {
+        /* ignore */
+      }
+
+      // One-time use: clear keys so it doesn't stick forever
+      try {
+        sessionStorage.removeItem(storageKeyFlag);
+        sessionStorage.removeItem(storageKeyScroll);
+      } catch (e) {
+        /* ignore */
+      }
+
+      // If flagged, restore scroll WITHOUT smooth animation (no flicker)
+      if (shouldRestore) {
+        var prevBehavior = slider.style.scrollBehavior;
+        // Temporarily disable smooth scroll (overrides CSS)
+        slider.style.scrollBehavior = 'auto';
+        slider.scrollLeft = savedScroll || 0;
+        // Force layout so the browser applies position before we restore smoothness
+        void slider.offsetHeight;
+        // Restore previous inline value (or clear to use CSS)
+        if (prevBehavior) {
+          slider.style.scrollBehavior = prevBehavior;
+        } else {
+          slider.style.scrollBehavior = '';
+        }
+      }
+
+      // When user clicks any collection tile in this carousel,
+      // remember the current scroll for the NEXT page load.
+      var links = slider.querySelectorAll('.collection-link');
+      links.forEach(function(link) {
+        link.addEventListener('click', function() {
+          try {
+            sessionStorage.setItem(storageKeyScroll, String(slider.scrollLeft || 0));
+            sessionStorage.setItem(storageKeyFlag, '1');
+          } catch (e) {
+            /* ignore */
+          }
+        });
+      });
+
+      // Hook arrows to move by ~2 cards per click (smooth within the page)
+      var navButtons = document.querySelectorAll('[aria-controls="slider-{{ section.id }}"]');
+      var firstItem  = slider.querySelector('.collection-item');
+      var cardWidth  = firstItem ? firstItem.getBoundingClientRect().width : 0;
+
+      navButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (!cardWidth) return;
+          var dir = btn.getAttribute('name') === 'next' ? 1 : -1;
+          slider.scrollBy({
+            left: dir * cardWidth * 2,
+            behavior: 'smooth'
+          });
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSafewakeRelatedCarouselState);
+    } else {
+      initSafewakeRelatedCarouselState();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Collection pages",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show collection title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image_behind_heading",
+      "label": "Show collection image behind title",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "heading_image_height",
+      "label": "Heading image height",
+      "options": [
+        {
+          "value": "small",
+          "label": "Compact"
+        },
+        {
+          "value": "medium",
+          "label": "Small"
+        },
+        {
+          "value": "large",
+          "label": "Medium"
+        },
+        {
+          "value": "huge",
+          "label": "Large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "id": "overlay_style",
+      "type": "select",
+      "label": "Overlay style",
+      "default": "shadow",
+      "options": [
+        {
+          "value": "full",
+          "label": "Tint"
+        },
+        {
+          "value": "box",
+          "label": "Box"
+        },
+        {
+          "value": "shadow",
+          "label": "Text shadow"
+        },
+        {
+          "value": "full image-overlay--bg-shadow",
+          "label": "Text shadow and tint"
+        },
+        {
+          "value": "no_background",
+          "label": "No background"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "coll_desc_pos",
+      "label": "Description position",
+      "default": "above",
+      "options": [
+        {
+          "value": "above",
+          "label": "Below collection title"
+        },
+        {
+          "value": "below",
+          "label": "Below products"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "coll_num_per_page_int",
+      "min": 16,
+      "max": 50,
+      "step": 2,
+      "label": "Number of products to show per page",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "grid",
+      "label": "Products per row",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show product vendors",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_total",
+      "label": "Show product total",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Filters"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filtering",
+      "info": "[Customize filters](/admin/menus)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "collapse_tag_sidebar_by_default",
+      "label": "Collapse filter column",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "collapse_filters_method",
+      "label": "Filter row collapse",
+      "default": "over-12",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "over-6",
+          "label": "Over 6 items"
+        },
+        {
+          "value": "over-12",
+          "label": "Over 12 items"
+        },
+        {
+          "value": "over-18",
+          "label": "Over 18 items"
+        },
+        {
+          "value": "all",
+          "label": "All rows"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter_counts",
+      "label": "Show filter counts",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_disabled_filters",
+      "label": "Show filters with zero results",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_apply_hide_unavailable",
+      "label": "On selecting a filter, automatically apply 'Hide out of stock'",
+      "default": false,
+      "info": "Requires Availability filter to be enabled"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_filter",
+      "label": "Enable stick on scroll",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "filter_two_columns",
+      "label": "Two column filter values",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort",
+      "label": "Show sorting dropdown",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sort_show_featured",
+      "label": "Enable order: Featured",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "sort_show_best",
+      "label": "Enable order: Best selling",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sort_show_alpha",
+      "label": "Enable order: Alphabetical",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sort_show_price",
+      "label": "Enable order: Price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sort_show_date",
+      "label": "Enable order: Date added",
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "The collection's default sort order will always show."
+    },
+    {
+      "type": "header",
+      "content": "Related collections / Subcollections"
+    },
+    {
+      "type": "paragraph",
+      "content": "Show links to other collections at the top of the page. Use a metafield to change which links show on each collection page. [Read more](https://cleancanvas.co.uk/support/symmetry/related-collections)"
+    },
+    {
+      "type": "collection_list",
+      "id": "related_collections",
+      "label": "Collections"
+    },
+    {
+      "type": "select",
+      "id": "related_collections_style",
+      "label": "Related collections style",
+      "default": "buttons",
+      "options": [
+        {
+          "value": "buttons",
+          "label": "Buttons"
+        },
+        {
+          "value": "gallery",
+          "label": "Gallery"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Related collections gallery layout"
+    },
+    {
+      "type": "select",
+      "id": "rel_coll_gall_aspect_ratio",
+      "label": "Image shape",
+      "default": "1",
+      "options": [
+        {
+          "value": "2",
+          "label": "Landscape (2x1)"
+        },
+        {
+          "value": "1.5",
+          "label": "Landscape (6x4)"
+        },
+        {
+          "value": "1.25",
+          "label": "Landscape (5x4)"
+        },
+        {
+          "value": "1",
+          "label": "Square (1x1)"
+        },
+        {
+          "value": "0.8",
+          "label": "Portrait (4x5)"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image alignment",
+      "info": "Used to keep the subject of your image in view",
+      "default": "center center",
+      "options": [
+        {
+          "value": "top left",
+          "label": "Top left"
+        },
+        {
+          "value": "top center",
+          "label": "Top center"
+        },
+        {
+          "value": "top right",
+          "label": "Top right"
+        },
+        {
+          "value": "center left",
+          "label": "Middle left"
+        },
+        {
+          "value": "center center",
+          "label": "Middle center"
+        },
+        {
+          "value": "center right",
+          "label": "Middle right"
+        },
+        {
+          "value": "bottom left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom right",
+          "label": "Bottom right"
+        }
+      ]
+    },
+    {
+      "id": "rel_coll_gall_enable_margin",
+      "type": "checkbox",
+      "label": "Add spacing around images",
+      "default": true
+    },
+    {
+      "id": "rel_coll_gall_full_width",
+      "type": "checkbox",
+      "label": "Full page width",
+      "default": false
+    },
+    {
+      "id": "rel_coll_gall_overlay_style",
+      "type": "select",
+      "label": "Overlay style",
+      "default": "shadow",
+      "options": [
+        {
+          "value": "full",
+          "label": "Tint"
+        },
+        {
+          "value": "box",
+          "label": "Box"
+        },
+        {
+          "value": "shadow",
+          "label": "Text shadow"
+        },
+        {
+          "value": "full image-overlay--bg-shadow",
+          "label": "Text shadow and tint"
+        },
+        {
+          "value": "no_background",
+          "label": "No background"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "rel_coll_gall_text_alignment",
+      "label": "Text overlay position",
+      "options": [
+        {
+          "value": "top left",
+          "label": "Top left"
+        },
+        {
+          "value": "top center",
+          "label": "Top center"
+        },
+        {
+          "value": "top right",
+          "label": "Top right"
+        },
+        {
+          "value": "center center",
+          "label": "Middle"
+        },
+        {
+          "value": "bottom left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "select",
+      "id": "rel_coll_grid_mobile",
+      "label": "Images per row - mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "hide",
+          "label": "Hide"
+        }
+      ],
+      "default": "2"
+    }
+  ]
+}
+{% endschema %}

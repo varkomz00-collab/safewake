@@ -1,0 +1,530 @@
+{% doc %}
+  @prompt
+    We’re on the SafeWake website, but this section is introducing our new subsection called SafeSnow. Keep it very Apple-style: clean, minimal, premium, lots of whitespace. The section above is black, so this section should start in black and smoothly fade down into white so it transitions nicely into the next section. Add a subtle snowfall in the background (tiny drifting snow, very light—just texture, not cheesy). In the center, put a small label ‘SAFE SNOW’, a bold headline like ‘SafeSnow is here’ or ‘New season 2025’, a short line saying our snowboard lineup is now available in the UAE for GCC riders / Ski Dubai, and one simple button like ‘Shop Snowboards’. Under that, add 2–3 short feature lines like ‘The right board, first try’, ‘First-session size swap’, ‘Free wax & setup’. That’s it—just a small brand-intro moment, no carousel yet, This is close, but the aesthetics need a full Apple-style polish pass. Right now the typography feels generic and the text hierarchy/spacing looks off, so it reads ‘janky’ instead of premium. Please redo the styling like Apple: use a clean system/SF-style font, tighter typography, and proper hierarchy. Make the eyebrow ‘SAFE SNOW’ small, letter-spaced, and subtle. Make the headline bold, crisp, and perfectly centered with generous whitespace. The body copy should be shorter and clearer, with better contrast (no muddy gray-on-gray). Suggested copy: ‘New season snowboards, boots & bindings — now in the UAE. Built for GCC riders & Ski Dubai.’ Then place ONE clean CTA right under it (pill button, premium, not floating at the bottom).
+    
+    Also make it feel more “ski / snow” without being cheesy. The background fade should still go black → soft cool gray → clean white, but add a colder snow tone (slight icy tint) and a softer ‘snow drift’ haze near the bottom. Upgrade the snowfall: smaller particles, more depth (some blurred, some sharp), slightly diagonal drift like real snow, and keep it subtle so it feels like texture.
+    
+    Lastly, replace the 3 lines at the bottom with cleaner feature bullets (better spacing): ‘The right board, first try.’ ‘First-session size swap.’ ‘Free wax & setup.’ Keep everything centered, balanced, and premium.”, Perfect — keep the typography and snowfall exactly like this. Now fix only the layout + background behavior:
+    
+    Section height is too tall. Don’t make it full screen / 100vh. This should be a compact ‘announcement’ band, not a hero that fills the whole phone. Set the section to size itself to the content, with something like top padding ~48–72px and bottom padding ~48–72px (responsive). No huge empty space above or below.
+    
+    Background fade must be simple and consistent: start fully black at the top, then smoothly fade down into pure white at the very bottom. Right now it looks like it fades out weird near the bottom — remove that extra “fade-out” feeling. Keep it as one clean vertical gradient: black → cool gray → white. The bottom should end in clean white, not wash out the content or look like it’s disappearing.
+    
+    Keep snowfall confined to the section and proportional: the snow overlay should still look great, but it should not force extra height. It should simply animate inside this smaller section.
+    
+    Everything else stays the same (text sizes, copy, Apple styling). Just make the section shorter and make the gradient end cleanly in white at the bottom.”**, OK see how at the very bottom text isn't even showing that's not how it's supposed to be Make sure that the section like only at the very bottom of it turns completely too white but the rest of it is gonna be primarily like in the lighter Gray type of section but at the very top yes it has to be like completely like starting from black Give everything else exactly the same
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-safesnow-intro-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, 
+      #000000 0%, 
+      #1a1d24 15%,
+      #2a3340 25%,
+      #4a5568 35%,
+      #6b7280 45%,
+      #8b95a8 55%,
+      #a8b0bc 65%,
+      #c4cad4 75%,
+      #d8dde3 85%,
+      #e8ebef 92%,
+      #f5f7f9 96%,
+      #ffffff 100%
+    );
+    overflow: hidden;
+    padding: {{ block.settings.padding_top }}px 24px {{ block.settings.padding_bottom }}px;
+  }
+
+  .ai-safesnow-canvas-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .ai-safesnow-haze-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    background: linear-gradient(to top, 
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(240, 248, 255, 0.12) 50%,
+      transparent 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .ai-safesnow-content-{{ ai_gen_id }} {
+    position: relative;
+    z-index: 3;
+    max-width: 720px;
+    text-align: center;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-safesnow-eyebrow-{{ ai_gen_id }} {
+    display: inline-block;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: {{ block.settings.eyebrow_size }}px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  .ai-safesnow-headline-{{ ai_gen_id }} {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: {{ block.settings.headline_size }}px;
+    font-weight: 700;
+    line-height: 1.05;
+    margin: 0 0 32px;
+    letter-spacing: -0.03em;
+  }
+
+  .ai-safesnow-description-{{ ai_gen_id }} {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: {{ block.settings.description_size }}px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0 0 40px;
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ai-safesnow-cta-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 14px 36px;
+    background-color: {{ block.settings.button_bg }};
+    color: {{ block.settings.button_text_color }};
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: {{ block.settings.button_size }}px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 980px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 72px;
+    letter-spacing: -0.01em;
+  }
+
+  .ai-safesnow-cta-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_bg_hover }};
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-safesnow-features-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .ai-safesnow-feature-{{ ai_gen_id }} {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: {{ block.settings.feature_size }}px;
+    font-weight: 400;
+    opacity: 0.7;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    color: {{ block.settings.feature_text_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-safesnow-intro-{{ ai_gen_id }} {
+      padding: {{ block.settings.padding_top_mobile }}px 20px {{ block.settings.padding_bottom_mobile }}px;
+    }
+
+    .ai-safesnow-eyebrow-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.eyebrow_size }}px * 0.85);
+      margin-bottom: 12px;
+    }
+
+    .ai-safesnow-headline-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.headline_size }}px * 0.5);
+      margin-bottom: 24px;
+    }
+
+    .ai-safesnow-description-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.description_size }}px * 0.9);
+      margin-bottom: 32px;
+    }
+
+    .ai-safesnow-cta-{{ ai_gen_id }} {
+      padding: 12px 32px;
+      font-size: calc({{ block.settings.button_size }}px * 0.95);
+      margin-bottom: 56px;
+    }
+
+    .ai-safesnow-feature-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.feature_size }}px * 0.95);
+    }
+  }
+{% endstyle %}
+
+<safe-snow-intro-{{ ai_gen_id }} class="ai-safesnow-intro-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <canvas class="ai-safesnow-canvas-{{ ai_gen_id }}" data-snow-count="{{ block.settings.snow_count }}"></canvas>
+  <div class="ai-safesnow-haze-{{ ai_gen_id }}"></div>
+  
+  <div class="ai-safesnow-content-{{ ai_gen_id }}">
+    {% if block.settings.eyebrow != blank %}
+      <div class="ai-safesnow-eyebrow-{{ ai_gen_id }}">
+        {{ block.settings.eyebrow }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.headline != blank %}
+      <h1 class="ai-safesnow-headline-{{ ai_gen_id }}">
+        {{ block.settings.headline }}
+      </h1>
+    {% endif %}
+
+    {% if block.settings.description != blank %}
+      <div class="ai-safesnow-description-{{ ai_gen_id }}">
+        {{ block.settings.description }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.cta_text != blank and block.settings.cta_link != blank %}
+      <a href="{{ block.settings.cta_link }}" class="ai-safesnow-cta-{{ ai_gen_id }}">
+        {{ block.settings.cta_text }}
+      </a>
+    {% endif %}
+
+    {% if block.settings.feature_1 != blank or block.settings.feature_2 != blank or block.settings.feature_3 != blank %}
+      <div class="ai-safesnow-features-{{ ai_gen_id }}">
+        {% if block.settings.feature_1 != blank %}
+          <div class="ai-safesnow-feature-{{ ai_gen_id }}">{{ block.settings.feature_1 }}</div>
+        {% endif %}
+        {% if block.settings.feature_2 != blank %}
+          <div class="ai-safesnow-feature-{{ ai_gen_id }}">{{ block.settings.feature_2 }}</div>
+        {% endif %}
+        {% if block.settings.feature_3 != blank %}
+          <div class="ai-safesnow-feature-{{ ai_gen_id }}">{{ block.settings.feature_3 }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</safe-snow-intro-{{ ai_gen_id }}>
+
+<script>
+(function() {
+  class SafeSnowIntro{{ ai_gen_id }} extends HTMLElement {
+    constructor() {
+      super();
+      this.canvas = this.querySelector('.ai-safesnow-canvas-{{ ai_gen_id }}');
+      this.ctx = this.canvas.getContext('2d');
+      this.snowflakes = [];
+      this.animationId = null;
+    }
+
+    connectedCallback() {
+      this.initCanvas();
+      this.createSnowflakes();
+      this.animate();
+      window.addEventListener('resize', this.handleResize.bind(this));
+    }
+
+    disconnectedCallback() {
+      if (this.animationId) {
+        cancelAnimationFrame(this.animationId);
+      }
+      window.removeEventListener('resize', this.handleResize.bind(this));
+    }
+
+    initCanvas() {
+      this.canvas.width = this.offsetWidth;
+      this.canvas.height = this.offsetHeight;
+    }
+
+    handleResize() {
+      this.initCanvas();
+    }
+
+    createSnowflakes() {
+      const count = parseInt(this.canvas.dataset.snowCount) || 80;
+      this.snowflakes = [];
+      
+      for (let i = 0; i < count; i++) {
+        const depth = Math.random();
+        const size = depth < 0.3 ? Math.random() * 1.5 + 0.5 : 
+                     depth < 0.7 ? Math.random() * 2 + 1.5 : 
+                     Math.random() * 2.5 + 2;
+        
+        this.snowflakes.push({
+          x: Math.random() * this.canvas.width,
+          y: Math.random() * this.canvas.height,
+          radius: size,
+          speed: (1 - depth) * 0.6 + 0.3,
+          drift: (Math.random() - 0.5) * 0.8,
+          opacity: depth < 0.3 ? Math.random() * 0.15 + 0.05 : 
+                   depth < 0.7 ? Math.random() * 0.25 + 0.15 : 
+                   Math.random() * 0.35 + 0.25,
+          blur: depth < 0.3 ? 2 : depth < 0.7 ? 1 : 0
+        });
+      }
+    }
+
+    animate() {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+      this.snowflakes.forEach((flake) => {
+        this.ctx.save();
+        
+        if (flake.blur > 0) {
+          this.ctx.filter = `blur(${flake.blur}px)`;
+        }
+        
+        this.ctx.beginPath();
+        this.ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+        this.ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+        this.ctx.fill();
+        
+        this.ctx.restore();
+
+        flake.y += flake.speed;
+        flake.x += flake.drift;
+
+        if (flake.y > this.canvas.height + 10) {
+          flake.y = -10;
+          flake.x = Math.random() * this.canvas.width;
+        }
+
+        if (flake.x > this.canvas.width + 10) {
+          flake.x = -10;
+        } else if (flake.x < -10) {
+          flake.x = this.canvas.width + 10;
+        }
+      });
+
+      this.animationId = requestAnimationFrame(this.animate.bind(this));
+    }
+  }
+
+  customElements.define('safe-snow-intro-{{ ai_gen_id }}', SafeSnowIntro{{ ai_gen_id }});
+})();
+</script>
+
+{% schema %}
+{
+  "name": "SafeSnow intro",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "SAFE SNOW"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "SafeSnow is here"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "New season snowboards, boots & bindings — now in the UAE. Built for GCC riders & Ski Dubai."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button label",
+      "default": "Shop Snowboards"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Features"
+    },
+    {
+      "type": "text",
+      "id": "feature_1",
+      "label": "Feature 1",
+      "default": "The right board, first try."
+    },
+    {
+      "type": "text",
+      "id": "feature_2",
+      "label": "Feature 2",
+      "default": "First-session size swap."
+    },
+    {
+      "type": "text",
+      "id": "feature_3",
+      "label": "Feature 3",
+      "default": "Free wax & setup."
+    },
+    {
+      "type": "header",
+      "content": "Snow effect"
+    },
+    {
+      "type": "range",
+      "id": "snow_count",
+      "min": 30,
+      "max": 150,
+      "step": 10,
+      "label": "Snow particle count",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 40,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding (desktop)",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 40,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding (desktop)",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 32,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding (mobile)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 32,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding (mobile)",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "feature_text_color",
+      "label": "Feature text color",
+      "default": "#1f2937"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#0aa3ff"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_hover",
+      "label": "Button background hover",
+      "default": "#3db8ff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Eyebrow size",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "headline_size",
+      "min": 40,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Headline size",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 16,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "min": 14,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Button size",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "feature_size",
+      "min": 13,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Feature size",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "SafeSnow intro"
+    }
+  ]
+}
+{% endschema %}

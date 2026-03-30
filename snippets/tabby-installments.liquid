@@ -1,0 +1,119 @@
+{%- liquid
+  assign sectionId = section.id
+  assign lang = localization.language.iso_code
+-%}
+<div id="TabbyPromo"></div>
+<script>
+  (function() {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.tabby.ai/tabby-promo.js';
+    script.async = true;
+    script.onload = () => {
+      const SUPPORTED_CURRENCIES = {
+        AED: 'AED',
+        KWD: 'KWD',
+        SAR: 'SAR',
+        BHD: 'BHD',
+        QAR: 'QAR',
+      };
+
+      const CURRENCY_NAME_TO_CODE_MAP = {
+        AED: SUPPORTED_CURRENCIES.AED,
+        KWD: SUPPORTED_CURRENCIES.KWD,
+        SAR: SUPPORTED_CURRENCIES.SAR,
+        BHD: SUPPORTED_CURRENCIES.BHD,
+        QAR: SUPPORTED_CURRENCIES.QAR,
+        KD: SUPPORTED_CURRENCIES.KWD,
+        SR: SUPPORTED_CURRENCIES.SAR,
+        BD: SUPPORTED_CURRENCIES.BHD,
+        Dh: SUPPORTED_CURRENCIES.AED,
+        Dhs: SUPPORTED_CURRENCIES.AED,
+      };
+
+      const CURRENCY_DIGITS_COUNT = {
+        [SUPPORTED_CURRENCIES.AED]: 2,
+        [SUPPORTED_CURRENCIES.SAR]: 2,
+        [SUPPORTED_CURRENCIES.BHD]: 3,
+        [SUPPORTED_CURRENCIES.QAR]: 2,
+        [SUPPORTED_CURRENCIES.KWD]: 3,
+      };
+
+      const priceRegExp = /\b[0-9\.,']+\b/;
+      const currencyRegExp = new RegExp(`\\b(${Object.keys(CURRENCY_NAME_TO_CODE_MAP).join('|')})\\b`);
+      const installmentsCount = 4;
+      const tabbyElementId = '#TabbyPromo';
+      const lang = '{{ lang }}';
+      const sectionId = '{{ sectionId }}';
+
+      const priceElement = document.querySelector(`[id^="price-${sectionId}"]`) || document.querySelector('.product-price');
+
+      const initializeTabbyPromo = ({ element }) => {
+        const layoutPrice = element.textContent?.match(priceRegExp)?.[0] || '';
+        const layoutCurrency = element.textContent?.match(currencyRegExp)?.[0] || '';
+        const price = layoutPrice.replace(/\D/g, '');
+        const currency = CURRENCY_NAME_TO_CODE_MAP[layoutCurrency];
+
+        if (price && currency) {
+          document.querySelector(tabbyElementId).style.display = 'block';
+
+          new TabbyPromo({
+            selector: tabbyElementId,
+            currency,
+            price: price / Number(1 + '0'.repeat(CURRENCY_DIGITS_COUNT[currency])),
+            lang,
+            installmentsCount,
+            publicKey: 'pk_0191657e-c291-202d-3ee8-8f9416210112', // specify your apiKey
+            merchantCode: 'default', // enter the code of your Store base currency
+          });
+        } else {
+          console.warn('Cannot recognize currency or price; promo will be hidden.');
+          document.querySelector(tabbyElementId).style.display = 'none';
+        }
+      };
+
+      if (priceElement) {
+        initializeTabbyPromo({ element: priceElement });
+
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach(mutation => {
+            if (mutation.type === 'childList') {
+              initializeTabbyPromo({ element: mutation.target });
+            }
+          });
+        });
+
+        observer.observe(priceElement, { subtree: true, childList: true });
+      } else {
+        console.warn('Price element not found.');
+        document.querySelector(tabbyElementId).style.display = 'none';
+      }
+    };
+    document.body.appendChild(script);
+  })();
+</script>
+<style>
+  /* Widget: keep white always */
+  #TabbyPromo {
+    background-color: #ffffff !important;  /* changed from black */
+    color: #000000 !important;             /* ensure text is readable on white */
+    border-radius: 8px !important;
+  }
+
+  /* Keep hover identical (white on hover too) */
+  #TabbyPromo:hover {
+    background-color: #ffffff !important;  /* was switching to white on hover */
+    color: #000000 !important;
+  }
+
+  /* Dialog overlay unchanged */
+  #TabbyDialogContainer {
+    background-color: #000000 !important;
+    border-radius: 8px !important;
+  }
+
+  /* Hide empty divs to avoid spacing issues */
+  #TabbyPromo div:empty,
+  #TabbyDialogContainer div:empty {
+    display: none;
+  }
+</style>

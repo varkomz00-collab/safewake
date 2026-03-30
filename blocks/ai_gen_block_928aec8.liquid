@@ -1,0 +1,528 @@
+{% doc %}
+  @prompt
+    Generate this section that fades from Black into white and then into snow and then starts with a caption that says safe snow and then just for a limited time only exclusive edition we're going to be offering like like snowboards so take a look at the very bottom save Snow now is here and then just like a nice few quotes things like that and then but like just make it fade from black cause the section above it is black and then into white and then there's gonna be a carousel underneath it but right now build this section that is just a black to white fade and I'd like some snow as if it's snowing and yeah just like introduce our new snowboard brand lineup That is now available in the UE
+    
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-snow-intro-{{ ai_gen_id }} {
+    display: block;
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    background: linear-gradient(to bottom, #000000 0%, #1a1a1a 20%, #4a4a4a 50%, #d0d0d0 80%, #ffffff 100%);
+    overflow: hidden;
+    padding: 80px 40px;
+  }
+
+  .ai-snow-intro-canvas-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .ai-snow-intro-content-{{ ai_gen_id }} {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .ai-snow-intro-badge-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: {{ block.settings.badge_bg_color }};
+    color: {{ block.settings.badge_text_color }};
+    font-size: {{ block.settings.badge_font_size }}px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .ai-snow-intro-headline-{{ ai_gen_id }} {
+    font-size: {{ block.settings.headline_font_size }}px;
+    font-weight: 900;
+    color: {{ block.settings.headline_color }};
+    margin: 0;
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .ai-snow-intro-subheadline-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subheadline_font_size }}px;
+    color: {{ block.settings.subheadline_color }};
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .ai-snow-intro-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_font_size }}px;
+    color: {{ block.settings.description_color }};
+    max-width: 800px;
+    line-height: 1.8;
+    margin: 0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  .ai-snow-intro-quotes-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 700px;
+    margin-top: 20px;
+  }
+
+  .ai-snow-intro-quote-{{ ai_gen_id }} {
+    font-size: {{ block.settings.quote_font_size }}px;
+    color: {{ block.settings.quote_color }};
+    font-style: italic;
+    padding: 20px 30px;
+    background-color: {{ block.settings.quote_bg_color }};
+    border-left: 4px solid {{ block.settings.quote_accent_color }};
+    border-radius: 8px;
+    text-align: left;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .ai-snow-intro-cta-{{ ai_gen_id }} {
+    margin-top: 20px;
+  }
+
+  .ai-snow-intro-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 18px 50px;
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .ai-snow-intro-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg_color }};
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-snow-intro-{{ ai_gen_id }} {
+      min-height: 500px;
+      padding: 60px 20px;
+    }
+
+    .ai-snow-intro-headline-{{ ai_gen_id }} {
+      font-size: {{ block.settings.headline_font_size | times: 0.6 }}px;
+    }
+
+    .ai-snow-intro-subheadline-{{ ai_gen_id }} {
+      font-size: {{ block.settings.subheadline_font_size | times: 0.7 }}px;
+    }
+
+    .ai-snow-intro-description-{{ ai_gen_id }} {
+      font-size: {{ block.settings.description_font_size | times: 0.9 }}px;
+    }
+
+    .ai-snow-intro-quote-{{ ai_gen_id }} {
+      font-size: {{ block.settings.quote_font_size | times: 0.9 }}px;
+      padding: 15px 20px;
+    }
+
+    .ai-snow-intro-button-{{ ai_gen_id }} {
+      padding: 15px 40px;
+      font-size: {{ block.settings.button_font_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<snow-intro-{{ ai_gen_id }}
+  class="ai-snow-intro-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <canvas class="ai-snow-intro-canvas-{{ ai_gen_id }}"></canvas>
+
+  <div class="ai-snow-intro-content-{{ ai_gen_id }}">
+    {% if block.settings.badge_text != blank %}
+      <div class="ai-snow-intro-badge-{{ ai_gen_id }}">
+        {{ block.settings.badge_text }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.headline != blank %}
+      <h1 class="ai-snow-intro-headline-{{ ai_gen_id }}">
+        {{ block.settings.headline }}
+      </h1>
+    {% endif %}
+
+    {% if block.settings.subheadline != blank %}
+      <h2 class="ai-snow-intro-subheadline-{{ ai_gen_id }}">
+        {{ block.settings.subheadline }}
+      </h2>
+    {% endif %}
+
+    {% if block.settings.description != blank %}
+      <div class="ai-snow-intro-description-{{ ai_gen_id }}">
+        {{ block.settings.description }}
+      </div>
+    {% endif %}
+
+    <div class="ai-snow-intro-quotes-{{ ai_gen_id }}">
+      {% if block.settings.quote_1 != blank %}
+        <div class="ai-snow-intro-quote-{{ ai_gen_id }}">
+          {{ block.settings.quote_1 }}
+        </div>
+      {% endif %}
+
+      {% if block.settings.quote_2 != blank %}
+        <div class="ai-snow-intro-quote-{{ ai_gen_id }}">
+          {{ block.settings.quote_2 }}
+        </div>
+      {% endif %}
+
+      {% if block.settings.quote_3 != blank %}
+        <div class="ai-snow-intro-quote-{{ ai_gen_id }}">
+          {{ block.settings.quote_3 }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if block.settings.button_text != blank %}
+      <div class="ai-snow-intro-cta-{{ ai_gen_id }}">
+        <a
+          href="{{ block.settings.button_link }}"
+          class="ai-snow-intro-button-{{ ai_gen_id }}"
+        >
+          {{ block.settings.button_text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</snow-intro-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class SnowIntro{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.canvas = this.querySelector('.ai-snow-intro-canvas-{{ ai_gen_id }}');
+        this.ctx = this.canvas.getContext('2d');
+        this.snowflakes = [];
+        this.maxSnowflakes = {{ block.settings.snow_amount }};
+        this.animationFrame = null;
+      }
+
+      connectedCallback() {
+        this.resizeCanvas();
+        this.createSnowflakes();
+        this.animate();
+
+        window.addEventListener('resize', () => this.resizeCanvas());
+      }
+
+      disconnectedCallback() {
+        if (this.animationFrame) {
+          cancelAnimationFrame(this.animationFrame);
+        }
+        window.removeEventListener('resize', () => this.resizeCanvas());
+      }
+
+      resizeCanvas() {
+        this.canvas.width = this.canvas.offsetWidth;
+        this.canvas.height = this.canvas.offsetHeight;
+      }
+
+      createSnowflakes() {
+        this.snowflakes = [];
+        for (let i = 0; i < this.maxSnowflakes; i++) {
+          this.snowflakes.push({
+            x: Math.random() * this.canvas.width,
+            y: Math.random() * this.canvas.height,
+            radius: Math.random() * 3 + 1,
+            speed: Math.random() * 1 + 0.5,
+            wind: Math.random() * 0.5 - 0.25,
+            opacity: Math.random() * 0.5 + 0.3
+          });
+        }
+      }
+
+      animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.snowflakes.forEach((flake) => {
+          this.ctx.beginPath();
+          this.ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+          this.ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+          this.ctx.fill();
+
+          flake.y += flake.speed;
+          flake.x += flake.wind;
+
+          if (flake.y > this.canvas.height) {
+            flake.y = -10;
+            flake.x = Math.random() * this.canvas.width;
+          }
+
+          if (flake.x > this.canvas.width) {
+            flake.x = 0;
+          } else if (flake.x < 0) {
+            flake.x = this.canvas.width;
+          }
+        });
+
+        this.animationFrame = requestAnimationFrame(() => this.animate());
+      }
+    }
+
+    customElements.define('snow-intro-{{ ai_gen_id }}', SnowIntro{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Snow intro",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Badge"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "Safe Snow"
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Background color",
+      "default": "#0aa3ff"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Safe Snow Now is Here"
+    },
+    {
+      "type": "range",
+      "id": "headline_font_size",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 72
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Subheadline"
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "Subheadline",
+      "default": "Limited Time Only - Exclusive Edition"
+    },
+    {
+      "type": "range",
+      "id": "subheadline_font_size",
+      "min": 16,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 28
+    },
+    {
+      "type": "color",
+      "id": "subheadline_color",
+      "label": "Text color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Introducing our premium snowboard lineup, now available exclusively in the UAE. Experience the thrill of the slopes with cutting-edge technology and unmatched performance."
+    },
+    {
+      "type": "range",
+      "id": "description_font_size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Text color",
+      "default": "#d0d0d0"
+    },
+    {
+      "type": "header",
+      "content": "Quotes"
+    },
+    {
+      "type": "textarea",
+      "id": "quote_1",
+      "label": "Quote 1",
+      "default": "Engineered for precision, designed for adventure."
+    },
+    {
+      "type": "textarea",
+      "id": "quote_2",
+      "label": "Quote 2",
+      "default": "Where innovation meets the mountain."
+    },
+    {
+      "type": "textarea",
+      "id": "quote_3",
+      "label": "Quote 3",
+      "default": "Your journey to the peak starts here."
+    },
+    {
+      "type": "range",
+      "id": "quote_font_size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Text color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "quote_bg_color",
+      "label": "Background color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "quote_accent_color",
+      "label": "Accent color",
+      "default": "#0aa3ff"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Explore Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Background color",
+      "default": "#0aa3ff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Hover background color",
+      "default": "#3db8ff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Snow effect"
+    },
+    {
+      "type": "range",
+      "id": "snow_amount",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "label": "Snow amount",
+      "default": 150
+    }
+  ],
+  "presets": [
+    {
+      "name": "Snow intro"
+    }
+  ]
+}
+{% endschema %}

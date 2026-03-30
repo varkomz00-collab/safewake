@@ -1,0 +1,674 @@
+{% doc %}
+  @prompt
+    Build a minimal “Cinematic Dark” hero section for ONE featured kneeboard: the 2026 CHROMA, an exclusive early-access model, in a black-and-white premium style.
+    
+    GLOBAL STYLE
+    
+    Solid black #000000 background.
+    
+    Text white #FFFFFF, muted #B9C4CF.
+    
+    Card glass effect rgba(255,255,255,0.03) with 1px border rgba(255,255,255,0.10) and soft shadow.
+    
+    Only accent color: electric blue #0AA3FF for small highlights and button hover.
+    
+    LAYOUT & HEADER
+    
+    Centered narrow container, compact height, not full-screen.
+    
+    Small pill chip “EXCLUSIVE PRE-ORDER” in all caps, muted #B9C4CF, glass background, rounded-full.
+    
+    Main heading: “Be first to ride CHROMA 2026” in a modern sans-serif, white, single line.
+    
+    Short scarcity line: “Ships from UAE only • limited slots”.
+    
+    CARD + IMAGE
+    
+    Single hero card for “Chroma Kneeboard”, scaled down ~50% vs a typical hero.
+    
+    Desktop: centered card with max-width around 480–560px, generous margins so it never feels huge.
+    
+    Mobile: same centered card, no horizontal scroll, vertical footprint clearly less than full screen.
+    
+    Product image: small perfect square (1:1), same visual size family as other product images, centered with margin, never edge-to-edge.
+    
+    TEXT + BUTTON
+    
+    Top label: “KNEEBOARD • LIMITED 2026 PRE-ORDER” in #B9C4CF.
+    
+    Main title word “CHROMA” big, white, with subtle neon-style glow.
+    
+    Under the title, 1–2 tiny bullets about early access and owning cable season 2026.
+    
+    At the very bottom of the card, add ONE compact primary button with label “PRE-ORDER NOW” that links directly to the product page (real anchor/link, not “#”), plus a tiny urgency line under it like “First drop capped • secure now”.
+    
+    Keep all animations minimal and smooth., GENERAL REFINEMENTS
+    Keep the Cinematic Dark style, but shrink visual scale so the section feels like a normal, minimalistic content block — not a full-screen hero — on both desktop and mobile.
+    On desktop, make the entire section height and presence similar to other product sections on the site. Keep the card max-width around 480–560px, centered, with clear empty space left and right and above/below. No full-bleed or near full-screen layouts.
+    On mobile, keep the same single card but make it feel like a compact product tile: reduce vertical spacing, keep padding tight, and ensure the section does NOT fill the viewport height. There should be clear space above and below so it blends naturally with the rest of the page.
+    IMAGE + TYPOGRAPHY
+    Confirm the product image is strictly 1:1 ratio, displayed as a small square that visually matches other product tiles on the site (not oversized).
+    Make sure the square image never touches the card edges; keep comfortable but minimal padding around it so the layout stays light.
+    Use consistent, readable font sizes (roughly 14–18px for body, slightly larger for headings). Avoid any huge, hero-style text that makes the section feel heavier than other parts of the site.
+    BUTTON + LINK LOGIC
+    At the bottom of the card, keep exactly one primary button labeled “PRE-ORDER NOW”.
+    The button must be a real clickable element that navigates to the CHROMA product page using the theme’s dynamic product URL (no placeholder href, no “javascript:void(0)”).
+    Keep the button compact in height and width, not full-width on desktop. On mobile it can expand slightly but should still feel small, premium, and in line with the site’s other buttons.
+    Under the button, keep one concise urgency line like “First drop capped • secure now” to reinforce scarcity without adding bulk.
+    FINAL CHECKS
+    Remove any unused wrappers, extra spacing, or oversized margins that make the section feel heavy or taller than nearby sections.
+    Ensure everything stays accessible (strong contrast, GENERAL REFINEMENTS
+    Keep the Cinematic Dark style, but keep the section as a normal minimal content block, not a full-screen hero, on both desktop and mobile. Match the visual weight and height of other product sections on the site.
+    DESKTOP LAYOUT (IMAGE LEFT, DETAILS RIGHT)
+    On desktop, change the layout to a simple two-column product view:
+    
+    
+    Left column: product images.
+    
+    
+    Right column: title, text, and PRE-ORDER button.
+    Keep the total width modest (no full-bleed); center the whole block with comfortable space left/right and above/below.
+    
+    
+    IMAGE + PRODUCT BINDING
+    
+    
+    Remove any “select image” setting from the schema. Instead, add a PRODUCT PICKER setting so the merchant selects the actual CHROMA product.
+    
+    
+    Use that selected product’s dynamic data (e.g. section.settings.product) to pull:
+    
+    
+    Featured image as the main image.
+    
+    
+    Additional media as a small, minimal image gallery or thumbnails under/next to the main image.
+    
+    
+    
+    
+    Ensure all images display as small, perfect 1:1 squares that visually match the size of other product tiles on the site, never touching the card edges.
+    
+    
+    MOBILE LAYOUT
+    
+    
+    On mobile, stack everything in one column: images first, then text and button.
+    
+    
+    Reduce vertical spacing so the section feels like a compact product tile, not a full-screen block. There should always be clear space above and below.
+    
+    
+    TYPOGRAPHY
+    
+    
+    Keep headings and body text modest: roughly 14–18px for body, slightly larger for headings. No huge hero text.
+    
+    
+    Preserve the existing microcopy (exclusive, UAE-only, limited slots) but keep all lines short and tight.
+    
+    
+    BUTTON + LINK LOGIC
+    
+    
+    At the bottom of the right-hand column, keep exactly one primary button labeled “PRE-ORDER NOW”.
+    
+    
+    The button must link directly to the selected product’s URL using the theme’s dynamic product URL (no placeholder href, no “javascript:void(0)”).
+    
+    
+    Keep the button compact in height and width (not full-width on desktop; on mobile it can widen slightly but still look small and premium).
+    
+    
+    Keep one concise urg, GENERAL REFINEMENTS
+    
+    
+    Keep the Cinematic Dark style and current desktop two-column layout (images left, details right), but make the hierarchy on both desktop and mobile feel like a normal product detail block: title → price → button → info.
+    
+    
+    Keep the section a compact content block, not a full-screen hero.
+    
+    
+    CONTENT ORDER (DESKTOP & MOBILE)
+    
+    
+    In the text/details column, enforce this exact vertical order:
+    
+    
+    Pill chip “EXCLUSIVE PRE-ORDER”.
+    
+    
+    Top label “KNEEBOARD • LIMITED 2026 PRE-ORDER”.
+    
+    
+    Product title (e.g. “Chroma Kneeboard – Cable Park Edition”).
+    
+    
+    Product price (use the selected product’s dynamic price, and compare_at_price if available).
+    
+    
+    Primary “PRE-ORDER NOW” button.
+    
+    
+    Tiny urgency line (“First drop capped • secure now”).
+    
+    
+    Short description / bullets (UAE-only, early access, own cable season 2026, etc.).
+    
+    
+    
+    
+    MOBILE LAYOUT
+    
+    
+    On mobile, stack everything in a single column but keep the title, price, and button visually tight together near the top of the text block.
+    
+    
+    Reduce vertical spacing between title, price, and button so the CTA feels connected to the product name and price, not floating far away.
+    
+    
+    Ensure the section height on mobile remains compact, with visible space above and below so it blends with other sections.
+    
+    
+    IMAGES
+    
+    
+    Keep the desktop layout with images on the left and text on the right.
+    
+    
+    On mobile, place the main product image (and thumbnails if any) above the text block.
+    
+    
+    All images remain small 1:1 squares that match other product tiles on the site, with comfortable but minimal padding and no edge-to-edge behavior.
+    
+    
+    BUTTON + LINK LOGIC
+    
+    
+    Keep exactly one primary button labeled “PRE-ORDER NOW” that uses the selected product’s dynamic URL (no placeholder href, no javascript:void(0)).
+    
+    
+    Button remains compact (not full-width on desktop; can be wider on mobile but still feel small and premium).
+    
+    
+    FINAL CHECKS
+    
+    
+    Remove any extra gaps between sections so the block feels tight and minimal.
+    
+    
+    Confirm text sizes stay around 14–18px for body, 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-chroma-product-{{ ai_gen_id }} {
+    background-color: #000000;
+    padding: 48px 20px;
+  }
+
+  .ai-chroma-product__container-{{ ai_gen_id }} {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .ai-chroma-product__card-{{ ai_gen_id }} {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 12px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .ai-chroma-product__images-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ai-chroma-product__main-image-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .ai-chroma-product__main-image-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .ai-chroma-product__image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+  }
+
+  .ai-chroma-product__image-placeholder-{{ ai_gen_id }} svg {
+    width: 60px;
+    height: 60px;
+    opacity: 0.3;
+  }
+
+  .ai-chroma-product__thumbnails-{{ ai_gen_id }} {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .ai-chroma-product__thumbnail-{{ ai_gen_id }} {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+
+  .ai-chroma-product__thumbnail-{{ ai_gen_id }}:hover {
+    border-color: #0AA3FF;
+  }
+
+  .ai-chroma-product__details-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ai-chroma-product__pill-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 9999px;
+    color: #B9C4CF;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 500;
+    width: fit-content;
+  }
+
+  .ai-chroma-product__label-{{ ai_gen_id }} {
+    color: #B9C4CF;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .ai-chroma-product__title-{{ ai_gen_id }} {
+    color: #FFFFFF;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    text-shadow: 0 0 16px rgba(10, 163, 255, 0.35), 0 0 32px rgba(10, 163, 255, 0.15);
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+
+  .ai-chroma-product__price-{{ ai_gen_id }} {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .ai-chroma-product__price-current-{{ ai_gen_id }} {
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .ai-chroma-product__price-compare-{{ ai_gen_id }} {
+    color: #B9C4CF;
+    font-size: 18px;
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+
+  .ai-chroma-product__cta-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .ai-chroma-product__button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 12px 28px;
+    background-color: #0AA3FF;
+    color: #000000;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    width: fit-content;
+  }
+
+  .ai-chroma-product__button-{{ ai_gen_id }}:hover {
+    background-color: #3db8ff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(10, 163, 255, 0.25);
+  }
+
+  .ai-chroma-product__urgency-{{ ai_gen_id }} {
+    color: #B9C4CF;
+    font-size: 10px;
+  }
+
+  .ai-chroma-product__description-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .ai-chroma-product__feature-{{ ai_gen_id }} {
+    color: #B9C4CF;
+    font-size: 13px;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .ai-chroma-product__feature-{{ ai_gen_id }}:before {
+    content: '•';
+    position: absolute;
+    left: 4px;
+    color: #0AA3FF;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ai-chroma-product__card-{{ ai_gen_id }} {
+      grid-template-columns: 320px 1fr;
+      gap: 36px;
+      padding: 32px 28px;
+    }
+
+    .ai-chroma-product__main-image-wrapper-{{ ai_gen_id }} {
+      max-width: 100%;
+    }
+
+    .ai-chroma-product__thumbnails-{{ ai_gen_id }} {
+      justify-content: flex-start;
+    }
+
+    .ai-chroma-product__details-{{ ai_gen_id }} {
+      gap: 14px;
+    }
+
+    .ai-chroma-product__title-{{ ai_gen_id }} {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .ai-chroma-product__price-current-{{ ai_gen_id }} {
+      font-size: 26px;
+    }
+
+    .ai-chroma-product__cta-wrapper-{{ ai_gen_id }} {
+      margin-bottom: 10px;
+    }
+
+    .ai-chroma-product__description-{{ ai_gen_id }} {
+      padding-top: 12px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-chroma-product-{{ ai_gen_id }} {
+      padding: 32px 16px;
+    }
+
+    .ai-chroma-product__card-{{ ai_gen_id }} {
+      padding: 20px 16px;
+      gap: 20px;
+    }
+
+    .ai-chroma-product__details-{{ ai_gen_id }} {
+      gap: 10px;
+    }
+
+    .ai-chroma-product__title-{{ ai_gen_id }} {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .ai-chroma-product__price-current-{{ ai_gen_id }} {
+      font-size: 22px;
+    }
+
+    .ai-chroma-product__price-compare-{{ ai_gen_id }} {
+      font-size: 16px;
+    }
+
+    .ai-chroma-product__button-{{ ai_gen_id }} {
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .ai-chroma-product__cta-wrapper-{{ ai_gen_id }} {
+      margin-bottom: 6px;
+    }
+
+    .ai-chroma-product__description-{{ ai_gen_id }} {
+      padding-top: 6px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-chroma-product-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-chroma-product__container-{{ ai_gen_id }}">
+    <div class="ai-chroma-product__card-{{ ai_gen_id }}">
+      <div class="ai-chroma-product__images-{{ ai_gen_id }}">
+        <div class="ai-chroma-product__main-image-wrapper-{{ ai_gen_id }}">
+          {% if block.settings.chroma_product != blank and block.settings.chroma_product.featured_image %}
+            <img
+              src="{{ block.settings.chroma_product.featured_image | image_url: width: 640 }}"
+              alt="{{ block.settings.chroma_product.featured_image.alt | escape }}"
+              class="ai-chroma-product__main-image-{{ ai_gen_id }}"
+              loading="lazy"
+              width="320"
+              height="320"
+            >
+          {% else %}
+            <div class="ai-chroma-product__image-placeholder-{{ ai_gen_id }}">
+              {{ 'product-1' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+
+        {% if block.settings.chroma_product != blank and block.settings.chroma_product.media.size > 1 %}
+          <div class="ai-chroma-product__thumbnails-{{ ai_gen_id }}">
+            {% for media in block.settings.chroma_product.media limit: 4 %}
+              {% if media.media_type == 'image' %}
+                <img
+                  src="{{ media | image_url: width: 120 }}"
+                  alt="{{ media.alt | escape }}"
+                  class="ai-chroma-product__thumbnail-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="60"
+                  height="60"
+                >
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ai-chroma-product__details-{{ ai_gen_id }}">
+        <div class="ai-chroma-product__pill-{{ ai_gen_id }}">
+          {{ block.settings.pill_text }}
+        </div>
+
+        <div>
+          <div class="ai-chroma-product__label-{{ ai_gen_id }}">
+            {{ block.settings.product_label }}
+          </div>
+          <h2 class="ai-chroma-product__title-{{ ai_gen_id }}">
+            {% if block.settings.chroma_product != blank %}
+              {{ block.settings.chroma_product.title }}
+            {% else %}
+              {{ block.settings.product_name }}
+            {% endif %}
+          </h2>
+        </div>
+
+        {% if block.settings.chroma_product != blank %}
+          <div class="ai-chroma-product__price-{{ ai_gen_id }}">
+            <span class="ai-chroma-product__price-current-{{ ai_gen_id }}">
+              {{ block.settings.chroma_product.price | money }}
+            </span>
+            {% if block.settings.chroma_product.compare_at_price > block.settings.chroma_product.price %}
+              <span class="ai-chroma-product__price-compare-{{ ai_gen_id }}">
+                {{ block.settings.chroma_product.compare_at_price | money }}
+              </span>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <div class="ai-chroma-product__cta-wrapper-{{ ai_gen_id }}">
+          {% if block.settings.chroma_product != blank %}
+            <a
+              href="{{ block.settings.chroma_product.url }}"
+              class="ai-chroma-product__button-{{ ai_gen_id }}"
+            >
+              {{ block.settings.button_text }}
+            </a>
+          {% else %}
+            <a
+              href="#"
+              class="ai-chroma-product__button-{{ ai_gen_id }}"
+            >
+              {{ block.settings.button_text }}
+            </a>
+          {% endif %}
+          <div class="ai-chroma-product__urgency-{{ ai_gen_id }}">
+            {{ block.settings.urgency_text }}
+          </div>
+        </div>
+
+        <div class="ai-chroma-product__description-{{ ai_gen_id }}">
+          {% if block.settings.feature_1 != blank %}
+            <div class="ai-chroma-product__feature-{{ ai_gen_id }}">
+              {{ block.settings.feature_1 }}
+            </div>
+          {% endif %}
+          {% if block.settings.feature_2 != blank %}
+            <div class="ai-chroma-product__feature-{{ ai_gen_id }}">
+              {{ block.settings.feature_2 }}
+            </div>
+          {% endif %}
+          {% if block.settings.feature_3 != blank %}
+            <div class="ai-chroma-product__feature-{{ ai_gen_id }}">
+              {{ block.settings.feature_3 }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Chroma product",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product"
+    },
+    {
+      "type": "product",
+      "id": "chroma_product",
+      "label": "CHROMA product"
+    },
+    {
+      "type": "header",
+      "content": "Labels"
+    },
+    {
+      "type": "text",
+      "id": "pill_text",
+      "label": "Pill text",
+      "default": "EXCLUSIVE PRE-ORDER"
+    },
+    {
+      "type": "text",
+      "id": "product_label",
+      "label": "Product label",
+      "default": "KNEEBOARD • LIMITED 2026 PRE-ORDER"
+    },
+    {
+      "type": "text",
+      "id": "product_name",
+      "label": "Fallback product name",
+      "default": "CHROMA"
+    },
+    {
+      "type": "header",
+      "content": "Features"
+    },
+    {
+      "type": "text",
+      "id": "feature_1",
+      "label": "Feature 1",
+      "default": "Ships from UAE only • limited slots"
+    },
+    {
+      "type": "text",
+      "id": "feature_2",
+      "label": "Feature 2",
+      "default": "Exclusive early access to 2026 model"
+    },
+    {
+      "type": "text",
+      "id": "feature_3",
+      "label": "Feature 3",
+      "default": "Own cable season 2026 with premium tech"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "PRE-ORDER NOW"
+    },
+    {
+      "type": "text",
+      "id": "urgency_text",
+      "label": "Urgency text",
+      "default": "First drop capped • secure now"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Chroma product"
+    }
+  ]
+}
+{% endschema %}

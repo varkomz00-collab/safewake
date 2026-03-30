@@ -1,0 +1,502 @@
+{% doc %}
+  @prompt
+    Build a minimal “Cinematic Dark” hero section for ONE featured kneeboard: the 2026 CHROMA, an exclusive early-access model, in a black-and-white premium style.
+    
+    GLOBAL STYLE
+    
+    Solid black #000000 background.
+    
+    Text white #FFFFFF, muted #B9C4CF.
+    
+    Card glass effect rgba(255,255,255,0.03), 1px border rgba(255,255,255,0.10), soft shadow.
+    
+    Only accent color: electric blue #0AA3FF for small highlights.
+    
+    SECTION HEADER
+    
+    Centered narrow container.
+    
+    Small pill chip “EXCLUSIVE PRE-ORDER” in all caps, muted #B9C4CF, glass background, rounded-full.
+    
+    Main heading: “Be first to ride CHROMA 2026” in a modern sans-serif, white, single line.
+    
+    Short scarcity line: “Ships from UAE only • limited slots”.
+    
+    PRODUCT LAYOUT
+    
+    Single hero product card for “Chroma Kneeboard”.
+    
+    Desktop: one centered compact-width card, not full-bleed.
+    
+    Mobile: same centered card, no horizontal scroll, vertical footprint smaller than a full screen.
+    
+    CARD DESIGN
+    
+    Match structure and button style of the rest of the site but scale everything down ~50% vs a typical hero.
+    
+    Medium card padding and rounded corners.
+    
+    Top label: “KNEEBOARD • LIMITED 2026 PRE-ORDER” in #B9C4CF.
+    
+    Main title word “CHROMA” big, white, with a subtle neon-style glow.
+    
+    Under the title, 1–2 tiny benefit bullets about early access and owning cable season 2026.
+    
+    IMAGE + CTA + RESPONSIVENESS
+    
+    Product image must be a small perfect square (1:1), same visual size family as other product images, centered with margins so it never runs edge-to-edge.
+    
+    Primary button compact, not full-width, text “Pre-order CHROMA 2026” with a small urgency line under it like “First drop capped • secure now”, plus a subtle text link “View full specs”. Keep animations minimal and smooth.
+    
+    Section should read as a tight, high-impact centerpiece on desktop and mobile, with typography, square image size and button scale matching other product tiles so the grid feels consistent.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-chroma-hero-{{ ai_gen_id }} {
+    background-color: {{ block.settings.bg_color }};
+    padding: 60px 20px;
+    position: relative;
+  }
+
+  .ai-chroma-hero-container-{{ ai_gen_id }} {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .ai-chroma-hero-header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .ai-chroma-hero-pill-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 16px;
+    background: {{ block.settings.glass_bg }};
+    border: 1px solid {{ block.settings.glass_border }};
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: {{ block.settings.muted_color }};
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-chroma-hero-heading-{{ ai_gen_id }} {
+    font-size: 32px;
+    font-weight: 700;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+
+  .ai-chroma-hero-scarcity-{{ ai_gen_id }} {
+    font-size: 13px;
+    color: {{ block.settings.muted_color }};
+    margin: 0;
+  }
+
+  .ai-chroma-hero-card-{{ ai_gen_id }} {
+    background: {{ block.settings.glass_bg }};
+    border: 1px solid {{ block.settings.glass_border }};
+    border-radius: 16px;
+    padding: 32px 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .ai-chroma-hero-label-{{ ai_gen_id }} {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: {{ block.settings.muted_color }};
+    margin-bottom: 16px;
+  }
+
+  .ai-chroma-hero-title-{{ ai_gen_id }} {
+    font-size: 48px;
+    font-weight: 900;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 20px {{ block.settings.accent_color }}40,
+                 0 0 40px {{ block.settings.accent_color }}20;
+  }
+
+  .ai-chroma-hero-benefits-{{ ai_gen_id }} {
+    margin-bottom: 24px;
+  }
+
+  .ai-chroma-hero-benefit-{{ ai_gen_id }} {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    color: {{ block.settings.muted_color }};
+    margin-bottom: 8px;
+  }
+
+  .ai-chroma-hero-benefit-{{ ai_gen_id }}:last-child {
+    margin-bottom: 0;
+  }
+
+  .ai-chroma-hero-benefit-icon-{{ ai_gen_id }} {
+    width: 4px;
+    height: 4px;
+    background: {{ block.settings.accent_color }};
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .ai-chroma-hero-image-wrapper-{{ ai_gen_id }} {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+
+  .ai-chroma-hero-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .ai-chroma-hero-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-chroma-hero-image-placeholder-{{ ai_gen_id }} svg {
+    width: 80px;
+    height: 80px;
+    opacity: 0.3;
+  }
+
+  .ai-chroma-hero-cta-{{ ai_gen_id }} {
+    text-align: center;
+  }
+
+  .ai-chroma-hero-button-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    background-color: {{ block.settings.button_bg }};
+    color: {{ block.settings.button_text_color }};
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 8px;
+  }
+
+  .ai-chroma-hero-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg }};
+    transform: translateY(-1px);
+  }
+
+  .ai-chroma-hero-urgency-{{ ai_gen_id }} {
+    font-size: 11px;
+    color: {{ block.settings.muted_color }};
+    margin-bottom: 12px;
+  }
+
+  .ai-chroma-hero-link-{{ ai_gen_id }} {
+    font-size: 12px;
+    color: {{ block.settings.accent_color }};
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .ai-chroma-hero-link-{{ ai_gen_id }}:hover {
+    opacity: 0.8;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ai-chroma-hero-{{ ai_gen_id }} {
+      padding: 80px 40px;
+    }
+
+    .ai-chroma-hero-heading-{{ ai_gen_id }} {
+      font-size: 42px;
+    }
+
+    .ai-chroma-hero-title-{{ ai_gen_id }} {
+      font-size: 64px;
+    }
+
+    .ai-chroma-hero-card-{{ ai_gen_id }} {
+      padding: 40px 32px;
+    }
+
+    .ai-chroma-hero-image-wrapper-{{ ai_gen_id }} {
+      width: 240px;
+      height: 240px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-chroma-hero-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-chroma-hero-container-{{ ai_gen_id }}">
+    <div class="ai-chroma-hero-header-{{ ai_gen_id }}">
+      <div class="ai-chroma-hero-pill-{{ ai_gen_id }}">
+        {{ block.settings.pill_text }}
+      </div>
+      <h2 class="ai-chroma-hero-heading-{{ ai_gen_id }}">
+        {{ block.settings.heading }}
+      </h2>
+      <p class="ai-chroma-hero-scarcity-{{ ai_gen_id }}">
+        {{ block.settings.scarcity_text }}
+      </p>
+    </div>
+
+    <div class="ai-chroma-hero-card-{{ ai_gen_id }}">
+      <div class="ai-chroma-hero-label-{{ ai_gen_id }}">
+        {{ block.settings.card_label }}
+      </div>
+
+      <h3 class="ai-chroma-hero-title-{{ ai_gen_id }}">
+        {{ block.settings.product_title }}
+      </h3>
+
+      {% if block.settings.benefit_1 != blank or block.settings.benefit_2 != blank %}
+        <div class="ai-chroma-hero-benefits-{{ ai_gen_id }}">
+          {% if block.settings.benefit_1 != blank %}
+            <div class="ai-chroma-hero-benefit-{{ ai_gen_id }}">
+              <span class="ai-chroma-hero-benefit-icon-{{ ai_gen_id }}"></span>
+              <span>{{ block.settings.benefit_1 }}</span>
+            </div>
+          {% endif %}
+          {% if block.settings.benefit_2 != blank %}
+            <div class="ai-chroma-hero-benefit-{{ ai_gen_id }}">
+              <span class="ai-chroma-hero-benefit-icon-{{ ai_gen_id }}"></span>
+              <span>{{ block.settings.benefit_2 }}</span>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div class="ai-chroma-hero-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.product_image %}
+          <img
+            src="{{ block.settings.product_image | image_url: width: 480 }}"
+            alt="{{ block.settings.product_image.alt | escape }}"
+            loading="lazy"
+            width="240"
+            height="240"
+            class="ai-chroma-hero-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-chroma-hero-image-placeholder-{{ ai_gen_id }}">
+            {{ 'product-1' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ai-chroma-hero-cta-{{ ai_gen_id }}">
+        {% if block.settings.button_url != blank %}
+          <a
+            href="{{ block.settings.button_url }}"
+            class="ai-chroma-hero-button-{{ ai_gen_id }}"
+          >
+            {{ block.settings.cta_button_text }}
+          </a>
+        {% else %}
+          <button class="ai-chroma-hero-button-{{ ai_gen_id }}">
+            {{ block.settings.cta_button_text }}
+          </button>
+        {% endif %}
+
+        {% if block.settings.urgency_text != blank %}
+          <div class="ai-chroma-hero-urgency-{{ ai_gen_id }}">
+            {{ block.settings.urgency_text }}
+          </div>
+        {% endif %}
+
+        {% if block.settings.specs_url != blank %}
+          <a
+            href="{{ block.settings.specs_url }}"
+            class="ai-chroma-hero-link-{{ ai_gen_id }}"
+          >
+            {{ block.settings.specs_link_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Chroma hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted text",
+      "default": "#B9C4CF"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#0AA3FF"
+    },
+    {
+      "type": "color",
+      "id": "glass_bg",
+      "label": "Glass background",
+      "default": "rgba(255, 255, 255, 0.03)"
+    },
+    {
+      "type": "color",
+      "id": "glass_border",
+      "label": "Glass border",
+      "default": "rgba(255, 255, 255, 0.10)"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#0AA3FF"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Button hover background",
+      "default": "#3DB8FF"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "text",
+      "id": "pill_text",
+      "label": "Pill text",
+      "default": "EXCLUSIVE PRE-ORDER"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Be first to ride CHROMA 2026"
+    },
+    {
+      "type": "text",
+      "id": "scarcity_text",
+      "label": "Scarcity text",
+      "default": "Ships from UAE only • limited slots"
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "text",
+      "id": "card_label",
+      "label": "Card label",
+      "default": "KNEEBOARD • LIMITED 2026 PRE-ORDER"
+    },
+    {
+      "type": "text",
+      "id": "product_title",
+      "label": "Product title",
+      "default": "CHROMA"
+    },
+    {
+      "type": "text",
+      "id": "benefit_1",
+      "label": "Benefit 1",
+      "default": "First access to the most advanced kneeboard design"
+    },
+    {
+      "type": "text",
+      "id": "benefit_2",
+      "label": "Benefit 2",
+      "default": "Own cable season 2026 with exclusive early delivery"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product image"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "Button text",
+      "default": "Pre-order CHROMA 2026"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "urgency_text",
+      "label": "Urgency text",
+      "default": "First drop capped • secure now"
+    },
+    {
+      "type": "text",
+      "id": "specs_link_text",
+      "label": "Specs link text",
+      "default": "View full specs"
+    },
+    {
+      "type": "url",
+      "id": "specs_url",
+      "label": "Specs link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Chroma hero"
+    }
+  ]
+}
+{% endschema %}

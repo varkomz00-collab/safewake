@@ -1,0 +1,465 @@
+{%- liquid
+  assign show_promos = false
+
+  if section.blocks.size > 0
+    if section.settings.show_on_home_page
+      assign show_promos = true
+    elsif section.settings.show_on_home_page == false and template != 'index'
+      assign show_promos = true
+    endif
+  endif
+-%}
+
+{%- if show_promos -%}
+  {%- liquid
+    if section.blocks.size == 4
+      assign column_width = 'quarter'
+    elsif section.blocks.size == 3
+      assign column_width = 'third'
+    elsif section.blocks.size == 2
+      assign column_width = 'half'
+    else
+      assign column_width = 'full'
+    endif
+  -%}
+
+  <div id="section-id-{{ section.id }}" class="cross-page-promos" data-cc-animate>
+    <div class="container">
+      <div class="cross-page-promos__shell">
+        {%- if section.settings.header_label != blank
+          or section.settings.header_title != blank
+          or section.settings.header_text != blank
+        -%}
+          <header class="cross-page-promos__header">
+            {%- if section.settings.header_label != blank -%}
+              <p class="cross-page-promos__kicker">{{ section.settings.header_label | escape }}</p>
+            {%- endif -%}
+
+            {%- if section.settings.header_title != blank -%}
+              <h2 class="cross-page-promos__heading heading-font">
+                {{ section.settings.header_title | escape }}
+              </h2>
+            {%- endif -%}
+
+            {%- if section.settings.header_text != blank -%}
+              <p class="cross-page-promos__description">
+                {{ section.settings.header_text }}
+              </p>
+            {%- endif -%}
+          </header>
+        {%- endif -%}
+
+        <div class="cross-page-promos__items flexible-layout cross-page-promos__items--count-{{ section.blocks.size }} {% if column_width == 'quarter' %}layout-all-quarters{% endif %}">
+          {%- for block in section.blocks -%}
+            {%- assign has_link = false -%}
+            {%- if block.settings.link_url != blank -%}
+              {%- assign has_link = true -%}
+            {%- endif -%}
+
+            <div class="column column--{{ column_width }} cross-page-promos__column block-id-{{ block.id }}" {{ block.shopify_attributes }}>
+              {%- if has_link -%}
+                <a class="cross-page-promos__card" href="{{ block.settings.link_url }}">
+              {%- else -%}
+                <div class="cross-page-promos__card">
+              {%- endif -%}
+
+                  <div class="cross-page-promos__item">
+                    <div class="cross-page-promos__item-icon">
+                      {%- if block.settings.image != blank -%}
+                        <div class="cross-page-promos__icon-image">
+                          {%- render 'image' with block.settings.image,
+                            sizes: '28px',
+                            widths: '28, 56',
+                            loading: 'lazy'
+                          -%}
+                        </div>
+                      {%- elsif block.type contains 'icon' -%}
+                        <div class="cross-page-promos__icon-symbol">
+                          {%- render 'icon', icon: block.settings.icon, size: 'small' -%}
+                        </div>
+                      {%- else -%}
+                        <div class="cross-page-promos__icon-placeholder">
+                          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                        </div>
+                      {%- endif -%}
+                    </div>
+
+                    <div class="cross-page-promos__item-copy">
+                      {%- if block.settings.text != blank -%}
+                        <p class="cross-page-promos__title heading-font">
+                          {{ block.settings.text }}
+                        </p>
+                      {%- endif -%}
+
+                      {%- if block.settings.subtext != blank -%}
+                        <p class="cross-page-promos__subtitle">
+                          {{ block.settings.subtext }}
+                        </p>
+                      {%- endif -%}
+                    </div>
+                  </div>
+
+              {%- if has_link -%}
+                </a>
+              {%- else -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% style %}
+  #section-id-{{ section.id }} {
+    --bg-color: {{ section.settings.cross_page_promo_bg }};
+    --text-color: {{ section.settings.cross_page_promo_color }};
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding-block: 20px; /* tighter overall on mobile */
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__shell {
+    position: relative;
+    border-radius: 999px;
+    padding: 10px 12px; /* less vertical bulk on mobile */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 55%),
+      radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.03), transparent 60%),
+      rgba(255, 255, 255, 0.02);
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* tight gap between header and chip grid on mobile */
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__header {
+    text-align: left;
+    max-width: 420px;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__kicker {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 0 0 2px;
+    opacity: 0.7;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__heading {
+    font-size: 0.95rem;
+    margin: 0 0 2px;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__description {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+
+  /* MOBILE: compact 2-column chip grid */
+  #section-id-{{ section.id }} .cross-page-promos__items {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 8px; /* horizontal + vertical chip gap */
+    justify-content: flex-start;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__items--count-1 {
+    justify-content: flex-start;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__column {
+    display: flex;
+    min-width: 0;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__card {
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    padding: 4px 8px; /* tighter pill padding for chip feel */
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition:
+      background 150ms ease,
+      border-color 150ms ease,
+      transform 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__card:hover .cross-page-promos__item {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.14);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__card:active .cross-page-promos__item {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__item-icon {
+    flex: 0 0 auto;
+    width: 22px;   /* smaller icon circle */
+    height: 22px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__icon-image img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    display: block;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__icon-symbol svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__icon-placeholder svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0.4;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__item-copy {
+    min-width: 0;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__title {
+    margin: 0;
+    font-size: 0.82rem; /* slightly smaller title */
+    line-height: 1.25;
+    white-space: normal;
+  }
+
+  #section-id-{{ section.id }} .cross-page-promos__subtitle {
+    margin: 0;
+    font-size: 0.72rem;
+    line-height: 1.25;
+    opacity: 0.8; /* lighter subtitle feel */
+  }
+
+  /* MOBILE: 2-column chips (2 on first row, 1 below for 3 items) */
+  #section-id-{{ section.id }} .cross-page-promos__items--count-2 .cross-page-promos__column,
+  #section-id-{{ section.id }} .cross-page-promos__items--count-3 .cross-page-promos__column,
+  #section-id-{{ section.id }} .cross-page-promos__items--count-4 .cross-page-promos__column {
+    flex: 0 0 calc(50% - 4px);
+    max-width: calc(50% - 4px);
+  }
+
+  @media (min-width: 768px) {
+    #section-id-{{ section.id }} {
+      padding-block: 36px; /* more top/bottom space on desktop */
+    }
+
+    #section-id-{{ section.id }} .cross-page-promos__shell {
+      flex-direction: row;
+      align-items: center;     /* vertically center chips vs header block */
+      justify-content: space-between;
+      gap: 32px;               /* clear separation between header and chips */
+      padding: 14px 20px;
+    }
+
+    #section-id-{{ section.id }} .cross-page-promos__header {
+      flex: 0 0 auto;
+    }
+
+    #section-id-{{ section.id }} .cross-page-promos__items {
+      flex: 1 1 auto;
+      flex-direction: row;       /* DESKTOP: horizontal row */
+      flex-wrap: nowrap;         /* single line on desktop */
+      gap: 16px;                 /* consistent spacing between chips */
+      justify-content: flex-end; /* Apple-style: chips aligned neatly to the right */
+    }
+
+    /* Desktop: chips auto-width, not stretched */
+    #section-id-{{ section.id }} .cross-page-promos__items--count-2 .cross-page-promos__column,
+    #section-id-{{ section.id }} .cross-page-promos__items--count-3 .cross-page-promos__column,
+    #section-id-{{ section.id }} .cross-page-promos__items--count-4 .cross-page-promos__column {
+      flex: 0 0 auto;
+      max-width: none;
+    }
+  }
+
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'image' and block.settings.text != blank -%}
+      #section-id-{{ section.id }} .block-id-{{ block.id }} .cross-page-promos__title,
+      #section-id-{{ section.id }} .block-id-{{ block.id }} .cross-page-promos__subtitle {
+        color: {{ block.settings.overlay_color }};
+      }
+    {%- endif -%}
+  {%- endfor -%}
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Cross-page promos",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "color",
+      "id": "cross_page_promo_bg",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cross_page_promo_color",
+      "label": "Text and icon color",
+      "default": "#454564"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_home_page",
+      "label": "Show on home page",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "header_label",
+      "label": "Eyebrow label",
+      "default": "Shipping & service"
+    },
+    {
+      "type": "text",
+      "id": "header_title",
+      "label": "Heading",
+      "default": "Fast local UAE delivery & GCC options"
+    },
+    {
+      "type": "textarea",
+      "id": "header_text",
+      "label": "Supporting text",
+      "default": "3–7 day delivery in UAE, GCC shipping, and easy returns."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image pill",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon image"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Main line",
+          "default": "3–7 day UAE delivery"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Second line",
+          "default": "Ships from within the UAE"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Text color override",
+          "default": "#ffffff"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Optional link (shipping info, etc.)"
+        }
+      ]
+    },
+    {
+      "type": "icon",
+      "name": "Icon pill",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "truck",
+          "options": [
+            { "value": "award", "label": "Award" },
+            { "value": "box", "label": "Box" },
+            { "value": "briefcase", "label": "Briefcase" },
+            { "value": "calendar", "label": "Calendar" },
+            { "value": "chat_bubble", "label": "Chat bubble" },
+            { "value": "check_mark", "label": "Check mark" },
+            { "value": "check_mark_in_circle", "label": "Check mark in circle" },
+            { "value": "clock", "label": "Clock" },
+            { "value": "credit_card", "label": "Credit card" },
+            { "value": "dollar_sign", "label": "Dollar sign" },
+            { "value": "dryer", "label": "Dryer" },
+            { "value": "eye", "label": "Eye" },
+            { "value": "feather", "label": "Feather" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "iron", "label": "Iron" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "leather", "label": "Leather" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "map_pin", "label": "Map pin" },
+            { "value": "pants", "label": "Pants" },
+            { "value": "percent", "label": "Percent" },
+            { "value": "plane", "label": "Plane" },
+            { "value": "price_tag", "label": "Price tag" },
+            { "value": "question_mark", "label": "Question mark" },
+            { "value": "return", "label": "Return" },
+            { "value": "ruler", "label": "Ruler" },
+            { "value": "scissors", "label": "Scissors" },
+            { "value": "shirt", "label": "Shirt" },
+            { "value": "shoe", "label": "Shoe" },
+            { "value": "silhouette", "label": "Silhouette" },
+            { "value": "star", "label": "Star" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "washing", "label": "Washing" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom icon (optional)",
+          "info": "Replaces the selected icon above"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Main line",
+          "default": "Ships from UAE"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Second line",
+          "default": "Fast GCC delivery available"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Optional link (shipping policy, etc.)"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,308 @@
+{% doc %}
+  @prompt
+    but this time only for the chroma board just one knee board not two Build a minimal “Cinematic Dark” featured products section for two kneeboards, following a black-and-white, premium style.
+    
+    GLOBAL STYLE
+    - Page background: solid black #000000.
+    - Text color: white #FFFFFF, muted text #B9C4CF.
+    - Card background: subtle glass effect using rgba(255,255,255,0.03) with a 1px border rgba(255,255,255,0.10) and soft shadow 0 10px 30px rgba(0,0,0,0.35).
+    - Accent color only for tiny highlights: electric blue #0AA3FF (no extra colors).
+    
+    SECTION HEADER (TOP)
+    - Centered, narrow max-width container (around 960–1200px).
+    - Small pill chip above the heading: text “PRE-ORDER SECTION” in all caps, muted text #B9C4CF, glass background rgba(255,255,255,0.06), rounded-full border.
+    - Main heading: “Pre-order 2026 now live” in a clean sans-serif (Space Grotesk / Inter style), white #FFFFFF, 1 line only.
+    - Optional subtext: one short line like “Lock in Joker and Chroma before prices go back up.” in muted text #B9C4CF.
+    
+    PRODUCT LAYOUT
+    - Two product cards using dynamic product selectors:
+      - Card A: product “Chroma Kneeboard”.
+      - Card B: product “Joker Kneeboard”.
+    - On DESKTOP: show both cards side by side in a 2-column grid (50/50 width) with a small gap between them; center the grid in the page.
+    - On MOBILE (iPhone): stack the cards vertically in one column with **Chroma first on top**, then Joker below. No horizontal scrolling.
+    
+    CARD DESIGN (BOTH CARDS MATCH)
+    - Use the same structure, same spacing, same button style for both.
+    - Card padding: medium (around 24px), border-radius about 20–24px.
+    - Top label: small muted line like “KNEEBOARD • LIMITED 2026 PRE-ORDER” in #B9C4CF.
+    - Main title word only:
+      - For Chroma: big “CHROMA” in white with a subtle retro neon feel and a very soft flicker animation on brightness (no wild colors).
+      - For Joker: big “JOKER” in white with a subtle lightning-style underline or accent using #0AA3FF and a very gentle flicker similar to the Joker sign used befo , Way too big on desktop it's good on like it's good on how it looks on iPhone but it's still way too big on iPhone it should not take that much space just to have this product it should be like half of the size and it does everything that it does more efficiently there shouldn't be a description it should just say the Chroma Park Cable Park edition and on the price and then just just be like hey pre-order 2026 is live and just like have it like that but it's way too big on desktop And there's a lot of fluff in the iPhone version that makes it like really annoying  
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-cinematic-preorder-{{ ai_gen_id }} {
+    background-color: #000000;
+    padding: 40px 20px;
+  }
+
+  .ai-cinematic-container-{{ ai_gen_id }} {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .ai-cinematic-header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .ai-cinematic-pill-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 9999px;
+    color: #B9C4CF;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .ai-cinematic-heading-{{ ai_gen_id }} {
+    font-size: 28px;
+    color: #FFFFFF;
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .ai-cinematic-card-{{ ai_gen_id }} {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+
+  .ai-cinematic-label-{{ ai_gen_id }} {
+    font-size: 10px;
+    color: #B9C4CF;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .ai-cinematic-title-{{ ai_gen_id }} {
+    font-size: 42px;
+    color: #FFFFFF;
+    margin: 0 0 20px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    animation: ai-cinematic-flicker-{{ ai_gen_id }} 3s infinite alternate;
+  }
+
+  @keyframes ai-cinematic-flicker-{{ ai_gen_id }} {
+    0%, 100% {
+      filter: brightness(1);
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+    50% {
+      filter: brightness(1.1);
+      text-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  .ai-cinematic-product-image-{{ ai_gen_id }} {
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .ai-cinematic-product-image-{{ ai_gen_id }} img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ai-cinematic-product-info-{{ ai_gen_id }} {
+    margin-bottom: 20px;
+  }
+
+  .ai-cinematic-product-title-{{ ai_gen_id }} {
+    font-size: 18px;
+    color: #FFFFFF;
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+
+  .ai-cinematic-product-price-{{ ai_gen_id }} {
+    font-size: 24px;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  .ai-cinematic-button-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 14px 28px;
+    background-color: #0AA3FF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .ai-cinematic-button-{{ ai_gen_id }}:hover {
+    background-color: #3db8ff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(10, 163, 255, 0.3);
+  }
+
+  .ai-cinematic-empty-state-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 40px 20px;
+    color: #B9C4CF;
+  }
+
+  .ai-cinematic-empty-state-{{ ai_gen_id }} svg {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin-bottom: 16px;
+    opacity: 0.3;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-cinematic-preorder-{{ ai_gen_id }} {
+      padding: 30px 16px;
+    }
+
+    .ai-cinematic-header-{{ ai_gen_id }} {
+      margin-bottom: 24px;
+    }
+
+    .ai-cinematic-heading-{{ ai_gen_id }} {
+      font-size: 22px;
+    }
+
+    .ai-cinematic-title-{{ ai_gen_id }} {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .ai-cinematic-card-{{ ai_gen_id }} {
+      padding: 16px;
+    }
+
+    .ai-cinematic-product-title-{{ ai_gen_id }} {
+      font-size: 16px;
+    }
+
+    .ai-cinematic-product-price-{{ ai_gen_id }} {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .ai-cinematic-button-{{ ai_gen_id }} {
+      padding: 12px 24px;
+      font-size: 13px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-cinematic-preorder-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-cinematic-container-{{ ai_gen_id }}">
+    <div class="ai-cinematic-header-{{ ai_gen_id }}">
+      <div class="ai-cinematic-pill-{{ ai_gen_id }}">{{ block.settings.pill_text }}</div>
+      <h2 class="ai-cinematic-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+    </div>
+
+    {% if block.settings.chroma_product != blank %}
+      {% assign product = block.settings.chroma_product %}
+      <div class="ai-cinematic-card-{{ ai_gen_id }}">
+        <div class="ai-cinematic-label-{{ ai_gen_id }}">{{ block.settings.card_label }}</div>
+        <h3 class="ai-cinematic-title-{{ ai_gen_id }}">CHROMA</h3>
+
+        {% if product.featured_image %}
+          <div class="ai-cinematic-product-image-{{ ai_gen_id }}">
+            <img
+              src="{{ product.featured_image | image_url: width: 1200 }}"
+              alt="{{ product.featured_image.alt | escape }}"
+              loading="lazy"
+              width="{{ product.featured_image.width }}"
+              height="{{ product.featured_image.height }}"
+            >
+          </div>
+        {% endif %}
+
+        <div class="ai-cinematic-product-info-{{ ai_gen_id }}">
+          <h4 class="ai-cinematic-product-title-{{ ai_gen_id }}">{{ product.title }}</h4>
+          <div class="ai-cinematic-product-price-{{ ai_gen_id }}">{{ product.price | money }}</div>
+        </div>
+
+        <a href="{{ product.url }}" class="ai-cinematic-button-{{ ai_gen_id }}">
+          {{ block.settings.button_text }}
+        </a>
+      </div>
+    {% else %}
+      <div class="ai-cinematic-empty-state-{{ ai_gen_id }}">
+        {{ 'product-1' | placeholder_svg_tag }}
+        <p>Select the Chroma Kneeboard product to display</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cinematic pre-order",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "text",
+      "id": "pill_text",
+      "label": "Pill text",
+      "default": "PRE-ORDER SECTION"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Pre-order 2026 now live"
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "text",
+      "id": "card_label",
+      "label": "Card label",
+      "default": "KNEEBOARD • LIMITED 2026 PRE-ORDER"
+    },
+    {
+      "type": "product",
+      "id": "chroma_product",
+      "label": "Chroma product"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Pre-order now"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cinematic pre-order"
+    }
+  ]
+}
+{% endschema %}

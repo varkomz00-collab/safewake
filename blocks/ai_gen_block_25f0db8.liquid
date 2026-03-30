@@ -1,0 +1,608 @@
+{% doc %}
+  @prompt
+    Create a minimal “Cinematic Dark” featured products section on a black background. At the top, add a small chip that says “PRE-ORDER SECTION” and a heading “Pre-order 2026 now live” centered. Below, show two compact glass cards: left card for product “Joker Kneeboard”, right card for product “Chroma Kneeboard”. On desktop the cards sit side by side 50/50; on mobile they stack vertically.
+    Each card has a bold title word only (“JOKER” with electric lightning / neon style, “CHROMA” with retro neon style) with a subtle flicker animation, then a medium-sized product image (do NOT make it full-screen), then a price row showing the old price “AED 2400” crossed out and the live product price from Shopify next to it.
+    Under the price, add one primary button that says “Pre-order now” and adds that product to cart. Both cards must use the same button style and layout. Keep everything centered, black background, white text, very little copy, no extra blocks, and no large hero image so the section stays compact and premium.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-preorder-section-{{ ai_gen_id }} {
+    background-color: #000000;
+    padding: 60px 20px;
+    color: #ffffff;
+  }
+
+  .ai-preorder-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ai-preorder-header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .ai-preorder-chip-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: {{ block.settings.chip_bg_color }};
+    color: {{ block.settings.chip_text_color }};
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .ai-preorder-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+  }
+
+  .ai-preorder-cards-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-preorder-cards-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .ai-preorder-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.7 }}px;
+    }
+  }
+
+  .ai-preorder-card-{{ ai_gen_id }} {
+    background: {{ block.settings.card_bg_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    padding: 40px 30px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid {{ block.settings.card_border_color }};
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ai-preorder-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+  }
+
+  .ai-preorder-card-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.card_title_size }}px;
+    font-weight: 900;
+    margin: 0 0 25px 0;
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .ai-preorder-card-title-joker-{{ ai_gen_id }} {
+    color: {{ block.settings.joker_color }};
+    text-shadow: 0 0 10px {{ block.settings.joker_color }},
+                 0 0 20px {{ block.settings.joker_color }},
+                 0 0 30px {{ block.settings.joker_color }};
+    animation: ai-flicker-joker-{{ ai_gen_id }} 3s infinite alternate;
+  }
+
+  .ai-preorder-card-title-chroma-{{ ai_gen_id }} {
+    color: {{ block.settings.chroma_color }};
+    text-shadow: 0 0 10px {{ block.settings.chroma_color }},
+                 0 0 20px {{ block.settings.chroma_color }},
+                 0 0 30px {{ block.settings.chroma_color }};
+    animation: ai-flicker-chroma-{{ ai_gen_id }} 3s infinite alternate;
+  }
+
+  @keyframes ai-flicker-joker-{{ ai_gen_id }} {
+    0%, 100% {
+      opacity: 1;
+      text-shadow: 0 0 10px {{ block.settings.joker_color }},
+                   0 0 20px {{ block.settings.joker_color }},
+                   0 0 30px {{ block.settings.joker_color }};
+    }
+    50% {
+      opacity: 0.8;
+      text-shadow: 0 0 5px {{ block.settings.joker_color }},
+                   0 0 10px {{ block.settings.joker_color }};
+    }
+  }
+
+  @keyframes ai-flicker-chroma-{{ ai_gen_id }} {
+    0%, 100% {
+      opacity: 1;
+      text-shadow: 0 0 10px {{ block.settings.chroma_color }},
+                   0 0 20px {{ block.settings.chroma_color }},
+                   0 0 30px {{ block.settings.chroma_color }};
+    }
+    50% {
+      opacity: 0.85;
+      text-shadow: 0 0 5px {{ block.settings.chroma_color }},
+                   0 0 10px {{ block.settings.chroma_color }};
+    }
+  }
+
+  .ai-preorder-card-image-{{ ai_gen_id }} {
+    margin: 0 auto 25px;
+    max-width: {{ block.settings.image_max_width }}px;
+    width: 100%;
+  }
+
+  .ai-preorder-card-image-{{ ai_gen_id }} img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .ai-preorder-card-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-preorder-card-image-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-preorder-price-row-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    font-size: {{ block.settings.price_size }}px;
+  }
+
+  .ai-preorder-old-price-{{ ai_gen_id }} {
+    color: {{ block.settings.old_price_color }};
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+
+  .ai-preorder-current-price-{{ ai_gen_id }} {
+    color: {{ block.settings.current_price_color }};
+    font-weight: 700;
+    font-size: {{ block.settings.price_size | times: 1.2 }}px;
+  }
+
+  .ai-preorder-button-{{ ai_gen_id }} {
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    border: none;
+    padding: 16px 40px;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .ai-preorder-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg_color }};
+    transform: scale(1.05);
+  }
+
+  .ai-preorder-button-{{ ai_gen_id }}:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .ai-preorder-button-{{ ai_gen_id }}:disabled:hover {
+    transform: none;
+  }
+{% endstyle %}
+
+<preorder-section-{{ ai_gen_id }} class="ai-preorder-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-preorder-container-{{ ai_gen_id }}">
+    <div class="ai-preorder-header-{{ ai_gen_id }}">
+      <div class="ai-preorder-chip-{{ ai_gen_id }}">{{ block.settings.chip_text }}</div>
+      <h2 class="ai-preorder-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+    </div>
+
+    <div class="ai-preorder-cards-{{ ai_gen_id }}">
+      <div class="ai-preorder-card-{{ ai_gen_id }}">
+        <h3 class="ai-preorder-card-title-{{ ai_gen_id }} ai-preorder-card-title-joker-{{ ai_gen_id }}">
+          {{ block.settings.joker_title }}
+        </h3>
+
+        <div class="ai-preorder-card-image-{{ ai_gen_id }}">
+          {% if block.settings.joker_product and block.settings.joker_product.featured_image %}
+            <img
+              src="{{ block.settings.joker_product.featured_image | image_url: width: 600 }}"
+              alt="{{ block.settings.joker_product.featured_image.alt | escape }}"
+              loading="lazy"
+              width="600"
+              height="600"
+            >
+          {% else %}
+            <div class="ai-preorder-card-image-placeholder-{{ ai_gen_id }}">
+              {{ 'product-1' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="ai-preorder-price-row-{{ ai_gen_id }}">
+          <span class="ai-preorder-old-price-{{ ai_gen_id }}">{{ block.settings.old_price }}</span>
+          {% if block.settings.joker_product %}
+            <span class="ai-preorder-current-price-{{ ai_gen_id }}">
+              {{ block.settings.joker_product.price | money }}
+            </span>
+          {% else %}
+            <span class="ai-preorder-current-price-{{ ai_gen_id }}">AED 0</span>
+          {% endif %}
+        </div>
+
+        {% if block.settings.joker_product %}
+          <button
+            class="ai-preorder-button-{{ ai_gen_id }}"
+            data-product-id="{{ block.settings.joker_product.id }}"
+            data-variant-id="{{ block.settings.joker_product.selected_or_first_available_variant.id }}"
+          >
+            {{ block.settings.button_text }}
+          </button>
+        {% else %}
+          <button class="ai-preorder-button-{{ ai_gen_id }}" disabled>
+            {{ block.settings.button_text }}
+          </button>
+        {% endif %}
+      </div>
+
+      <div class="ai-preorder-card-{{ ai_gen_id }}">
+        <h3 class="ai-preorder-card-title-{{ ai_gen_id }} ai-preorder-card-title-chroma-{{ ai_gen_id }}">
+          {{ block.settings.chroma_title }}
+        </h3>
+
+        <div class="ai-preorder-card-image-{{ ai_gen_id }}">
+          {% if block.settings.chroma_product and block.settings.chroma_product.featured_image %}
+            <img
+              src="{{ block.settings.chroma_product.featured_image | image_url: width: 600 }}"
+              alt="{{ block.settings.chroma_product.featured_image.alt | escape }}"
+              loading="lazy"
+              width="600"
+              height="600"
+            >
+          {% else %}
+            <div class="ai-preorder-card-image-placeholder-{{ ai_gen_id }}">
+              {{ 'product-1' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="ai-preorder-price-row-{{ ai_gen_id }}">
+          <span class="ai-preorder-old-price-{{ ai_gen_id }}">{{ block.settings.old_price }}</span>
+          {% if block.settings.chroma_product %}
+            <span class="ai-preorder-current-price-{{ ai_gen_id }}">
+              {{ block.settings.chroma_product.price | money }}
+            </span>
+          {% else %}
+            <span class="ai-preorder-current-price-{{ ai_gen_id }}">AED 0</span>
+          {% endif %}
+        </div>
+
+        {% if block.settings.chroma_product %}
+          <button
+            class="ai-preorder-button-{{ ai_gen_id }}"
+            data-product-id="{{ block.settings.chroma_product.id }}"
+            data-variant-id="{{ block.settings.chroma_product.selected_or_first_available_variant.id }}"
+          >
+            {{ block.settings.button_text }}
+          </button>
+        {% else %}
+          <button class="ai-preorder-button-{{ ai_gen_id }}" disabled>
+            {{ block.settings.button_text }}
+          </button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</preorder-section-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class PreorderSection{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.buttons = this.querySelectorAll('.ai-preorder-button-{{ ai_gen_id }}');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.buttons.forEach((button) => {
+          button.addEventListener('click', this.handleAddToCart.bind(this));
+        });
+      }
+
+      async handleAddToCart(event) {
+        const button = event.target;
+        const variantId = button.dataset.variantId;
+
+        if (!variantId || button.disabled) return;
+
+        button.disabled = true;
+        const originalText = button.textContent;
+        button.textContent = 'ADDING...';
+
+        try {
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: variantId,
+              quantity: 1,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to add to cart');
+          }
+
+          button.textContent = 'ADDED!';
+
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.disabled = false;
+          }, 2000);
+
+          document.dispatchEvent(new CustomEvent('cart:refresh'));
+
+          const cartDrawer = document.querySelector('cart-drawer');
+          if (cartDrawer) {
+            cartDrawer.open();
+          }
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          button.textContent = 'ERROR';
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.disabled = false;
+          }, 2000);
+        }
+      }
+    }
+
+    customElements.define('preorder-section-{{ ai_gen_id }}', PreorderSection{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Preorder products",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "chip_text",
+      "label": "Chip text",
+      "default": "PRE-ORDER SECTION"
+    },
+    {
+      "type": "color",
+      "id": "chip_bg_color",
+      "label": "Chip background",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "chip_text_color",
+      "label": "Chip text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Pre-order 2026 now live"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Joker card"
+    },
+    {
+      "type": "text",
+      "id": "joker_title",
+      "label": "Title",
+      "default": "JOKER"
+    },
+    {
+      "type": "color",
+      "id": "joker_color",
+      "label": "Title color",
+      "default": "#00d4ff"
+    },
+    {
+      "type": "product",
+      "id": "joker_product",
+      "label": "Product"
+    },
+    {
+      "type": "header",
+      "content": "Chroma card"
+    },
+    {
+      "type": "text",
+      "id": "chroma_title",
+      "label": "Title",
+      "default": "CHROMA"
+    },
+    {
+      "type": "color",
+      "id": "chroma_color",
+      "label": "Title color",
+      "default": "#ff00ff"
+    },
+    {
+      "type": "product",
+      "id": "chroma_product",
+      "label": "Product"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Background",
+      "default": "rgba(255, 255, 255, 0.05)"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border",
+      "default": "rgba(255, 255, 255, 0.1)"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "image_max_width",
+      "min": 150,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "label": "Image max width",
+      "default": 300
+    },
+    {
+      "type": "header",
+      "content": "Pricing"
+    },
+    {
+      "type": "text",
+      "id": "old_price",
+      "label": "Old price",
+      "default": "AED 2400"
+    },
+    {
+      "type": "color",
+      "id": "old_price_color",
+      "label": "Old price color",
+      "default": "#999999"
+    },
+    {
+      "type": "color",
+      "id": "current_price_color",
+      "label": "Current price color",
+      "default": "#22c55e"
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Price size",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Pre-order now"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Background",
+      "default": "#0aa3ff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Hover background",
+      "default": "#3db8ff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 6
+    }
+  ],
+  "presets": [
+    {
+      "name": "Preorder products"
+    }
+  ]
+}
+{% endschema %}

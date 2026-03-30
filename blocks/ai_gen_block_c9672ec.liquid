@@ -1,0 +1,458 @@
+{% doc %}
+  Thin global brand bar at the very top of the site, styled like Hyperlite’s
+  brand strip.
+
+  - Sits above main header on every page.
+  - Background: dark/near-black (#202226).
+  - Shows SAFEWAKE and SAFESNOW with 32x32 logos.
+  - Active brand text: white (#FFFFFF).
+  - Inactive brand text: medium grey (#6B7280).
+  - Hover text: light grey (#E5E7EB).
+  - Extra brand slots (3–5) for future use.
+{% enddoc %}
+
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-brand-bar-{{ ai_gen_id }} {
+    background-color: {{ block.settings.background_color }};
+    width: 100%;
+    padding: {{ block.settings.bar_height }}px 0;
+    border-bottom: 1px solid {{ block.settings.border_color }};
+  }
+
+  .ai-brand-bar-container-{{ ai_gen_id }} {
+    max-width: {{ settings.max_page_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: {{ block.settings.spacing }}px;
+  }
+
+  .ai-brand-bar-link-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: {{ block.settings.font.family }}, {{ block.settings.font.fallback_families }};
+    font-weight: {{ block.settings.font.weight }};
+    font-size: {{ block.settings.font_size }}px;
+    color: {{ block.settings.text_color }};
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: {{ block.settings.letter_spacing }}px;
+    transition: color 0.2s ease, opacity 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .ai-brand-bar-link-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.text_hover_color }};
+    opacity: 0.9;
+  }
+
+  .ai-brand-bar-link-{{ ai_gen_id }}.active {
+    color: {{ block.settings.active_text_color }};
+  }
+
+  .ai-brand-bar-link-{{ ai_gen_id }}.inactive {
+    color: {{ block.settings.inactive_text_color }};
+  }
+
+  .ai-brand-bar-logo-{{ ai_gen_id }} {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    object-fit: contain;
+    background-color: {{ block.settings.placeholder_bg }};
+    border-radius: 4px;
+  }
+
+  .ai-brand-bar-logo-placeholder-{{ ai_gen_id }} {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    background-color: {{ block.settings.placeholder_bg }};
+    border-radius: 4px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-brand-bar-container-{{ ai_gen_id }} {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .ai-brand-bar-link-{{ ai_gen_id }} {
+      font-size: {{ block.settings.font_size | times: 0.9 }}px;
+    }
+
+    .ai-brand-bar-logo-{{ ai_gen_id }},
+    .ai-brand-bar-logo-placeholder-{{ ai_gen_id }} {
+      width: 28px;
+      height: 28px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-brand-bar-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-brand-bar-container-{{ ai_gen_id }}">
+
+    {%- comment -%} Brand 1: SAFEWAKE (usually the current site) {%- endcomment -%}
+    {% if block.settings.brand_1_text != blank %}
+      <a
+        href="{{ block.settings.brand_1_url }}"
+        class="ai-brand-bar-link-{{ ai_gen_id }} {% if block.settings.brand_1_active %}active{% else %}inactive{% endif %}"
+        {% if block.settings.brand_1_new_tab %}target="_blank" rel="noopener"{% endif %}
+      >
+        {% if block.settings.brand_1_logo %}
+          <img
+            src="{{ block.settings.brand_1_logo | image_url: width: 64 }}"
+            alt="{{ block.settings.brand_1_text }}"
+            class="ai-brand-bar-logo-{{ ai_gen_id }}"
+            width="32"
+            height="32"
+            loading="lazy"
+          >
+        {% else %}
+          <div class="ai-brand-bar-logo-placeholder-{{ ai_gen_id }}"></div>
+        {% endif %}
+        {{ block.settings.brand_1_text }}
+      </a>
+    {% endif %}
+
+    {%- comment -%} Brand 2: SAFESNOW (usually other site, opens new tab) {%- endcomment -%}
+    {% if block.settings.brand_2_text != blank %}
+      <a
+        href="{{ block.settings.brand_2_url }}"
+        class="ai-brand-bar-link-{{ ai_gen_id }} {% if block.settings.brand_2_active %}active{% else %}inactive{% endif %}"
+        {% if block.settings.brand_2_new_tab %}target="_blank" rel="noopener"{% endif %}
+      >
+        {% if block.settings.brand_2_logo %}
+          <img
+            src="{{ block.settings.brand_2_logo | image_url: width: 64 }}"
+            alt="{{ block.settings.brand_2_text }}"
+            class="ai-brand-bar-logo-{{ ai_gen_id }}"
+            width="32"
+            height="32"
+            loading="lazy"
+          >
+        {% else %}
+          <div class="ai-brand-bar-logo-placeholder-{{ ai_gen_id }}"></div>
+        {% endif %}
+        {{ block.settings.brand_2_text }}
+      </a>
+    {% endif %}
+
+    {%- comment -%} Future brands 3–5 (only render if configured) {%- endcomment -%}
+    {% if block.settings.brand_3_text != blank %}
+      <a
+        href="{{ block.settings.brand_3_url }}"
+        class="ai-brand-bar-link-{{ ai_gen_id }} inactive"
+        {% if block.settings.brand_3_new_tab %}target="_blank" rel="noopener"{% endif %}
+      >
+        {% if block.settings.brand_3_logo %}
+          <img
+            src="{{ block.settings.brand_3_logo | image_url: width: 64 }}"
+            alt="{{ block.settings.brand_3_text }}"
+            class="ai-brand-bar-logo-{{ ai_gen_id }}"
+            width="32"
+            height="32"
+            loading="lazy"
+          >
+        {% else %}
+          <div class="ai-brand-bar-logo-placeholder-{{ ai_gen_id }}"></div>
+        {% endif %}
+        {{ block.settings.brand_3_text }}
+      </a>
+    {% endif %}
+
+    {% if block.settings.brand_4_text != blank %}
+      <a
+        href="{{ block.settings.brand_4_url }}"
+        class="ai-brand-bar-link-{{ ai_gen_id }} inactive"
+        {% if block.settings.brand_4_new_tab %}target="_blank" rel="noopener"{% endif %}
+      >
+        {% if block.settings.brand_4_logo %}
+          <img
+            src="{{ block.settings.brand_4_logo | image_url: width: 64 }}"
+            alt="{{ block.settings.brand_4_text }}"
+            class="ai-brand-bar-logo-{{ ai_gen_id }}"
+            width="32"
+            height="32"
+            loading="lazy"
+          >
+        {% else %}
+          <div class="ai-brand-bar-logo-placeholder-{{ ai_gen_id }}"></div>
+        {% endif %}
+        {{ block.settings.brand_4_text }}
+      </a>
+    {% endif %}
+
+    {% if block.settings.brand_5_text != blank %}
+      <a
+        href="{{ block.settings.brand_5_url }}"
+        class="ai-brand-bar-link-{{ ai_gen_id }} inactive"
+        {% if block.settings.brand_5_new_tab %}target="_blank" rel="noopener"{% endif %}
+      >
+        {% if block.settings.brand_5_logo %}
+          <img
+            src="{{ block.settings.brand_5_logo | image_url: width: 64 }}"
+            alt="{{ block.settings.brand_5_text }}"
+            class="ai-brand-bar-logo-{{ ai_gen_id }}"
+            width="32"
+            height="32"
+            loading="lazy"
+          >
+        {% else %}
+          <div class="ai-brand-bar-logo-placeholder-{{ ai_gen_id }}"></div>
+        {% endif %}
+        {{ block.settings.brand_5_text }}
+      </a>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brand switcher bar",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Brand 1"
+    },
+    {
+      "type": "text",
+      "id": "brand_1_text",
+      "label": "Text",
+      "default": "SAFEWAKE"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_1_logo",
+      "label": "Logo"
+    },
+    {
+      "type": "url",
+      "id": "brand_1_url",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "brand_1_active",
+      "label": "Active (current site)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "brand_1_new_tab",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Brand 2"
+    },
+    {
+      "type": "text",
+      "id": "brand_2_text",
+      "label": "Text",
+      "default": "SAFESNOW"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_2_logo",
+      "label": "Logo"
+    },
+    {
+      "type": "url",
+      "id": "brand_2_url",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "brand_2_active",
+      "label": "Active (current site)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "brand_2_new_tab",
+      "label": "Open in new tab",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Brand 3"
+    },
+    {
+      "type": "text",
+      "id": "brand_3_text",
+      "label": "Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_3_logo",
+      "label": "Logo"
+    },
+    {
+      "type": "url",
+      "id": "brand_3_url",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "brand_3_new_tab",
+      "label": "Open in new tab",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Brand 4"
+    },
+    {
+      "type": "text",
+      "id": "brand_4_text",
+      "label": "Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_4_logo",
+      "label": "Logo"
+    },
+    {
+      "type": "url",
+      "id": "brand_4_url",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "brand_4_new_tab",
+      "label": "Open in new tab",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Brand 5"
+    },
+    {
+      "type": "text",
+      "id": "brand_5_text",
+      "label": "Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_5_logo",
+      "label": "Logo"
+    },
+    {
+      "type": "url",
+      "id": "brand_5_url",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "brand_5_new_tab",
+      "label": "Open in new tab",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#202226"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "active_text_color",
+      "label": "Active text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "inactive_text_color",
+      "label": "Inactive text",
+      "default": "#6B7280"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Default text",
+      "default": "#6B7280"
+    },
+    {
+      "type": "color",
+      "id": "text_hover_color",
+      "label": "Text hover",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "color",
+      "id": "placeholder_bg",
+      "label": "Logo placeholder",
+      "default": "#111318"
+    },
+    {
+      "type": "range",
+      "id": "bar_height",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "spacing",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Space between brands",
+      "default": 30
+    },
+    {
+      "type": "font_picker",
+      "id": "font",
+      "label": "Font",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "min": 0,
+      "max": 4,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Letter spacing",
+      "default": 1.5
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand switcher bar"
+    }
+  ]
+}
+{% endschema %}

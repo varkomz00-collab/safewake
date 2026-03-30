@@ -1,0 +1,584 @@
+{% doc %}
+  @prompt
+    Give me a featured product section I want them to side by side they have the same price and same button so pretty much what I want them to do if they click the SO there's two products either the joker knee board or the chroma knee board so I need to paste one that says buy now joker knee board on 1/2 of the screen and the other half of the screen says buy now Chroma kneeboard And then they have to be side by side when it's on desktop when it's on iPhone it's gonna be above one another and you're gonna have some really funky text meaning like really like **** text with Lightning and it's gonna say Joker and in the bottom it's gonna have really amazing like retro text says Chroma and then it says and it has the product image under underneath it the price and then the just add to cart BUTTON, I love how you did the joker sign that just flashes I want the exact same thing but for the chroma sign exact same thing that you did for the joker do for the chroma below really nice really good instead of buy now say pre order now and then you would have whatever price the product is set to and then you would have like an old price which was 2400 AED and you're gonna slash it and you're gonna put the actual price of the product next to it Everything else looks really good Add like at the top and at the bottom just say pre-order section like at the top of this section just say pre order section pre-order 2026 NOW LIVE 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-dual-product-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ai-dual-product__header-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: {{ block.settings.header_bg_color }};
+  }
+
+  .ai-dual-product__header-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.header_text_size }}px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: {{ block.settings.header_text_color }};
+    margin: 0;
+  }
+
+  .ai-dual-product__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    width: 100%;
+    min-height: 600px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-dual-product__grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .ai-dual-product__side-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ai-dual-product__side--left-{{ ai_gen_id }} {
+    background-color: {{ block.settings.left_bg_color }};
+  }
+
+  .ai-dual-product__side--right-{{ ai_gen_id }} {
+    background-color: {{ block.settings.right_bg_color }};
+  }
+
+  .ai-dual-product__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 900;
+    text-align: center;
+    margin: 0 0 30px;
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 
+      0 0 10px currentColor,
+      0 0 20px currentColor,
+      0 0 30px currentColor,
+      0 0 40px currentColor,
+      3px 3px 0px rgba(0, 0, 0, 0.8);
+    animation: ai-lightning-flicker-{{ ai_gen_id }} 2s infinite alternate;
+  }
+
+  .ai-dual-product__title--joker-{{ ai_gen_id }} {
+    color: {{ block.settings.joker_text_color }};
+  }
+
+  .ai-dual-product__title--chroma-{{ ai_gen_id }} {
+    color: {{ block.settings.chroma_text_color }};
+  }
+
+  @keyframes ai-lightning-flicker-{{ ai_gen_id }} {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      text-shadow: 
+        0 0 10px currentColor,
+        0 0 20px currentColor,
+        0 0 30px currentColor,
+        0 0 40px currentColor,
+        3px 3px 0px rgba(0, 0, 0, 0.8);
+    }
+    20%, 24%, 55% {
+      text-shadow: 
+        0 0 5px currentColor,
+        3px 3px 0px rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  .ai-dual-product__image-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 0 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ai-dual-product__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .ai-dual-product__image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-dual-product__image-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-dual-product__empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .ai-dual-product__price-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 0 0 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ai-dual-product__price-old-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.old_price_color }};
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+
+  .ai-dual-product__price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.price_color }};
+  }
+
+  .ai-dual-product__button-{{ ai_gen_id }} {
+    padding: 15px 40px;
+    font-size: {{ block.settings.button_text_size }}px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+  }
+
+  .ai-dual-product__button--joker-{{ ai_gen_id }} {
+    background-color: {{ block.settings.joker_button_bg }};
+    color: {{ block.settings.joker_button_text_color }};
+  }
+
+  .ai-dual-product__button--joker-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.joker_button_hover_bg }};
+    transform: scale(1.05);
+    box-shadow: 0 0 20px {{ block.settings.joker_text_color }};
+  }
+
+  .ai-dual-product__button--chroma-{{ ai_gen_id }} {
+    background-color: {{ block.settings.chroma_button_bg }};
+    color: {{ block.settings.chroma_button_text_color }};
+  }
+
+  .ai-dual-product__button--chroma-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.chroma_button_hover_bg }};
+    transform: scale(1.05);
+    box-shadow: 0 0 20px {{ block.settings.chroma_text_color }};
+  }
+
+  .ai-dual-product__footer-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: {{ block.settings.footer_bg_color }};
+  }
+
+  .ai-dual-product__footer-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.footer_text_size }}px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: {{ block.settings.footer_text_color }};
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-dual-product__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.7);
+    }
+
+    .ai-dual-product__price-old-{{ ai_gen_id }},
+    .ai-dual-product__price-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.price_size }}px * 0.85);
+    }
+
+    .ai-dual-product__button-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.button_text_size }}px * 0.9);
+      padding: 12px 30px;
+    }
+
+    .ai-dual-product__header-text-{{ ai_gen_id }},
+    .ai-dual-product__footer-text-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.header_text_size }}px * 0.7);
+    }
+  }
+{% endstyle %}
+
+<div class="ai-dual-product-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-dual-product__header-{{ ai_gen_id }}">
+    <h2 class="ai-dual-product__header-text-{{ ai_gen_id }}">
+      {{ block.settings.header_text }}
+    </h2>
+  </div>
+
+  <div class="ai-dual-product__grid-{{ ai_gen_id }}">
+    <div class="ai-dual-product__side-{{ ai_gen_id }} ai-dual-product__side--left-{{ ai_gen_id }}">
+      <h3 class="ai-dual-product__title-{{ ai_gen_id }} ai-dual-product__title--joker-{{ ai_gen_id }}">
+        {{ block.settings.joker_title }}
+      </h3>
+
+      <div class="ai-dual-product__image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.joker_product and block.settings.joker_product.featured_image %}
+          <img
+            src="{{ block.settings.joker_product.featured_image | image_url: width: 800 }}"
+            alt="{{ block.settings.joker_product.featured_image.alt | escape }}"
+            class="ai-dual-product__image-{{ ai_gen_id }}"
+            loading="lazy"
+            width="800"
+            height="800"
+          >
+        {% else %}
+          <div class="ai-dual-product__image-placeholder-{{ ai_gen_id }}">
+            {{ 'product-1' | placeholder_svg_tag }}
+            <div class="ai-dual-product__empty-state-{{ ai_gen_id }}">
+              Select Joker product
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      {% if block.settings.joker_product %}
+        <div class="ai-dual-product__price-wrapper-{{ ai_gen_id }}">
+          <span class="ai-dual-product__price-old-{{ ai_gen_id }}">{{ block.settings.old_price }}</span>
+          <span class="ai-dual-product__price-{{ ai_gen_id }}">{{ block.settings.joker_product.price | money }}</span>
+        </div>
+
+        <a
+          href="{{ block.settings.joker_product.url }}"
+          class="ai-dual-product__button-{{ ai_gen_id }} ai-dual-product__button--joker-{{ ai_gen_id }}"
+        >
+          {{ block.settings.joker_button_label }}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="ai-dual-product__side-{{ ai_gen_id }} ai-dual-product__side--right-{{ ai_gen_id }}">
+      <h3 class="ai-dual-product__title-{{ ai_gen_id }} ai-dual-product__title--chroma-{{ ai_gen_id }}">
+        {{ block.settings.chroma_title }}
+      </h3>
+
+      <div class="ai-dual-product__image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.chroma_product and block.settings.chroma_product.featured_image %}
+          <img
+            src="{{ block.settings.chroma_product.featured_image | image_url: width: 800 }}"
+            alt="{{ block.settings.chroma_product.featured_image.alt | escape }}"
+            class="ai-dual-product__image-{{ ai_gen_id }}"
+            loading="lazy"
+            width="800"
+            height="800"
+          >
+        {% else %}
+          <div class="ai-dual-product__image-placeholder-{{ ai_gen_id }}">
+            {{ 'product-1' | placeholder_svg_tag }}
+            <div class="ai-dual-product__empty-state-{{ ai_gen_id }}">
+              Select Chroma product
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      {% if block.settings.chroma_product %}
+        <div class="ai-dual-product__price-wrapper-{{ ai_gen_id }}">
+          <span class="ai-dual-product__price-old-{{ ai_gen_id }}">{{ block.settings.old_price }}</span>
+          <span class="ai-dual-product__price-{{ ai_gen_id }}">{{ block.settings.chroma_product.price | money }}</span>
+        </div>
+
+        <a
+          href="{{ block.settings.chroma_product.url }}"
+          class="ai-dual-product__button-{{ ai_gen_id }} ai-dual-product__button--chroma-{{ ai_gen_id }}"
+        >
+          {{ block.settings.chroma_button_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="ai-dual-product__footer-{{ ai_gen_id }}">
+    <p class="ai-dual-product__footer-text-{{ ai_gen_id }}">
+      {{ block.settings.footer_text }}
+    </p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Dual product showcase",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header section"
+    },
+    {
+      "type": "text",
+      "id": "header_text",
+      "label": "Header text",
+      "default": "PRE-ORDER 2026 NOW LIVE"
+    },
+    {
+      "type": "color",
+      "id": "header_bg_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "header_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "header_text_size",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Text size",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Joker kneeboard"
+    },
+    {
+      "type": "product",
+      "id": "joker_product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "joker_title",
+      "label": "Title",
+      "default": "JOKER"
+    },
+    {
+      "type": "text",
+      "id": "joker_button_label",
+      "label": "Button text",
+      "default": "PRE-ORDER NOW"
+    },
+    {
+      "type": "color",
+      "id": "left_bg_color",
+      "label": "Background color",
+      "default": "#1a0033"
+    },
+    {
+      "type": "color",
+      "id": "joker_text_color",
+      "label": "Title color",
+      "default": "#ff00ff"
+    },
+    {
+      "type": "color",
+      "id": "joker_button_bg",
+      "label": "Button background",
+      "default": "#ff00ff"
+    },
+    {
+      "type": "color",
+      "id": "joker_button_hover_bg",
+      "label": "Button hover background",
+      "default": "#cc00cc"
+    },
+    {
+      "type": "color",
+      "id": "joker_button_text_color",
+      "label": "Button text color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Chroma kneeboard"
+    },
+    {
+      "type": "product",
+      "id": "chroma_product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "chroma_title",
+      "label": "Title",
+      "default": "CHROMA"
+    },
+    {
+      "type": "text",
+      "id": "chroma_button_label",
+      "label": "Button text",
+      "default": "PRE-ORDER NOW"
+    },
+    {
+      "type": "color",
+      "id": "right_bg_color",
+      "label": "Background color",
+      "default": "#330033"
+    },
+    {
+      "type": "color",
+      "id": "chroma_text_color",
+      "label": "Title color",
+      "default": "#00ffff"
+    },
+    {
+      "type": "color",
+      "id": "chroma_button_bg",
+      "label": "Button background",
+      "default": "#00ffff"
+    },
+    {
+      "type": "color",
+      "id": "chroma_button_hover_bg",
+      "label": "Button hover background",
+      "default": "#00cccc"
+    },
+    {
+      "type": "color",
+      "id": "chroma_button_text_color",
+      "label": "Button text color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Pricing"
+    },
+    {
+      "type": "text",
+      "id": "old_price",
+      "label": "Old price",
+      "default": "2400 AED"
+    },
+    {
+      "type": "color",
+      "id": "old_price_color",
+      "label": "Old price color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Current price color",
+      "default": "#22c55e"
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "min": 16,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Price size",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Footer section"
+    },
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer text",
+      "default": "PRE-ORDER SECTION"
+    },
+    {
+      "type": "color",
+      "id": "footer_bg_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "footer_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "footer_text_size",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Text size",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "General settings"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Button text size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Button border radius",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dual product showcase"
+    }
+  ]
+}
+{% endschema %}
